@@ -1,0 +1,10 @@
+
+.git-credentials
+/build/
+/target/
+.classpath
+.class
+.settings/
+.git/
+.idea
+desktop.ini
