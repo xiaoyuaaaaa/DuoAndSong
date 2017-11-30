@@ -1,0 +1,214 @@
+@charset "UTF-8";
+/* CSS Document */
+@import "../common/base_variable";
+@import "../common/base_tool";
+
+el-dialog{
+    display: none;
+}
+
+.dialog-multi{
+    .el-dialog__body{
+        padding: 0;
+        padding-left: 20px;
+    }
+    .el-dialog__header{
+        height: 51px;
+        padding: 16px;
+        padding-left: 20px;
+        border-bottom: 1px solid $g_greyColor;    
+        .el-dialog__title{
+            font-weight: normal;
+        }
+    }
+    .el-dialog__footer{
+        border-top: 1px solid $g_greyColor;   
+        padding: 10px 20px;
+    }
+}
+
+.dialog-select-wrap{
+    display: inline-block;
+    max-width: 615px;
+    vertical-align: middle;
+    span{
+        background-color: #F7A024;
+        color: #fff;
+        display: inline-block;
+        padding: 1px 8px 3px 9px;
+        margin-right: 10px;
+        border-radius: 3px;
+        text-align: center;
+        cursor: pointer;
+        &:after{
+            content: " x";
+            position: relative;
+            top: 1px;
+            color: #FFFFFF;
+            font-size: 16px;
+        }
+        &:hover:after{
+            color: #fff;
+        }
+    }
+}
+.dialog-item{
+    i:after{
+        content: '';
+        @include triangle(bottom, 4px, #333 );
+        position: absolute;
+        top: 13px;
+        margin-left: 3px;
+        cursor: pointer;
+        display: none;
+    }
+    &:hover{
+        i:after{
+            display: inline;
+        }
+    }
+}
+
+.dialog-item1-wrap{
+    max-height: 400px;
+    overflow: auto;
+    min-height: 150px;
+    
+    &.hotCity{
+        max-height: none;
+        min-height: inherit;
+        
+        .dialog-item3-wrap{
+            border: 1px solid #07a3ee;
+            background: #f2f6f9;
+        }
+    }
+    
+    .dialog-item{
+        font-weight: normal;
+        display: inline-block;
+        width: 238px;
+        position: relative;
+        //height: 30px;
+        padding-left: 10px;
+        margin-bottom: 0;
+        padding: 6px 0 6px 10px;
+        
+        
+        &.active{
+            border: 1px solid $g_blueColor;
+            background: #F2F6F9;
+            border-bottom: 0;
+            position: relative;
+            z-index: 1;
+        }
+        
+        &.dialog-item2.active{
+            background-color: #dbedfa;
+            border: none;
+        }
+        
+        >*{
+            display: inline-block;
+            vertical-align: middle;
+        }
+        input{
+            margin: 0 3px 0 0;
+        }
+        
+        
+        font{
+            position:relative; 
+            cursor: pointer;
+        }
+        
+    }
+    
+    >.dialog-item1{
+        
+        &:nth-of-type(3n){
+            //width: 242px;
+        }
+        font{
+            display: inline-block;
+            max-width: 200px;
+            @extend %textTruncate;
+        }
+    }
+    
+    .dialog-item2-wrap{
+        background: #F2F6F9;
+        border: 1px solid $g_blueColor;
+        position: relative;
+        top: -1px;
+        float: left;
+        width: 100%;
+        
+        .jobItem{
+            &.active{
+                background-color: #DBEDFA;
+                border: none;
+            }
+        }
+    }
+    .dialog-item3-wrap{
+        background-color: #DBEDFA;
+        border: none;
+    }
+}
+
+.dialog-industry,.dialog-job,.dialog-city{
+    width: 785px;
+}
+
+.dialog-city{
+    .dialog-item{
+        width: 100px;
+    }
+}
+
+.jobTheam2{
+    .dialog-job{
+        width: 955px;
+    }
+    .level1-wrap{
+        background: white;
+        font-size: 12px;
+        position: relative;
+        padding-left: 175px;
+        @include notFirst(&, border-top, 1px solid #DDDDDD);
+        .level1-name,.level2-wrap{
+            display: inline-block;
+        }
+        .level1-name{
+            background-color: #f9f9f9;
+            vertical-align: top;
+            padding: 5px 10px 0 0;
+            text-align: right;
+            width: 175px;
+            position: absolute;
+            left: 0;
+            height: 100%;
+            font-weight: bold;
+        }
+        .level2-wrap{
+            width: 747px;
+            .dialog-item{
+                width: 185px;
+            }
+        }
+    }
+}
+.dialog-footer{
+    .hr-btn{
+        min-width: inherit;
+        margin-left: 10px;
+    }
+}
+
+.currentIndustry{
+    .level1-wrap .level2-wrap .dialog-item{
+        @extend %textTruncate;
+    }
+}
+

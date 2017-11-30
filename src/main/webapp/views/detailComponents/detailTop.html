@@ -1,0 +1,59 @@
+<!--简历详情头部功能模块-->
+<div class="top-box-wrap">
+	<div class="tabs-wrap" v-if="rabsList.length>1&&resumeMore">
+		<span class="tabs-wrap-left" @click="rolling('-')">&lt;</span>
+		<span class="tabs-wrap-rigth" @click="rolling('+')">&gt;</span>
+		<div class="tabs-con">
+			<ul class="tabs-list clearfix" :style="{marginLeft:rollingPX,width:rabsList.length*175+'px'}">
+				<li :class="rabsActive==item.userId?'active':''" v-for="(item,index) in rabsList">
+					<a @click="rabsActive = item.userId;tabsHref(item,index)">{{item.jobTitle||'其他'}}</a>
+					<i class="icon-close" @click="deleteItem(index)"></i>
+				</li>
+			</ul>
+		</div>
+	</div>
+	<div class="top-box clearfix" >
+	    <a class="yf-logo-wrap" :class="$root.source=='rc'?'yf-logo-time':''" href="/search/index"><img src="/img/common/ico-logo-x110.png" alt=""></a>
+	    <span class="hr-ml25" :class="$root.source!='rc'?'hr-fr':''">简历更新时间：{{$parent.detailInfo.lastTime}}</span>
+		<div class="hr-fr" v-if="$root.source=='rc'">
+			<!--<el-button v-if="$parent.userInfo" 
+				@click="$root.$refs.dia_handle.getCvHandleLog();$root.$refs.dia_handle.historicalRecord=true">
+				<i class="ico-historicalRecord el-icon--left"></i>
+				简历动态
+			</el-button>-->
+			<el-button v-if="$parent.detailInfo.isStorage&&!$parent.detailInfo.isPay" @click="cancelStorageCv">
+				<i class="ico-addTemporary el-icon--left"></i>
+				取消暂存 
+			</el-button>
+			<el-button v-else-if="!$parent.detailInfo.isPay" @click="addTemporary">
+				<i class="ico-addTemporary el-icon--left"></i>
+				暂存简历
+			</el-button>
+			<el-button v-if="$parent.detailInfo.isPay" @click="$root.$refs.dia_download.download.dialog=true">
+				<i class="ico-addTemporary el-icon--left"></i>
+				下载简历
+			</el-button>
+		    <!--<el-dropdown style="margin: 0 10px;" trigger="click" @command="footSetType" @visible-change="dropdownUi" menu-align="start" v-if="$parent.userInfo&&($parent.detailInfo.isOwn||$parent.detailInfo.isToudi)">
+			  	<el-button>
+					<i class="ico-gtype el-icon--left"></i>
+			    	{{$parent.userInfo.gType?getGtype[$parent.userInfo.gType-1].value:'新简历'}}
+			    	<i class="iconfont icon-triangle-copy el-icon--right hr-fontsize22"></i>
+			  	</el-button>
+			  	<el-dropdown-menu class="gtype-item-wrap" slot="dropdown">
+			    	<el-dropdown-item v-for="item in getGtype" :key="item.id" :command="item.id" v-text="'放入'+item.value"></el-dropdown-item>
+			  	</el-dropdown-menu>
+			</el-dropdown>-->
+			<!--<el-dropdown trigger="click" menu-align="start">
+	    		<el-button icon="more"></el-button>
+			  	<el-dropdown-menu class="share-item-wrap" slot="dropdown">
+			    	<el-dropdown-item>
+			    		<a :href="qqfenxUrl" title="分享到QQ" @click="shareQQ" class="share-qq" target="_blank"></a>
+			    	</el-dropdown-item>	
+			    	<el-dropdown-item>
+			    		<a href="javascript:void(0)" title="分享到微信" @click="$root.$refs.dia_wxcode.codeDialog=true" class="share-wx"></a>
+			    	</el-dropdown-item>
+			  	</el-dropdown-menu>
+			</el-dropdown>-->
+		</div>
+	</div>
+</div>

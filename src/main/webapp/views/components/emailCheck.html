@@ -1,0 +1,61 @@
+<div>
+    <div class="user-right-title" v-text="!emailChange?'邮箱验证':'邮箱修改'"></div>
+	<el-form v-if="!emailChange" class="account-wrap" ref="userInfo" :model="userInfo" @submit.prevent="submit" label-width="96px">
+		<el-form-item label="邮箱地址：" prop="name">
+			<el-input v-model="userInfo.email" placeholder="请输入你的邮箱" disabled></el-input>
+			<a class="email-up hr-color-blue" @click="emailChange = true">修改邮箱</a>
+		</el-form-item>
+		<el-form-item label="图形验证码：" prop="imgCode" v-if="!$root.userinfo.isSuccess">
+			<el-input 
+				v-model="userInfo.imgCode" 
+				@change="imgCodeErr=''" 
+				id="imgCode" 
+				:maxlength="50" 
+				placeholder="请输入图形验证码"></el-input>
+			<img class="draw-image" @click="dramImg()" :src="'/imgCode/getDrawImage?'+DrawImage" alt="换一张" />
+			<a class="hr-color-blue" @click="dramImg()">换一张</a>
+			<div class="el-form-item__error" v-text="imgCodeErr"></div>
+		</el-form-item>
+		<el-form-item label="邮箱验证码：" v-if="!$root.userinfo.isSuccess">
+			<el-input v-model="userInfo.email_code" placeholder="请输入邮箱验证码">
+				<template slot="append">
+					<a class="hr-color-blue" @click="sendCheckEmail()">发送验证</a>
+				</template>
+			</el-input>
+			<div class="el-form-item__error" v-text="email_codeErr"></div>
+		</el-form-item>
+		<el-button type="submit" class="hr-btn-yellow hr-mt15" @click="checkEmail()" v-if="!$root.userinfo.isSuccess">确认提交</el-button>
+		<p class="prompt" v-if="!$root.userinfo.isSuccess">首次验证邮箱成功赠送<span class="hr-color-red">5份</span>简历下载</p>
+		<!--<p class="prompt" v-if="$root.userinfo.isSuccess">邮箱已验证</p>-->
+	</el-form>
+	<el-form v-if="emailChange" class="account-wrap" ref="upInfo" :model="upInfo" @submit.prevent="submit" label-width="96px">
+		<el-form-item label="当前邮箱：" prop="email">
+			<el-input v-model="upInfo.email" placeholder="请输入你的邮箱" disabled></el-input>
+		</el-form-item>
+		<el-form-item label="新的邮箱：" prop="newEmail">
+			<el-input v-model="upInfo.newEmail" placeholder="请输入你的新邮箱" @change="newEmailErr=''" ></el-input>
+			<div class="el-form-item__error" v-text="newEmailErr"></div>
+		</el-form-item>
+		<el-form-item label="图形验证：" prop="imgCode">
+			<el-input 
+				v-model="upInfo.imgCode" 
+				@change="newImgCodeErr=''" 
+				id="imgCode" 
+				:maxlength="50" 
+				placeholder="请输入图形验证码"></el-input>
+			<img class="draw-image" @click="dramImg()" :src="'/imgCode/getDrawImage?'+DrawImage" alt="换一张" />
+			<a class="hr-color-blue" @click="dramImg()">换一张</a>
+			<div class="el-form-item__error" v-text="newImgCodeErr"></div>
+		</el-form-item>
+		<el-form-item label="邮箱验证：" prop="check">
+			<el-input v-model="upInfo.email_code" placeholder="请输入邮箱验证码" @change="newEmail_codeErr=''">
+				<template slot="append">
+					<a class="hr-color-blue" @click="sendEidtEmail()">发送验证</a>
+				</template>
+			</el-input>
+			<div class="el-form-item__error" v-text="newEmail_codeErr"></div>
+		</el-form-item>
+		<el-button type="submit" class="hr-btn-yellow hr-mt15" @click="editEmail()">确认提交</el-button>
+		<el-button type="submit" class="hr-btn-grey2" @click="emailChange = false">返回</el-button>
+	</el-form>
+</div>

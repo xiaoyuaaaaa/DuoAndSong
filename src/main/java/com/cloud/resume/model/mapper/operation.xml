@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.cloud.resume.dao.OperationDao">  
+    
+  	<!-- 获取简历联系方式 -->
+    <select id="getCvContact" statementType="CALLABLE" resultType="String" >  
+        {
+        	call user_gain(
+        		#{resumeId,mode=IN,jdbcType=DECIMAL},
+        		#{searchId,mode=IN,jdbcType=VARCHAR},
+        		#{token,mode=IN,jdbcType=VARCHAR},
+        		#{userId,mode=IN,jdbcType=VARCHAR},
+        		#{resultEmail,mode=OUT,jdbcType=VARCHAR},
+        		#{resultPhone,mode=OUT,jdbcType=VARCHAR},
+        		#{resultName,mode=OUT,jdbcType=VARCHAR},
+        		#{resultMessage,mode=OUT,jdbcType=VARCHAR},
+        		#{resultNumber,mode=OUT,jdbcType=DECIMAL}
+        	)
+        } 
+    </select> 
+    
+    <!-- 添加暂存记录 -->
+	<insert id="addStorageLogs" parameterType="map">
+	 	insert into storage_logs   
+	 	(
+	 		userId,resumeId,searchId,token,creatTime
+	 	) values (
+	 		#{userId},#{resumeId},#{searchId},#{token},NOW()
+	 	);
+    </insert>
+    
+	<delete id="delStorageLogs" parameterType="map">
+	    delete from storage_logs where userId=#{userId} and id in (${ids})
+	</delete>
+</mapper> 

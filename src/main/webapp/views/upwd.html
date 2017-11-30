@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="UTF-8">
+	<title>多简历-找回密码</title>
+	<meta name="Keywords" content="多简历,免费简历,人才库,简历库">
+	<meta name="Description" content="多简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让多简历成为企业与人才之间沟通的桥梁。">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<link rel="shortcut icon" href="../img/common/logo.ico">
+	<link rel="stylesheet" type="text/css" href="/css/common/base.css"/>
+	<link rel="stylesheet" type="text/css" href="../js/lib/element/element.min.css"/>
+	<link rel="stylesheet" type="text/css" href="/css/controller/sign.css">
+
+	<script src="../js/require-config.js" defer="true"></script>
+	<script data-main="../js/controller/upwd.js" src="../js/lib/require/require.min.js" defer="true"></script>
+</head>
+
+<body>
+	<div id="app">
+		<div class="sign-wrap">
+			<form class="sign-form-wrap" @submit.prevent="forgotPassword">
+				<a href="/base/index"><img src="/img/common/ico-logo-x180.png" class="sign-logo"/></a>
+				<div class="sign-form">
+					<p class="sign-title">找回密码</p>
+					<div class="sign-con">
+						<div class="input-wrap">
+							<p class="input-title active">手机号</p>
+							<el-input 
+								v-model="userInfo.telephone"
+								@change="userPhoneErr='';imgCodeCheck=0" 
+								@blur="checkPhone()" 
+								id="userPhone" 
+								:maxlength="11" 
+								placeholder="请输入手机" ></el-input>
+							<div class="err" v-text="userPhoneErr"></div>
+						</div>
+						<div class="input-wrap input-verCode hr-hide" :class="!(tool.verifyMobile(userInfo.telephone).flag&&!imgCodeCheck)?'hr-hide':'hr-block'">
+							<p class="input-title active">图形验证码<span class="hr-fontWeight-normal">（请输入图形验证码）</span></p>
+							<el-input 
+								v-model="userInfo.imgCode" 
+								@change="imgCodeErr=''" 
+								id="imgCode" 
+								:maxlength="50" 
+								placeholder="请输入图形验证码"></el-input>
+							<img @click="dramImg()" :src="'/imgCode/getDrawImage?'+DrawImage" alt="换一张" />
+							<a @click="dramImg()">换一张</a>
+							<div class="err" v-text="imgCodeErr"></div>
+						</div>
+						<div class="input-wrap input-wrap-code">
+							<p class="input-title active">短信验证码</p>
+							<el-input 
+								v-model="userInfo.mobile_code" 
+								@change="mobileCodeErr=''" 
+								id="mobileCode" 
+								:maxlength="50" 
+								placeholder="请输入短信验证码"></el-input>
+							<a class="codeBtn hr-btn hr-btn-yellow" @click="sendCode()" v-text="supCode" :class="codeBtnType?'codeBtning':''"></a>
+							<div class="err" v-text="mobileCodeErr"></div>
+						</div>
+						
+						<div class="input-wrap">
+							<p class="input-title active">新密码</p>
+							<el-input type="password" 
+								v-model="userInfo.password" 
+								@change="passWordErr=''" 
+								id="passWord" 
+								:maxlength="16" 
+								placeholder="请输入新密码"></el-input>
+							<div class="err" v-text="passWordErr"></div>
+						</div>
+						<div class="sign-btn hr-mb15">
+							<button type="submit" class="hr-btn hr-btn-yellow">重置密码</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>

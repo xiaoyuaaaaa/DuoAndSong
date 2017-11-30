@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>全局变量配置文件</comment>
+<!-- cookie 最大超时时间 -->
+<entry key="MAX_COOKIE">360000000</entry>
+<!-- solr服务器地址 -->
+<entry key="SOLR_SERVER_URL">http://47.52.172.38:8080/solr/resume/</entry>
+
+<!-- 返回pdf页面路径 -->
+<entry key="PDF_INIT_URL">http://192.168.1.189:8080/resumeFile/initPdf?userId=</entry>
+<!-- 创建PDF -->
+<entry key="CREAT_PDF_FILE_PATH">http://192.168.1.189:8080/resumeFile/creatPdf?userId=</entry>
+<!-- pdf文件保存路径 -->
+<entry key="PDF_FILE_PATH">D:/upload/</entry>
+<!-- 返回word页面路径 -->
+<entry key="WORD_INIT_URL">http://192.168.1.189:8080/resumeFile/initWord?userId=</entry>
+<!-- 创建word -->
+<entry key="CREAT_WORD_FILE_PATH">http://192.168.1.189:8080/resumeFile/creatWord?userId=</entry>
+<!-- word文件保存路径 -->
+<entry key="WORD_FILE_PATH">D:/upload/</entry>
+<!-- excel文件保存路径 -->
+<entry key="EXCEL_FILE_PATH">D:/upload/</entry>
+
+<!-- sendCloud -->
+<entry key="api_user_all">yifengjianli</entry><!-- 批量 -->
+<entry key="api_user">yifengjianliTheTrigger</entry><!-- 触发 -->
+<entry key="api_key">y9imA7vyHW1HTEWN</entry>
+
+<!-- 用户头像保存路径 -->
+<entry key="UPLOAD_HEADIMG_PATH">/Users/tobber/Desktop/resume/</entry>
+
+<!-- 消息通知图片路径(确保与后台项目配置的一样) -->
+<entry key="NOTICE_IMG_URL">/Users/tobber/Desktop/resume/head/</entry>
+
+</properties>

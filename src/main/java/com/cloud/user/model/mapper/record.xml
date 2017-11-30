@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.cloud.user.dao.RecordDao">  
+    
+    <!--  获取记录列表 -->
+    <select id="getGainLogs" parameterType="com.cloud.user.model.RecordQueryModel" resultType="com.cloud.user.model.RecordResultModel" >  
+    	select 
+    		a.resumeId,
+    		a.searchId,
+    		a.searchToken,
+    		a.gainTime creatTime,
+    		b.jobTitle,
+    		b.expectCity,
+    		b.name,
+    		b.email,
+    		b.telephone,
+    		b.lastTime 
+    	from (
+    		select * from gain_logs where userId=#{userId}
+    	) a 
+    	left join resume b on a.resumeId=b.userId 
+    	<where>
+    	    <if test="name !=null">
+    	       and b.name=#{name} 
+    	    </if>
+    	    <if test="email !=null">
+    	       and b.email=#{email} 
+    	    </if>
+    	    <if test="telephone !=null">
+    	       and b.telephone=#{telephone} 
+    	    </if>
+    	    <if test="cityCode !=null">
+    	       and FIND_IN_SET(#{cityCode},b.expectCity)
+    	    </if>
+    	    <if test="jobTitle !=null">
+    	       and FIND_IN_SET(#{jobTitle},b.jobTitle)
+    	    </if>
+    	</where>
+    	order by a.gainTime desc limit #{page},#{pageSize}
+    </select> 
+    <select id="getGainLogsTotal" parameterType="com.cloud.user.model.RecordQueryModel" resultType="java.lang.Integer" >  
+    	select 
+    		count(*) 
+    	from (
+    		select * from gain_logs where userId=#{userId}
+    	) a 
+    	left join resume b on a.resumeId=b.userId 
+    	<where>
+    	    <if test="name !=null">
+    	       and b.name=#{name} 
+    	    </if>
+    	    <if test="email !=null">
+    	       and b.email=#{email} 
+    	    </if>
+    	    <if test="telephone !=null">
+    	       and b.telephone=#{telephone} 
+    	    </if>
+    	    <if test="cityCode !=null">
+    	       and FIND_IN_SET(#{cityCode},b.expectCity)
+    	    </if>
+    	    <if test="jobTitle !=null">
+    	       and FIND_IN_SET(#{jobTitle},b.jobTitle)
+    	    </if>
+    	</where>
+    </select>
+    
+    
+    <!--  获取暂存记录列表 -->
+    <select id="getStorageLogs" parameterType="com.cloud.user.model.StorageQueryModel" resultType="com.cloud.user.model.RecordResultModel" >  
+    	select 
+    		a.id,
+    		a.resumeId,
+    		a.searchId,
+    		a.token searchToken,
+    		a.creatTime,
+    		b.jobTitle,
+    		b.expectCity,
+    		b.sex,
+    		b.age,
+    		b.education,
+    		b.jobYear,
+    		b.lastTime 
+    	from (
+    		select * from storage_logs where userId=#{userId} 
+    		<if test="storageTime != null">
+    		    and #{storageTime}>=datediff(NOW(),creatTime)
+    		</if>
+    	) a 
+    	left join resume b on a.resumeId=b.userId 
+    	<where>
+    	    <if test="education !=null">
+    	       and b.education=#{education} 
+    	    </if>
+    	    <if test="jobYear !=null">
+    	       and jobYear BETWEEN ${jobYear}
+    	    </if>
+    	    <if test="cityCode !=null">
+    	       and FIND_IN_SET(#{cityCode},b.expectCity)
+    	    </if>
+    	    <if test="jobTitle !=null">
+    	       and FIND_IN_SET(#{jobTitle},b.jobTitle)
+    	    </if>
+    	</where>
+    	order by a.creatTime desc limit #{page},#{pageSize}
+    </select> 
+    <select id="getStorageLogsTotal" parameterType="com.cloud.user.model.StorageQueryModel" resultType="java.lang.Integer" >  
+    	select 
+    		count(*)  
+    	from (
+    		select * from storage_logs where userId=#{userId} 
+    		<if test="storageTime != null">
+    		    and #{storageTime}>=datediff(NOW(),creatTime)
+    		</if>
+    	) a 
+    	left join resume b on a.resumeId=b.userId 
+    	<where>
+    	    <if test="education !=null">
+    	       and b.education=#{education} 
+    	    </if>
+    	    <if test="jobYear !=null">
+    	       and jobYear BETWEEN ${jobYear}
+    	    </if>
+    	    <if test="cityCode !=null">
+    	       and FIND_IN_SET(#{cityCode},b.expectCity)
+    	    </if>
+    	    <if test="jobTitle !=null">
+    	       and FIND_IN_SET(#{jobTitle},b.jobTitle)
+    	    </if>
+    	</where>
+    </select>
+    
+    <select id="getGoldLogs" parameterType="String" resultType="com.cloud.user.model.GoldModel">
+        select id,gold,status,type,surplusGold,creatTime from gold_logs where userId=#{0} order by id desc limit #{1},#{2};
+    </select>
+    <select id="getGoldLogsTotal" parameterType="String" resultType="java.lang.Integer">
+        select count(*) from gold_logs where userId=#{0};
+    </select>
+    
+</mapper> 

@@ -1,0 +1,21 @@
+<div>
+	<div id="header">
+		<div class="hr-wrap">
+			<a href="/base/index"></a><img src="../../img/common/logo.png" class="hr-mt25"/>
+			<div class="hr-fr hr-vertical-middle-container hr-pt25">
+				<ul class="hr-header-channel hr-mr10">
+					<li><a href="/search/index" :class="{'active': pagename=='resumeSearch'}">简历搜索</a></li>
+					<li><a href="/record/main" :class="{'active': pagename=='resumeManage'}">简历管理</a></li>
+					<li><a href="/record/gold" :class="{'active': pagename=='goldRecord'}">金币记录</a></li>
+					<li><a href="/user/user#/user/companyAuth" :class="{'active': pagename=='companyAuth'}">企业验证</a></li>
+					<li><a href="/notice/notice" :class="{'active': pagename=='notice'}">消息通知 <i v-if="userinfo.noticeNum>0">{{userinfo.noticeNum}}</i></a></li>
+				</ul>
+				<div class="header-user-oper">
+					<a @click="userCancel" class="hr-btn  hr-btn-grey hr-mr10"><i class="icon-logout"></i>退出</a>
+					<a href="/user/user" class="hr-btn  hr-btn-yellow"><i class="icon-user"></i>个人中心</a>
+				</div>
+			</div>
+		</div>
+		<div class="header-line"></div>
+	</div>
+</div>

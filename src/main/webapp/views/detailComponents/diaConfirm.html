@@ -1,0 +1,13 @@
+<!--确认框-->
+<el-dialog class="hr-confirm-wrap"
+	:visible.sync="diaConfirm" top="35%" :show-close="false" :close-on-click-modal="false" :close-on-press-escape="false">
+	<span slot="title" class="dialog-title hr-fontsize15" v-text="popup.title?popup.title:'提醒'"></span>
+	<!--<span slot="body" class="dialog-title hr-fontsize15"></span>-->
+	<div class="confirm-con hr-vertical-middle-container">
+		<img src="/img/detail/ico-warning.png"/>
+		<p v-text="popup.message"></p>
+	</div>
+	<span slot="footer" class="dialog-footer">
+	    <el-button class="hr-btn hr-btn-yellow" type="primary" @click="confirmClose(popup);diaConfirm = false">确 定</el-button>
+	</span>
+</el-dialog>

@@ -1,0 +1,70 @@
+@charset "utf-8";
+/* CSS Document */
+@import "../common/base_variable";
+@import "../common/base_tool";
+
+.account-wrap{
+    width: 525px;
+    margin: 30px 0 30px 60px;
+    .el-form-item{
+        border-top: 1px dashed $g_greyBorderColor;
+        margin: 15px 0;
+        padding-top: 15px;
+        &:first-child{
+            border-top: 0;
+            margin-top: 0;
+            padding-top: 0;
+        }
+        .el-select{
+            width: 100%;
+        }
+        .el-form-item__label{
+            position: relative;
+            color: #333;
+            &:before{
+                position: absolute;
+                left: -7px;
+            }
+        }
+        .el-form-item__error{
+            top: 10px;
+            left: 100%;
+            width: 200px;
+            margin-left: 8px;
+        }
+        .email-up{
+            position: absolute;
+            left: 100%;
+            width: 100px;
+            top: 0px;
+            margin-left: 8px;
+        }
+        #imgCode{
+            width: 220px;
+        }
+        .draw-image{
+            margin: 0 10px;
+            vertical-align: middle;
+        }
+    }
+    .prompt{
+        display: inline-block;
+        background-color: #F4F4F4;
+        border: 1px solid #e1e1e1;
+        padding: 3px 10px;
+        margin-left: 15px;
+        box-shadow: 0px 1px 3px 0px #e1e1e1;
+        span{
+            margin: 0 3px;
+        }
+    }
+    .hr-btn-yellow{
+        border-radius: 3px;
+
+        &:focus,&:hover,&:active{
+            border-color: #e0972e;
+            color: #fff;
+        }
+    }
+}
+ 

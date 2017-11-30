@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>多简历-全网邀约</title>
+	<meta name="keywords" content="多简历,免费简历,人才库,简历库">
+	<meta name="description" content="多简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让多简历成为企业与人才之间沟通的桥梁。">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, no-siteapp">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<link rel="shortcut icon" href="../img/common/logo.ico">
+	<link rel="stylesheet" type="text/css" href="../js/lib/element/element.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/common/base.css" />
+	<link rel="stylesheet" type="text/css" href="../css/controller/notice.css"/>
+	<script type="text/javascript" src="../js/require-config.js" defer="true"></script>
+	<script data-main="../js/controller/notice.js" src="../js/lib/require/require.js" defer="true"></script>
+</head>
+<body>
+<div id="app" v-cloak>
+	<base-page ref="basePageChild"></base-page>
+	<header-page :userinfo="userinfo" :pagename="'notice'"></header-page>
+	<div class="hr-page-description">
+		<div class="hr-wrap">
+			<h1 v-text="pageDes.name"></h1>
+			<h2 v-if="pageDes.des" v-text="'-- '+pageDes.des"></h2>
+		</div>
+	</div>
+	<div class="hr-main-page">
+		<div v-if="listData.length>0">
+			<p>
+				全部 <span class="hr-color-blue">{{pageModel.rowCount}}</span> 条消息通知
+			</p>
+			<div class="line"></div>
+			<div class="notice-list">
+				<div class="notice-item" v-for="(item,i) in listData" :key=i>
+					<div class="notice-item-head clearfix">
+						<span class="hr-fl"><i class="ico-notice"></i>系统通知</span>
+						<span class="hr-fr">{{item.creatTime}}</span>
+					</div>
+					<div class="notice-item-conent">
+						<div class="notice-title clearfix" >
+							<p class="hr-fl" :class="!item.more?'ellipsis':''">
+								<strong class="hr-mr10">{{item.title}}</strong>
+								<span>{{item.content}}</span>
+							</p>
+							<p class="hr-fl">
+								<a class="hr-color-blue" href="javascript:;" v-show="!item.more" @click="moreCon(item)">更多</a>
+								<a v-if="item.noticeUrl && item.more" :href="item.noticeUrl" target=_blank class="item-line" >查看详情</a>
+							</p>
+
+						</div>
+						<div v-if="item.noticeImg">
+							<img  @click="getNoticeInfo(item.id,item.noticeImg)" :src="'/icloudimg/getNoticeImg?noticeImg='+item.noticeImg.split(',')[0]" alt="">
+						</div>
+
+					</div>
+				</div>
+				<pagination ref="pagination" :page-size-hide="true" :current-page="pageModel.page"
+							:total-page="pageModel.pageTotal" @changesize="changePageSize"
+							@change="changePage"></pagination>
+			</div>
+		</div>
+
+		<div class="notice-nothing" v-else>
+			<div class="line"></div>
+			<div class="notice-nothing-cen">
+				<img src="/img/common/nothing.png" alt="">
+				<span>暂无通知~</span>
+			</div>
+
+		</div>
+	</div>
+	<el-dialog custom-class="notice-bigimg" :visible.sync="bigimg" size="small"  :show-close="false" top="10%">
+		<div v-if="noticeDetail.noticeImg">
+			<img v-for="(item,i) in noticeDetail.noticeImg.split(',')" :src="'/icloudimg/getNoticeImg?noticeImg='+item" class="bigimg">
+		</div>
+
+	</el-dialog>
+</div>
+</body>
+</html>

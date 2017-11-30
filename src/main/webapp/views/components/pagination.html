@@ -1,0 +1,30 @@
+<div class="hr-pagination-wrap">
+	<el-select v-model="pageSize" 
+		v-show="!pageSizeHide"
+		@change="getPageSizeData"
+		class="hr-pagination-select">
+		 <el-option v-for="item in pageSizeAll" 
+		 	:key="item" 
+		 	:label="item+' 条/页'" 
+		 	:value="item"
+		 ></el-option>
+	</el-select>
+	<ul class="hr-pagination">
+		<li class="hr-pagination-prev hr-disabled" v-show="1 == currentPage">
+			<a>上一页</a>
+		</li>
+		<li class="hr-pagination-prev" v-if="!(1 == currentPage)">
+			<a @click="getPageData(currentPage-0-1)">上一页</a>
+		</li>
+		<li v-for="(item,index) in pageNumArr" :class="{'hr-active':item == currentPage}">
+			<a v-text="item" v-if="item>0" @click="getPageData(item)"></a>
+			<a v-text="item" :class="{true:'NaN'}[!(item>0)]" v-if="!(item>0)"></a>
+		</li>
+		<li class="hr-pagination-last hr-disabled" v-if="totalPage == currentPage">
+			<a >下一页</a>
+		</li>
+		<li class="hr-pagination-last" v-if="!(totalPage == currentPage)">
+			<a @click="getPageData(currentPage-0+1)">下一页</a>
+		</li>
+	</ul>
+</div>

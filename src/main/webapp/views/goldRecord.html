@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>多简历-全网邀约</title>
+    <meta name="keywords" content="多简历,免费简历,人才库,简历库">
+    <meta name="description"
+          content="多简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让多简历成为企业与人才之间沟通的桥梁。">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, no-siteapp">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="shortcut icon" href="../img/common/logo.ico">
+    <link rel="stylesheet" type="text/css" href="../js/lib/element/element.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common/base.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/controller/goldRecord.css"/>
+    <script type="text/javascript" src="../js/require-config.js" defer="true"></script>
+    <script data-main="../js/controller/goldRecord.js" src="../js/lib/require/require.js" defer="true"></script>
+</head>
+<body>
+<div id="app" v-cloak>
+    <base-page ref="basePageChild"></base-page>
+    <header-page :userinfo="userinfo" :pagename="'goldRecord'"></header-page>
+    <div class="hr-page-description">
+        <div class="hr-wrap">
+            <h1 v-text="pageDes.name"></h1>
+        </div>
+    </div>
+    <div class="hr-main-page">
+        <div class="gold-record-head clearfix">
+            <div class="head-item hr-fl">
+                <p>下载剩余：<span class="hr-color-blue">{{userinfo.gainNum/5}}</span> 份简历(<span> {{userinfo.gainNum}} </span>个金币)</p>
+            </div>
+            <div class="head-item hr-fr">
+                <button :class="type==true?'hr-btn-yellow':''" @click="type=true">赠送金币</button>
+                <button :class="type==false?'hr-btn-yellow':''" class="hr-ml15" @click="type=false">消费记录</button>
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="gold-record-main">
+            <table v-show="type" class="gold-main" cellspacing="0">
+                <tr>
+                    <th>操作说明</th>
+                    <th>积分数额</th>
+                    <th>状态提示</th>
+                </tr>
+                <tr>
+                    <td>成功注册多简历官方平台</td>
+                    <td>立即送 <span class='hr-color-blue'>50</span>金币 (10份简历)</td>
+                    <td>已注册</td>
+                </tr>
+                <tr>
+                    <td>每天首次登录多简历平台（不含当天注册）</td>
+                    <td>立即送 <span class='hr-color-blue'>10</span>金币 (2份简历)</td>
+                    <td>已登录</td>
+                </tr>
+                <tr>
+                    <td>成功验证一个企业招聘网站帐号（智联、前程、58、拉勾、猎聘、赶集、英才）</td>
+                    <td>每个帐号立即送 <span class='hr-color-blue'>300</span>金币 (60份简历)</td>
+                    <td><a class="hr-color-blue" href="/user/user#/user/companyAuth">去验证</a></td>
+                </tr>
+                <tr>
+                    <td>成功邀请好友注册（送50金币），好友企业验证（送450金币）</td>
+                    <td>立即送 <span class='hr-color-blue'>50+450</span>金币 (100份简历)</td>
+                    <td><a class="hr-color-blue" href="javascript:;" @click="invitation.dialog = true">去邀请</a></td>
+                </tr>
+                <tr>
+                    <td>成功完成登录邮箱验证</td>
+                    <td>立即送 <span class='hr-color-blue'>25</span>金币(5份简历)</td>
+                    <td>
+                        <a v-if="userinfo.isSuccess==0" class="hr-color-blue" href="/user/user#/user/emailCheck">去验证</a>
+                        <span v-if="userinfo.isSuccess==1">已验证</span>
+                    </td>
+                </tr>
+            </table>
+            <div v-show="!type" class="record-main">
+                <table cellspacing="0">
+                    <tr>
+                        <th>时间</th>
+                        <th>金币明细</th>
+                        <th>收支</th>
+                        <th>剩余金币</th>
+                    </tr>
+                    <tr v-for="(item,index) in logList" :key="index">
+                        <td :data-id="item.id">{{item.creatTime}}</td>
+                        <td>{{_match(item.status)}}</td>
+                        <td :class="item.type=='1'?'hr-color-blue':'hr-color-red'" v-text="item.type=='1'?'+'+item.gold:'-'+item.gold"></td>
+                        <td>{{item.surplusGold}}</td>
+                    </tr>
+                </table>
+                <pagination v-if="recordList.totalPage!=1" ref="pagination" :page-size-hide="false" :current-page="recordList.page"
+                            :total-page="recordList.totalPage" @changesize="changePageSize"
+                            @change="changePage"></pagination>
+            </div>
+
+        </div>
+    </div>
+    <el-dialog
+            custom-class="invitation"
+            :visible.sync="invitation.dialog">
+        <div slot="title">
+            <p class="hr-fontsize18 hr-color-blue hr-mb15">我的网站链接分享给好友</p>
+            <p>好友注册成功得<span class="hr-color-blue">50</span>金币，<br />好友通过企业验证后再得<span class="hr-color-blue">450</span>金币。</p>
+            <p>你将总共获赠 <span class="hr-color-blue">500</span>金币(100份简历)</p>
+        </div>
+        <p class="invitation-link">复制链接
+            <input type="text" id="link" :value="win().location.host+'/regist/regist?shareCode='+userinfo.shareCode">
+        </p>
+        <button class="copy-btn hr-btn-yellow hr-pointer" id="copyBtn" data-clipboard-target="#link">复 制</button>
+        <!--<span>这是一段信息</span>-->
+    </el-dialog>
+</div>
+</body>
+</html>

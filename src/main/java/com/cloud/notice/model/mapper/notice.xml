@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.cloud.notice.dao.NoticeDao">  
+    
+    <select id="getNoticeInfo" parameterType="java.lang.Integer" resultType="com.cloud.notice.model.NoticeModel">
+    	select 
+    		id,
+    		title,
+    		content,
+    		noticeImg,
+    		noticeUrl,
+    		creatTime  
+    	from notice_logs 
+    	where id=#{0} limit 1
+    </select>
+    
+    <select id="getNoticeList" parameterType="map" resultType="com.cloud.notice.model.NoticeModel">
+        select 
+        	a.isRead,
+        	a.readTime,
+        	b.id,
+        	b.title,
+    		b.content,
+    		b.noticeImg,
+    		b.noticeUrl,
+    		b.creatTime 
+        from(
+	    	select 
+	    		id,
+	    		userId,
+	    		noticeId,
+	    		isRead,
+	    		readTime 
+	    	from notice_read_logs 
+	    	where userId=#{userId} 
+	    	order by id desc limit ${(page-1)*pageSize},#{pageSize}
+	    ) a 
+	    left join notice_logs b on a.noticeId=b.id
+	    
+    </select>
+    <select id="getNoticeListTotal" parameterType="map" resultType="java.lang.Integer">
+    	select count(*) from notice_read_logs where userId=#{userId} 
+    </select>
+    
+    <!-- 更新阅读状态 -->
+    <update id="updateNoticeReadStatus" parameterType="map">
+        update notice_read_logs set isRead=1,readTime=NOW() where userId=#{userId} and isRead=0 
+        <if test="noticeId !=null">
+            and noticeId in (${noticeIds})
+        </if>
+    </update>
+    
+</mapper> 

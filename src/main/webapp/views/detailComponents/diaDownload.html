@@ -1,0 +1,47 @@
+<!--//下载-->
+<el-dialog
+        :visible.sync="download.dialog"
+        size="tiny" class="downloaddia"
+        :class="download.downReady?'downReady':''"
+        :show-close="!download.downReady" 
+        :close-on-click-modal="!download.downReady" 
+        :close-on-press-escape="!download.downReady"
+        @close="downloadClose">
+    <span slot="title" class="dialog-title hr-fontsize15">下载简历</span>
+    <!--<div class="downpage" v-if="!download.downReady">
+        <div class="downformat hr-mb10" >
+            <el-radio label="word" v-model="download.downFormat">选择word</el-radio>
+            <el-radio label="pdf" v-model="download.downFormat">选择PDF</el-radio>
+            <el-radio label="excel" v-model="download.downFormat">选择Excel</el-radio>
+        </div>
+    </div>-->
+    <div class="confirm-con hr-vertical-middle-container">
+		<!--<img src="/img/detail/ico-warning.png"/>-->
+		<div class="dialog-main" v-if="!download.downReady">
+			<!--选择下载格式-->
+			<el-radio label="word" v-model="download.downFormat">选择Word</el-radio>
+            <el-radio label="pdf" v-model="download.downFormat">选择PDF</el-radio>
+            <el-radio label="excel" v-model="download.downFormat">选择Excel</el-radio>
+		</div>
+		<div class="dialog-main" v-else>
+			准备完毕，点击确定下载简历
+		</div>
+	</div>
+    <div slot="footer">
+        <div type="primary" class="hr-btn hr-btn-yellow" @click="downNext" v-if="!download.downReady">下一步</div>
+        <div type="primary" class="hr-btn hr-btn-yellow" v-if="download.downReady&&download.downFormat!='excel'&&downLength<2">
+        	<a :href="'/downLoad/downloadSingleResume?type='+download.downFormat+'&userId='+$root.resumeData.resumeNumber"
+	           target="_blank" @click="download.dialog=false" >确 &nbsp;定</a>
+        </div>
+        <div type="primary" class="hr-btn hr-btn-yellow" v-if="download.downReady&&download.downFormat!='excel'&&downLength>1">
+        	<a :href="'/downLoad/downloadBatchResume?type='+download.downFormat"
+	           target="_blank" @click="download.dialog=false" >确 &nbsp;定</a>
+        </div>
+        <div type="primary" class="hr-btn hr-btn-yellow" v-if="download.downReady&&download.downFormat=='excel'">
+        	<a :href="'/downLoad/downloadBatchResume?type='+download.downFormat+'&userId='+$root.resumeData.resumeNumber"
+        	   target="_blank" @click="download.dialog=false">确 &nbsp;定</a>
+        </div>
+        <div type="primary" class="hr-btn hr-btn-grey2" @click="downloadClose">取消</div>
+    </div>
+    
+</el-dialog>

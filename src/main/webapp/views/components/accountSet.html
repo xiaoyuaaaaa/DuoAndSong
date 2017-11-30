@@ -1,0 +1,23 @@
+<div>
+    <div class="user-right-title">用户信息</div>
+	<el-form class="account-wrap" ref="userInfo" :rules="rules" :model="userInfo" @submit.prevent="submit" label-width="82px">
+		<el-form-item label="你的姓名：" prop="name">
+			<el-input v-model="userInfo.name" placeholder="请输入你的姓名"></el-input>
+		</el-form-item>
+		<el-form-item label="你的称呼：">
+			<el-input v-model="userInfo.nickName" placeholder="请输入你的称呼"></el-input>
+		</el-form-item>
+		<el-form-item label="你的职位：">
+			<el-input v-model="userInfo.jobTitle" placeholder="请输入你的职位"></el-input>
+		</el-form-item>
+		<el-form-item label="联系QQ：">
+			<el-input type="num" v-model="userInfo.qq" :maxLength="11" placeholder="请输入你的联系QQ"></el-input>
+		</el-form-item>
+		<el-form-item label="所在行业：">
+			<el-select v-model="userInfo.industry" placeholder="请选择你的所在行业">
+		      	<el-option v-for="item in areaName" :key="item.id" :label="item.name" :value="item.id"></el-option>
+		    </el-select>
+		</el-form-item>
+		<el-button type="submit" class="hr-btn-yellow hr-mt15" @click="setAccount()">确认提交</el-button>
+	</el-form>
+</div>

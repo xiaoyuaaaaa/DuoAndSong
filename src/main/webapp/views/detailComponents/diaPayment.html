@@ -1,0 +1,76 @@
+<!--支付弹框-->
+<!--<el-dialog
+        :visible.sync="payment.dialog"
+        size="tiny" class="paymentdia"
+        :class="!payment.msgDialog?'':'active'"
+        :show-close="!payment.msgDialog" 
+        :close-on-click-modal="!payment.msgDialog" 
+        :close-on-press-escape="!payment.msgDialog"
+        @close="paymentClose">
+    <span slot="title" class="dialog-title hr-fontsize15" v-if="!payment.msgDialog">
+		<strong>商品信息 </strong>
+	</span>
+    <div class="payIndex stonefont" v-if="!payment.msgDialog">
+        <ul class="payInfo">
+            <li>
+                <span>简历职位名</span>
+                <span>经验</span>
+                <span>学历</span>
+                <span>性别</span>
+                <span>价格</span>
+            </li>
+            <li>
+                <span :title="$root.$refs.detail_tem.detailInfo.resume.jobTitle">{{$root.$refs.detail_tem.detailInfo.resume.jobTitle}}</span>
+                <span>{{$root.$refs.detail_tem.detailInfo.resume.jobYear}}年</span>
+                <span>{{$root.$refs.detail_tem.detailInfo.resume.education}}</span>
+                <span>{{$root.$refs.detail_tem.detailInfo.resume.sex}}</span>
+                <span class="hr-color-red">{{$root.$refs.detail_tem.detailInfo.resume.price}}元</span>
+            </li>
+        </ul>
+        <p class="hr-mt25">选择付款方式</p>
+        <div class="paytype">
+            <el-radio-group v-model="payment.paymentType">
+                <el-radio-button label="1" v-if="$root.source=='rc'"><img src="/img/resume/ico_pay_zfb.png" alt=""></el-radio-button>
+                <el-radio-button label="2" v-if="$root.source=='rc'"><img src="/img/resume/ico_pay_yl.png" alt=""></el-radio-button>
+                <el-radio-button label="3" v-if="$root.source=='rc'"><img src="/img/resume/ico_pay_wx.png" alt=""></el-radio-button>
+                <el-radio-button label="4"><p>余额:<i class="goldcoin">{{tool.towDecimal(gainNum)}}</i>金币</p></el-radio-button>
+            </el-radio-group>
+            <div class="hr-fr hr-mt20"> 总计 <span class="goldcoin">￥{{$root.$refs.detail_tem.detailInfo.resume.price}}元</span></div>
+        </div>
+        <div class="hr-text-right hr-mt10">
+        	<a class="hr-color-blue hr-mr10" href="/userset/accountCenter#/account/recharge" v-if="$root.source=='rc'">去充值</a>
+            <el-button type="primary" class="paymentBtn" @click="paymentBtn">立即支付</el-button>
+        </div>
+    </div>
+    <div class="payMsg" v-if="payment.msgDialog">
+        <span>订单提交成功！</span>
+        <div class="hr-mb15">
+			如支付失败，请 <a class="yf-a-oper" href="http://wpa.qq.com/msgrd?v=3&uin=1545935909&site=www.shilipai.net&menu=yes" target="_blank">联系客服</a>；
+		</div>
+        <el-button type="primary" @click="$root.$refs.detail_tem.isGain($root.resumeData,true)" v-if="$root.source=='rc'">支付完成</el-button>
+        <el-button type="primary" @click="netWorkIsPaySuccess()" v-else>支付完成</el-button>
+    </div>
+</el-dialog>-->
+
+<!--支付弹框-->
+<el-dialog
+        :visible.sync="payment.dialog"
+        size="tiny" class="paymentdia"
+        :class="!payment.msgDialog?'':'active'"
+        :show-close="!payment.msgDialog" 
+        :close-on-click-modal="!payment.msgDialog" 
+        :close-on-press-escape="!payment.msgDialog"
+        @close="paymentClose" title="提醒">
+	<!--<span slot="title" class="dialog-title hr-fontsize15">提醒</span>-->
+	<!--<span slot="body" class="dialog-title hr-fontsize15"></span>-->
+	<div class="confirm-con hr-vertical-middle-container">
+		<img src="/img/detail/ico-warning.png"/>
+		<p>
+			本次获取简历将消耗<span class="hr-color-blue">{{$root.$refs.detail_tem.dealMoney}}</span>个金币（剩余：{{$root.gainNum}}金币）是否继续？
+		</p>
+	</div>
+	<span slot="footer" class="dialog-footer">
+	    <el-button class="hr-btn hr-btn-yellow" type="primary" @click="paymentBtn();payment.dialog = false">确 定</el-button>
+	    <el-button class="hr-btn hr-btn-grey2" type="primary" @click="payment.dialog = false">取 消</el-button>
+	</span>
+</el-dialog>

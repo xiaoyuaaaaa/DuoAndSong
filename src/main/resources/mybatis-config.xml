@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE configuration  
+  PUBLIC "-//mybatis.org//DTDConfig 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">  
+  
+<!-- mybatis的数据类型和处理器等等...都可以实现接口重写，然后配置  -->  
+<configuration>  
+    <mappers>  
+    <!--映射文件 -->
+       <mapper resource="com/cloud/user/model/mapper/register.xml"/>
+       <mapper resource="com/cloud/user/model/mapper/login.xml"/>
+       <mapper resource="com/cloud/user/model/mapper/user.xml"/>
+       <mapper resource="com/cloud/resume/model/mapper/detail.xml"/>
+       <mapper resource="com/cloud/search/model/mapper/search.xml"/>
+       <mapper resource="com/cloud/resume/model/mapper/buildResumeIndex.xml"/>
+       <mapper resource="com/cloud/resume/model/mapper/resume.xml"/>
+       <mapper resource="com/cloud/binding/model/mapper/binding.xml"/>
+       <mapper resource="com/cloud/resume/model/mapper/operation.xml"/>
+       <mapper resource="com/cloud/user/model/mapper/record.xml"/>
+       <mapper resource="com/cloud/user/model/mapper/edit.xml"/>
+       <mapper resource="com/cloud/user/model/mapper/forget.xml"/>
+       <mapper resource="com/cloud/notice/model/mapper/notice.xml"/>
+    </mappers>  
+</configuration> 

@@ -1,0 +1,32 @@
+<div>
+    <div class="user-right-title">修改手机号</div>
+	<el-form class="account-wrap" ref="upInfo" :model="upInfo" @submit.prevent="submit" label-width="96px">
+		<el-form-item label="当前手机号：" prop="telephone">
+			<el-input v-model="upInfo.telephone" placeholder="请输入你的手机号" disabled></el-input>
+		</el-form-item>
+		<el-form-item label="新的手机号：" prop="newPhone">
+			<el-input v-model="upInfo.newPhone" placeholder="请输入你的新手机号" @change="newPhoneErr=''"></el-input>
+			<div class="el-form-item__error" v-text="newPhoneErr"></div>
+		</el-form-item>
+		<el-form-item label="图形验证码：" prop="imgCode">
+			<el-input 
+				v-model="upInfo.imgCode" 
+				@change="imgCodeErr=''" 
+				id="imgCode" 
+				:maxlength="50" 
+				placeholder="请输入图形验证码"></el-input>
+			<img class="draw-image" @click="dramImg()" :src="'/imgCode/getDrawImage?'+DrawImage" alt="换一张" />
+			<a class="hr-color-blue" @click="dramImg()">换一张</a>
+			<div class="el-form-item__error" v-text="imgCodeErr"></div>
+		</el-form-item>
+		<el-form-item label="短信验证码：" prop="mobile_code">
+			<el-input v-model="upInfo.mobile_code" placeholder="请输入短信验证码"@change="mobile_codeErr=''">
+				<template slot="append">
+					<a class="hr-color-blue" @click="sendSMS()" v-text="supCode">发送验证</a>
+				</template>
+			</el-input>
+			<div class="el-form-item__error" v-text="mobile_codeErr"></div>
+		</el-form-item>
+		<el-button type="submit" class="hr-btn-yellow hr-mt15" @click="editPhone()">确认提交</el-button>
+	</el-form>
+</div> 

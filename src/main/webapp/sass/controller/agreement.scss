@@ -1,0 +1,42 @@
+@charset "UTF-8";
+/* CSS Document */
+@import "../common/base_variable";
+@import "../common/base_tool";
+
+.agreement{
+    width: 82%;
+    margin: 0 auto;
+    padding: 50px 0;
+    h1{
+        text-align: center;
+        font-size: 36px;
+        font-weight: 500;
+        line-height: 50px;
+        margin-bottom: 30px;
+    }
+    h3 {
+        font-size: 22px;
+        font-weight: 500;
+        line-height: 35px;
+        margin: 50px 0 20px 0;
+    }
+    h4 {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
+    p{
+        color: #8f8f8f;
+        line-height: 30px;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+}
+#footer {
+    background: linear-gradient(#2e5069,#1b3d58);
+    height: 61px;
+    .footer-text {
+        line-height: 61px;
+        color: #fff;
+    }
+}

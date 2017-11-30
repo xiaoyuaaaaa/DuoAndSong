@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.cloud.search.dao.SearchDao">  
+    
+    <resultMap id="readLogsResult" type="java.util.HashMap">
+    	<result property="key" column="resumeId"/>
+    	<result property="value" column="userId"/>
+	</resultMap>
+    
+	<insert id="addSearchLogs" parameterType="com.cloud.search.model.SearchModel">  
+		<selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER">  
+		    SELECT LAST_INSERT_ID()  
+		</selectKey>  
+        INSERT INTO search_logs   
+        <trim prefix="(" suffix=")" suffixOverrides=",">  
+            <if test="userId != null">  
+                `userId`,  
+            </if>
+            <if test="page != null">  
+                `page`,  
+            </if>  
+            <if test="pageSize != null">  
+                `pageSize`,  
+            </if>  
+            <if test="RM_S_1_1 != null">  
+                `RM_S_1_1`,  
+            </if>  
+            <if test="RM_S_1_2 != null">  
+                `RM_S_1_2`,  
+            </if>  
+            <if test="RM_S_1_3 != null">  
+                `RM_S_1_3`,  
+            </if>  
+            <if test="RM_S_1_4 != null">  
+                `RM_S_1_4`,  
+            </if>  
+            <if test="RM_S_1_5 != null">  
+                `RM_S_1_5`,  
+            </if>  
+            <if test="RM_S_1_6 != null">  
+                `RM_S_1_6`,  
+            </if>  
+            <if test="RM_S_1_7 != null">  
+                `RM_S_1_7`,  
+            </if> 
+            <if test="RM_S_1_8 != null">  
+                `RM_S_1_8`,  
+            </if>  
+            <if test="RM_S_1_9 != null">  
+                `RM_S_1_9`,  
+            </if>
+            <if test="RM_S_1_10 != null">  
+                `RM_S_1_10`,  
+            </if>  
+            <if test="RM_S_1_11 != null">  
+                `RM_S_1_11`,  
+            </if>
+            <if test="RM_S_1_12 != null">  
+                `RM_S_1_12`,  
+            </if>  
+            <if test="searchCode != null">  
+                `searchCode`,  
+            </if>
+            <if test="search_result != null">  
+                `search_result`,  
+            </if>
+            searchTime
+        </trim>  
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">  
+                #{userId},  
+            </if>   
+            <if test="page != null">  
+                #{page},  
+            </if>  
+            <if test="pageSize != null">  
+                #{pageSize},  
+            </if>  
+            <if test="RM_S_1_1 != null">  
+                #{RM_S_1_1},  
+            </if>  
+            <if test="RM_S_1_2 != null">  
+                #{RM_S_1_2},  
+            </if>  
+            <if test="RM_S_1_3 != null">  
+                #{RM_S_1_3},  
+            </if>  
+            <if test="RM_S_1_4 != null">  
+                #{RM_S_1_4},  
+            </if>  
+            <if test="RM_S_1_5 != null">  
+                #{RM_S_1_5},  
+            </if>  
+            <if test="RM_S_1_6 != null">  
+                #{RM_S_1_6},  
+            </if>  
+            <if test="RM_S_1_7 != null">  
+                #{RM_S_1_7},  
+            </if> 
+            <if test="RM_S_1_8 != null">  
+                #{RM_S_1_8},  
+            </if>  
+            <if test="RM_S_1_9 != null">  
+                #{RM_S_1_9},  
+            </if>
+            <if test="RM_S_1_10 != null">  
+                #{RM_S_1_10},  
+            </if>  
+            <if test="RM_S_1_11 != null">  
+                #{RM_S_1_11},  
+            </if>
+            <if test="RM_S_1_12 != null">  
+                #{RM_S_1_12},  
+            </if>  
+            <if test="searchCode != null">  
+                #{searchCode},  
+            </if> 
+            <if test="search_result != null">  
+                #{search_result},  
+            </if>
+            NOW()
+		</trim>  
+    </insert>
+    
+	<!-- 获取用户前三条搜索记录 -->
+    <select id="getSearchLogs" parameterType="String" resultType="com.cloud.search.model.SearchModel" >  
+        select 
+        id,
+        page,
+        pageSize,
+        RM_S_1_1,
+        RM_S_1_2,
+        RM_S_1_3,
+        RM_S_1_4,
+        RM_S_1_5,
+        RM_S_1_6,
+        RM_S_1_7,
+        RM_S_1_8,
+        RM_S_1_9,
+        RM_S_1_10,
+        RM_S_1_11,
+        RM_S_1_12 
+        from search_logs where userId=#{0} order by id desc limit 3
+    </select> 
+    
+    <!-- 获取阅读记录 -->
+    <select id="getReadLogs" parameterType="map" resultType="java.lang.Integer" >  
+        select 
+        	resumeId 
+        from read_logs where userId=#{userId} and resumeId in (${resumeIds})
+    </select> 
+    
+</mapper> 

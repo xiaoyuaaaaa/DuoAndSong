@@ -1,0 +1,300 @@
+<div>
+    <div class="user-right-title">企业认证</div>
+    <div class="user-right-con">
+        <p class="hr-fontsize14 hr-color-333 user-msg">根据相关法律规定，个人身份不能进行招聘活动，请你选择下面任意一种渠道验证企业信息</p>
+        <p class="hr-fontsize14 hr-color-666 user-msg">请验证下列招聘网站有效期内的企业账号验证通过将自动通过审核</p>
+        <ul class="company-list">
+            <li>
+                <img src="../img/user/qiancheng.jpg" alt="">
+                <p class="company-list-msg">成功验证前程无忧赠送 <span class="hr-color-red">300</span>金币</p>
+                <button :class="bindStatus.qc==1?'':'hr-btn-yellow'" :disabled="bindStatus.qc==1" v-text="bindStatus.qc==1?'成功验证':'立即验证'" @click="qcBind=true"></button>
+            </li>
+            <li>
+                <img src="../img/user/zhilian.jpg" alt="">
+                <p class="company-list-msg">成功验证智联招聘赠送 <span class="hr-color-red">300</span>金币</p>
+                <button :class="bindStatus.zl=='1'?'':'hr-btn-yellow'" :disabled="bindStatus.zl=='1'" v-text="bindStatus.zl=='1'?'成功验证':'立即验证'" @click="zlBind=true"></button>
+            </li>
+            <li>
+                <img src="../img/user/lagou.jpg" alt="">
+                <p class="company-list-msg">成功验证拉勾网赠送 <span class="hr-color-red">300</span>金币</p>
+                <button :class="bindStatus.lg==1?'':'hr-btn-yellow'" :disabled="bindStatus.lg==1" v-text="bindStatus.lg==1?'成功验证':'立即验证'" @click="lgBind=true"></button>
+                <!--<button disabled class="btn-expect">期待上线</button>-->
+            </li>
+            <li>
+                <img src="../img/user/58.jpg" alt="">
+                <p class="company-list-msg">成功验证58同城赠送 <span class="hr-color-red">300</span>金币</p>
+                <!--<button :class="bindStatus.wb==1?'':'hr-btn-yellow'" :disabled="bindStatus.wb==1" v-text="bindStatus.wb==1?'成功验证':'立即验证'" @click="wbBind=true"></button>-->
+                <button disabled class="btn-expect">期待上线</button>
+            </li>
+            <li>
+                <img src="../img/user/liepin.jpg" alt="">
+                <p class="company-list-msg">成功验证猎聘网赠送 <span class="hr-color-red">300</span>金币</p>
+                <!--<button :class="bindStatus.lp==1?'':'hr-btn-yellow'" :disabled="bindStatus.lp==1" v-text="bindStatus.lp==1?'成功验证':'立即验证'" @click="lpBind=true"></button>-->
+                <button disabled class="btn-expect">期待上线</button>
+            </li>
+
+            <li>
+                <img src="../img/user/ganji.jpg" alt="">
+                <p class="company-list-msg">成功验证赶集网赠送 <span class="hr-color-red">300</span>金币</p>
+                <!--<button :class="bindStatus.gj==1?'':'hr-btn-yellow'" :disabled="bindStatus.gj==1" v-text="bindStatus.gj==1?'成功验证':'立即验证'" @click="gjBind=true"></button>-->
+                <button disabled class="btn-expect">期待上线</button>
+            </li>
+            <li>
+                <img src="../img/user/yingcai.jpg" alt="">
+                <p class="company-list-msg">成功验证中华英才网赠送 <span class="hr-color-red">300</span>金币</p>
+                <!--<button :class="bindStatus.yc==1?'':'hr-btn-yellow'" :disabled="bindStatus.yc==1" v-text="bindStatus.yc==1?'成功验证':'立即验证'" @click="ycBind=true"></button>-->
+                <button disabled class="btn-expect">期待上线</button>
+            </li>
+        </ul>
+    </div>
+
+
+    <!--//前程-->
+    <el-dialog class="bind-wrap dialog-qc"
+               :visible.sync="qcBind"
+               :show-close="false"
+               :before-close="handleClose">
+        <div class="bind-content">
+            <div class="bind-content-top">
+                <img src="../../img/user/ico-qc-logo.png" alt="qc"/>
+            </div>
+            <el-form ref="form" :model="bind" class="form-content">
+                <el-form-item class="compName is-required" :class="compNameErr?'is-error':''">
+                    <el-input v-model="bind.compName" autofocus placeholder="请输入会员名" @change="compNameErr='';qcErrText=''">
+                        <img src="../../img/user/ico-addResume3.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="compNameErr" class="el-form-item__error" v-text="compNameErr"></div>
+                </el-form-item>
+                <el-form-item class="userName is-required" :class="userNameErr?'is-error':''">
+                    <el-input v-model="bind.userName" placeholder="请输入用户名" @change="userNameErr='';qcErrText=''">
+                        <img src="../../img/user/ico-addResume2.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="userNameErr" class="el-form-item__error" v-text="userNameErr"></div>
+                </el-form-item>
+                <el-form-item class="is-required" :class="userNameErr?'is-error':''">
+                    <el-input type="password"
+                              v-model="bind.pwd"
+                              auto-complete="off"
+                              placeholder="请输入密码"
+                              @change="pwdErr='';qcErrText=''">
+                        <img src="../../img/user/ico-addResume1.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="pwdErr" class="el-form-item__error" v-text="pwdErr"></div>
+                </el-form-item>
+                <el-form-item class="hr-mb0 is-required" :class="qcErrText?'is-error':''">
+                    <el-button type="primary" class="hr-width-percent100"
+                               @click="accountBinding(1)">立即绑定</el-button>
+                    <div v-if="qcErrText" class="el-form-item__error" v-text="qcErrText"></div>
+                </el-form-item>
+            </el-form>
+        </div>
+    </el-dialog>
+    <!--智联-->
+    <el-dialog class="bind-wrap dialog-zl"
+               :visible.sync="zlBind"
+               :show-close="false"
+               :before-close="handleClose">
+        <div class="bind-content">
+            <div class="bind-content-top">
+                <img src="../../img/user/ico-zl-logo.png" alt="qc" />
+            </div>
+            <el-form ref="form" :model="bind" class="form-content">
+                <el-form-item class="userName is-required" :class="userNameErr?'is-error':''">
+                    <el-input v-model="bind.userName" autofocus placeholder="请输入用户名" @change="userNameErr='';zlErrText=''">
+                        <img src="../../img/user/ico-addResume2.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="userNameErr" class="el-form-item__error" v-text="userNameErr"></div>
+                </el-form-item>
+                <el-form-item class="is-required" :class="userNameErr?'is-error':''">
+                    <el-input type="password"
+                              v-model="bind.pwd"
+                              auto-complete="off"
+                              placeholder="请输入密码"
+                              @change="pwdErr='';zlErrText=''">
+                        <img src="../../img/user/ico-addResume1.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="pwdErr" class="el-form-item__error" v-text="pwdErr"></div>
+                </el-form-item>
+                <el-form-item class="hr-mb0 is-required" :class="zlErrText?'is-error':''">
+                    <el-button type="primary" class="hr-width-percent100"
+                               @click="accountBinding(2)">立即绑定</el-button>
+                    <div v-if="zlErrText" class="el-form-item__error" v-text="zlErrText"></div>
+                </el-form-item>
+            </el-form>
+        </div>
+    </el-dialog>
+
+    <!--拉勾-->
+    <el-dialog class="bind-wrap dialog-zl"
+               :visible.sync="lgBind"
+               :show-close="false"
+               :before-close="handleClose">
+        <div class="bind-content">
+            <div class="bind-content-top">
+                <img src="../../img/user/ico-lg-logo.png" alt="qc" />
+            </div>
+            <el-form ref="form" :model="bind" class="form-content">
+                <el-form-item class="userName is-required" :class="userNameErr?'is-error':''">
+                    <el-input v-model="bind.userName" autofocus placeholder="请输入用户名" @change="userNameErr='';zlErrText=''">
+                        <img src="../../img/user/ico-addResume2.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="userNameErr" class="el-form-item__error" v-text="userNameErr"></div>
+                </el-form-item>
+                <el-form-item class="is-required" :class="userNameErr?'is-error':''">
+                    <el-input type="password"
+                              v-model="bind.pwd"
+                              auto-complete="off"
+                              placeholder="请输入密码"
+                              @change="pwdErr='';zlErrText=''">
+                        <img src="../../img/user/ico-addResume1.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="pwdErr" class="el-form-item__error" v-text="pwdErr"></div>
+                </el-form-item>
+                <el-form-item class="hr-mb0 is-required" :class="zlErrText?'is-error':''">
+                    <el-button type="primary" class="hr-width-percent100 lagou"
+                               @click="accountBinding(3)">立即绑定</el-button>
+                    <div v-if="zlErrText" class="el-form-item__error" v-text="zlErrText"></div>
+                </el-form-item>
+            </el-form>
+        </div>
+    </el-dialog>
+    <!--赶集-->
+    <el-dialog class="bind-wrap dialog-zl"
+               :visible.sync="gjBind"
+               :show-close="false"
+               :before-close="handleClose">
+        <div class="bind-content">
+            <div class="bind-content-top">
+                <img src="../../img/user/ico-gj-logo.png" alt="qc" />
+            </div>
+            <el-form ref="form" :model="bind" class="form-content">
+                <el-form-item class="userName is-required" :class="userNameErr?'is-error':''">
+                    <el-input v-model="bind.userName" autofocus placeholder="请输入用户名" @change="userNameErr='';zlErrText=''">
+                        <img src="../../img/user/ico-addResume2.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="userNameErr" class="el-form-item__error" v-text="userNameErr"></div>
+                </el-form-item>
+                <el-form-item class="is-required" :class="userNameErr?'is-error':''">
+                    <el-input type="password"
+                              v-model="bind.pwd"
+                              auto-complete="off"
+                              placeholder="请输入密码"
+                              @change="pwdErr='';zlErrText=''">
+                        <img src="../../img/user/ico-addResume1.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="pwdErr" class="el-form-item__error" v-text="pwdErr"></div>
+                </el-form-item>
+                <el-form-item class="hr-mb0 is-required" :class="zlErrText?'is-error':''">
+                    <el-button type="primary" class="hr-width-percent100 ganji"
+                               @click="accountBinding(4)">立即绑定</el-button>
+                    <div v-if="zlErrText" class="el-form-item__error" v-text="zlErrText"></div>
+                </el-form-item>
+            </el-form>
+        </div>
+    </el-dialog>
+    <!--中华英才网-->
+    <el-dialog class="bind-wrap dialog-zl"
+               :visible.sync="ycBind"
+               :show-close="false"
+               :before-close="handleClose">
+        <div class="bind-content">
+            <div class="bind-content-top">
+                <img src="../../img/user/ico-yc-logo.png" alt="qc" />
+            </div>
+            <el-form ref="form" :model="bind" class="form-content">
+                <el-form-item class="userName is-required" :class="userNameErr?'is-error':''">
+                    <el-input v-model="bind.userName" autofocus placeholder="请输入用户名" @change="userNameErr='';zlErrText=''">
+                        <img src="../../img/user/ico-addResume2.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="userNameErr" class="el-form-item__error" v-text="userNameErr"></div>
+                </el-form-item>
+                <el-form-item class="is-required" :class="userNameErr?'is-error':''">
+                    <el-input type="password"
+                              v-model="bind.pwd"
+                              auto-complete="off"
+                              placeholder="请输入密码"
+                              @change="pwdErr='';zlErrText=''">
+                        <img src="../../img/user/ico-addResume1.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="pwdErr" class="el-form-item__error" v-text="pwdErr"></div>
+                </el-form-item>
+                <el-form-item class="hr-mb0 is-required" :class="zlErrText?'is-error':''">
+                    <el-button type="primary" class="hr-width-percent100 yingcai"
+                               @click="accountBinding(5)">立即绑定</el-button>
+                    <div v-if="zlErrText" class="el-form-item__error" v-text="zlErrText"></div>
+                </el-form-item>
+            </el-form>
+        </div>
+    </el-dialog>
+
+
+    <!--58-->
+    <el-dialog class="bind-wrap dialog-zl"
+               :visible.sync="tcBind"
+               :show-close="false"
+               :before-close="handleClose">
+        <div class="bind-content">
+            <div class="bind-content-top">
+                <img src="../../img/user/ico-58-logo.png" alt="qc" />
+            </div>
+            <el-form ref="form" :model="bind" class="form-content">
+                <el-form-item class="userName is-required" :class="userNameErr?'is-error':''">
+                    <el-input v-model="bind.userName" autofocus placeholder="请输入用户名" @change="userNameErr='';zlErrText=''">
+                        <img src="../../img/user/ico-addResume2.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="userNameErr" class="el-form-item__error" v-text="userNameErr"></div>
+                </el-form-item>
+                <el-form-item class="is-required" :class="userNameErr?'is-error':''">
+                    <el-input type="password"
+                              v-model="bind.pwd"
+                              auto-complete="off"
+                              placeholder="请输入密码"
+                              @change="pwdErr='';zlErrText=''">
+                        <img src="../../img/user/ico-addResume1.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="pwdErr" class="el-form-item__error" v-text="pwdErr"></div>
+                </el-form-item>
+                <el-form-item class="hr-mb0 is-required" :class="zlErrText?'is-error':''">
+                    <el-button type="primary" class="hr-width-percent100 tongcheng"
+                               @click="accountBinding(1)">立即绑定</el-button>
+                    <div v-if="zlErrText" class="el-form-item__error" v-text="zlErrText"></div>
+                </el-form-item>
+            </el-form>
+        </div>
+    </el-dialog>
+
+    <!--猎聘-->
+    <el-dialog class="bind-wrap dialog-zl"
+               :visible.sync="lpBind"
+               :show-close="false"
+               :before-close="handleClose">
+        <div class="bind-content">
+            <div class="bind-content-top">
+                <img src="../../img/user/ico-lp-logo.png" alt="qc" />
+            </div>
+            <el-form ref="form" :model="bind" class="form-content">
+                <el-form-item class="userName is-required" :class="userNameErr?'is-error':''">
+                    <el-input v-model="bind.userName" autofocus placeholder="请输入用户名" @change="userNameErr='';zlErrText=''">
+                        <img src="../../img/user/ico-addResume2.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="userNameErr" class="el-form-item__error" v-text="userNameErr"></div>
+                </el-form-item>
+                <el-form-item class="is-required" :class="userNameErr?'is-error':''">
+                    <el-input type="password"
+                              v-model="bind.pwd"
+                              auto-complete="off"
+                              placeholder="请输入密码"
+                              @change="pwdErr='';zlErrText=''">
+                        <img src="../../img/user/ico-addResume1.png" alt="" slot="prepend" />
+                    </el-input>
+                    <div v-if="pwdErr" class="el-form-item__error" v-text="pwdErr"></div>
+                </el-form-item>
+                <el-form-item class="hr-mb0 is-required" :class="zlErrText?'is-error':''">
+                    <el-button type="primary" class="hr-width-percent100 liepin"
+                               @click="accountBinding(4)">立即绑定</el-button>
+                    <div v-if="zlErrText" class="el-form-item__error" v-text="zlErrText"></div>
+                </el-form-item>
+            </el-form>
+        </div>
+    </el-dialog>
+</div>

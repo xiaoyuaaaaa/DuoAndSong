@@ -1,0 +1,160 @@
+@charset "UTF-8";
+/* CSS Document */
+@import "../common/base_variable";
+@import "../common/base_tool";
+.dialog-searchjob{
+    width: 745px;
+    padding: 0 40px;
+    .job-title {
+        text-align: center;
+        font-size: 14px;
+        span {
+            color: $g_blueColor;
+        }
+    }
+    .resume-tag {
+        display: inline-block;
+        padding: 0 10px;
+        border-radius: 20px;
+        border: 1px solid #e5e5e5;
+        margin: 6px;
+        position: relative;
+        &:hover {
+            cursor: pointer;
+        }
+        &.active {
+            background: #9294a7;
+            color: #fff;
+            border: 1px solid #9294a7;
+        }
+        i {
+            position: absolute;
+            top: -5px;
+            color: #fb4c4d;
+            right: 0;
+            font-size: 12px;
+        }
+    }
+    span {
+        //color: #9294a7;
+    }
+    .job-selected {
+        margin: 15px 0;
+        height: 33px;
+        .job-selected-tit {
+            width: 70px;
+            height: 30px;
+            line-height: 30px;
+        }
+        .job-selected-list {
+            max-width: 500px;
+            max-height: 90px;
+            overflow: auto;
+        }
+    }
+    .job-diy {
+        input {
+            width: 466px;
+            height: 38px;
+            border: 1px solid #e5e5e5;
+            border-radius: 20px;
+            padding: 0 20px;
+        }
+        button {
+            width: 120px;
+            height: 40px;
+            color: #fff;
+            background: $g_blueColor;
+            border-radius: 20px;
+            outline: none;
+            border: none;
+            margin-left: 16px;
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+    .job-list {
+        border-top: 1px solid #e5e5e5;
+        margin-top: 40px;
+        padding: 40px 0;
+        .listtag {
+            line-height: 30px;
+            color: #9294a7;
+            margin: 10px 3px 0;
+            max-height: 150px;
+            overflow: auto;
+            li {
+                float: left;
+                width: 17.5%;
+                margin-right: 15px;
+                a {
+                    text-decoration: none;
+                    color: #9294a7;
+                    &:hover {
+                        color: $g_blueColor;
+                        border-bottom: 1px solid $g_blueColor;
+                    }
+                }
+            }
+            .job-alltag {
+                position: relative;
+                &:hover {
+                    ul {
+                        display: block;
+                    }
+                }
+                .job-alltag-a {
+                    color: $g_blueColor;
+                }
+                ul {
+                    display: none;
+                    background: #fff;
+                    position: absolute;
+                    left: 50%;
+                    max-height: 200px;
+                    overflow: auto;
+                    width: 120px;
+                    top: -80px;
+                    border: 1px solid #e5e5e5;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    li {
+                        padding: 0 18px;
+                        line-height: 26px;
+                        &:hover {
+                            background: $g_blueColor;
+                            a {
+                                color: #fff;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .hr-box-btn {
+        margin-bottom: 15px;
+        button {
+            float: right;
+            width: 60px;
+            height: 26px;
+            border: none;
+            outline: none;
+            margin: 0 10px;
+            &:hover {
+                cursor: pointer;
+            }
+            &.determine {
+                background: $g_blueColor;
+                color: #fff;
+            }
+            &.cancel {
+                color: #9294a7;
+                border: 1px solid #e5e5e5;
+                background: #fff;
+            }
+        }
+    }
+
+}

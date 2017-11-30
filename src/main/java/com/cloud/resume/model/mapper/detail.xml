@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.cloud.resume.dao.DetailDao">  
+    
+    <resultMap id="resumeDetailMap" type="com.cloud.resume.model.NewResume">  
+        <id property="userId" column="userId" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="isPay" column="isPay" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="lastTime" column="lastTime" javaType="java.lang.String" jdbcType="VARCHAR"/> 
+        <id property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="email" column="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="telephone" column="telephone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="sex" column="sex" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="maritalStatus" column="maritalStatus" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="education" column="education" javaType="java.lang.Integer" jdbcType="DECIMAL"/> 
+        <id property="jobYear" column="jobYear" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="age" column="age" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="birthYear" column="birthYear" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="city" column="city" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="province" column="province" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="hukouProvince" column="hukouProvince" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="hukouCity" column="hukouCity" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="jobTitle" column="jobTitle" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="expectWorkType" column="expectWorkType" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="expectCity" column="expectCity" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="expectSalary" column="expectSalary" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="expectIndustry" column="expectIndustry" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="jobState" column="jobState" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="selfEvaluate" column="selfEvaluate" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <collection property="projectList" column="userId" select="queryProjectList"></collection>
+        <collection property="eduList" column="userId" select="queryEducationList"></collection>
+        <collection property="workList" column="userId" select="queryWorkExList"></collection>
+        <collection property="trainList" column="userId" select="queryTraining"></collection>
+        <collection property="skillsList" column="userId" select="queryProfeSkill"></collection>
+        <collection property="languagesList" column="userId" select="queryLanguage"></collection>
+    </resultMap>
+    
+    
+    <select id="getResumeDetailByResumeId" resultType="com.cloud.resume.model.NewResume" parameterType="map" resultMap="resumeDetailMap">
+		select 
+			a.*,
+			ifnull(c.id,0) isPay,
+			ifnull(d.id,0) isStorage  
+		from(
+        	select 
+	        	userId,
+				lastTime,
+				name,
+				email,
+				telephone,
+				sex,
+				maritalStatus,
+				education,
+				jobYear,
+				age,
+				birthYear,
+				province,
+				hukouProvince,
+				expectWorkType,
+				expectSalary,
+				expectIndustry,
+				jobState,
+				selfEvaluate,
+				(select group_concat(`name`) from jobs where find_in_set(id,jobTitle)) jobTitle,
+				(select group_concat(`name`) from cities where find_in_set(id,city)) city,
+				(select group_concat(`name`) from cities where find_in_set(id,expectCity)) expectCity,
+				(select group_concat(`name`) from cities where find_in_set(id,hukouCity)) hukouCity 
+			from resume 
+			where userId =#{resumeId}
+		) a 
+		left join (select userId from search_logs where id=#{searchId} and userId=#{userId} and searchCode=#{token} and FIND_IN_SET(#{resumeId},search_result)) b on 1=1
+		left join (select id from gain_logs where userId=#{userId} and resumeId=#{resumeId}) c on 1=1 
+		left join (select id from storage_logs where userId=#{userId} and resumeId=#{resumeId}) d on 1=1 
+		where b.userId is not null
+	</select>
+	
+    <!-- 培训经历 -->
+    <select id="queryTraining" resultType="com.cloud.resume.model.NewTraining" parameterType="java.lang.Integer">
+  		SELECT * FROM training WHERE userId=#{resumeId} ORDER BY startTime DESC
+  	</select>
+  	
+    <!-- 语言能力 -->
+  	<select id="queryLanguage" resultType="com.cloud.resume.model.NewLanguage" parameterType="java.lang.Integer">
+  		SELECT * FROM language WHERE userId=#{resumeId}
+  	</select>
+  	
+  	<!-- 获取技能 -->
+  	<select id="queryProfeSkill" resultType="com.cloud.resume.model.NewProfeSkill" parameterType="java.lang.Integer">
+  		SELECT * FROM profeskill WHERE userId=#{resumeId}
+  	</select>
+  	
+  	 <!-- 获取教育经历 -->
+	<select id="queryEducationList" resultType="com.cloud.resume.model.NewEducations" parameterType="java.lang.Integer">
+  		SELECT * FROM educations WHERE userId=#{resumeId} ORDER BY startTime DESC
+  	</select>
+  	
+  	 <!-- 获取项目经验 -->
+  	<select id="queryProjectList" resultType="com.cloud.resume.model.NewProjectExp" parameterType="java.lang.Integer">
+  		SELECT * FROM projects WHERE userId=#{resumeId} ORDER BY startTime DESC
+  	</select>
+  	
+  	<!-- 获取工作经历 -->
+  	<select id="queryWorkExList" resultType="com.cloud.resume.model.NewWorkExp" parameterType="java.lang.Integer">
+  		SELECT * FROM work_experiences WHERE userId=#{resumeId} ORDER BY startTime DESC
+  	</select>
+    
+  	<!-- 添加阅读记录 -->
+  	<insert id="addReadLogs" parameterType="map">
+  	    insert into read_logs (userId,resumeId,searchId,searchCode,readTime) values (#{userId},#{resumeId},#{searchId},#{token},NOW())
+  	</insert>
+  	
+  	<!-- 用户注册 -->
+    <select id="getCvContact" statementType="CALLABLE" resultType="String" >  
+        {
+        	call user_gain(
+        		#{resumeId,mode=IN,jdbcType=DECIMAL},
+        		#{searchId,mode=IN,jdbcType=VARCHAR},
+        		#{token,mode=IN,jdbcType=VARCHAR},
+        		#{userId,mode=IN,jdbcType=VARCHAR},
+        		#{resultEmail,mode=OUT,jdbcType=VARCHAR},
+        		#{resultPhone,mode=OUT,jdbcType=VARCHAR},
+        		#{resultName,mode=OUT,jdbcType=VARCHAR},
+        		#{resultMessage,mode=OUT,jdbcType=VARCHAR},
+        		#{resultNumber,mode=OUT,jdbcType=DECIMAL}
+        	)
+        } 
+    </select> 
+</mapper> 

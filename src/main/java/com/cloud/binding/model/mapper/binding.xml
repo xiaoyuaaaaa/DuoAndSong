@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.cloud.binding.dao.BindingDao">  
+
+    <!-- 检查账号是否被绑定 -->
+    <select id="checkBingdingStatus" parameterType="map" resultType="int">
+    	SELECT COUNT(*) FROM binding_account WHERE accountType=#{i_accountType} 
+    	<if test="i_accountType==1">
+    		AND compName=#{i_compName}
+    	</if>
+    	<if test="i_accountType!=1">
+    		AND userName=#{i_userName} AND userPassWord=#{i_userPassWord}
+    	</if>
+    </select>
+    
+    <!-- 账户绑定 -->
+    <select id="accountBinding" statementType="CALLABLE" resultType="String">
+        <![CDATA[  
+		   {call accountBinding (
+		   		#{i_compUserId,mode=IN,jdbcType=INTEGER},
+		   		#{i_compName,mode=IN,jdbcType=VARCHAR},
+		   		#{i_userName,mode=IN,jdbcType=VARCHAR},
+		   		#{i_userPassWord,mode=IN,jdbcType=VARCHAR},
+		   		#{i_accountType,mode=IN,jdbcType=INTEGER},
+		   		#{i_requestIp,mode=IN,jdbcType=INTEGER},
+		   		#{i_rencaiNum,mode=IN,jdbcType=INTEGER},
+		   		#{i_toudiNum,mode=IN,jdbcType=INTEGER},
+		   		#{i_compNumber,mode=IN,jdbcType=VARCHAR},
+		   		#{i_city,mode=IN,jdbcType=VARCHAR},
+		   		#{resultNumber,mode=OUT,jdbcType=INTEGER})}  
+		]]>
+    </select>
+    
+    <!-- 获取用户绑定状态 -->
+    <select id="getUserBingdingStatus" parameterType="String" resultType="map">
+    	SELECT * FROM binding_account WHERE compUserId=#{0}
+    </select>
+</mapper> 

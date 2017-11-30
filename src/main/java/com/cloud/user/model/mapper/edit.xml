@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.cloud.user.dao.EditDao">  
+    
+	<!-- 编辑用户基本信息 -->
+	<update id="editBaseInfo" parameterType="com.cloud.user.model.EditUser">
+	    update registration 
+	    <trim prefix="set" suffixOverrides=",">
+	        <if test="name != null">
+	            name=#{name},
+	        </if>
+	        <if test="nickName != null">
+	            nickName=#{nickName},
+	        </if>
+	        <if test="jobTitle != null">
+	            jobTitle=#{jobTitle},
+	        </if>
+	        <if test="QQ != null">
+	            QQ=#{QQ},
+	        </if>
+	        <if test="industry != null">
+	            industry=#{industry},
+	        </if>
+	    </trim> 
+	    where userId=#{userId}
+	</update>
+    
+	<update id="editPassWord" parameterType="map">
+	    update registration set password=#{newPassWord} where userId=#{userId} and password=#{oldPassWord}
+	</update>
+	
+	<select id="findEmaiByEmail" parameterType="String" resultType="java.lang.Integer">
+	    select count(*) from registration where email=#{0}
+	</select>
+	
+	<select id="findPhoneByPhone" parameterType="String" resultType="java.lang.Integer">
+	    select count(*) from registration where telephone=#{0}
+	</select>
+	
+	<update id="editEmail" parameterType="map">
+	    update registration set email=#{email} where userId=#{userId}
+	</update>
+	
+	<update id="editTelephone" parameterType="map">
+	    update registration set telephone=#{telephone} where userId=#{userId}
+	</update>
+</mapper> 

@@ -1,0 +1,65 @@
+<div class="dialog-city-wrap">
+	<!-- 对话框开始 start-->
+	<el-dialog :visible.sync="dialog.city.status" :close-on-click-modal="false" custom-class="dialog-multi dialog-city">
+		<span slot="title">
+		 	<span v-text="(slt.city.item.length < 1?'请选择':'已选择') + dialog.city.title+'：'"></span>
+		 	<span class="dialog-select-wrap">
+		 		<span v-for="(item,index) in slt.city.item" v-text="item.value" @click="removeSltItem('city',index)"></span>
+		 	</span>
+		 	<slot name="titleSlot"></slot>
+		</span>
+		<div class="dialog-body">
+			<p class="hr-pt10 hr-pb10"><strong>热门城市</strong></p>
+			<div class="dialog-item1-wrap clearfix cityLevel1 hotCity" v-if="!hotCity.showLevel3" :class="'hotCity-'+dialog.city.belongDialog">
+				<label class="dialog-item dialog-item1" :title="item1.value" :id="'item1-'+item1.id" :key="item1.id" v-for="(item1,index) in hotCity.list">
+					<input type="checkbox" @click="sltDialogItem('city',item1,$event,1)" :checked="tool.findIndexInArr(slt.city.id,item1.id)"/>
+					<font v-text="item1.value" @click="showItemlevel2(item1,index,$event,'city','hotCity')"></font>
+				</label>
+			</div>
+			<div class="dialog-item1-wrap clearfix cityLevel1 hotCity" v-if="hotCity.showLevel3" :class="'hotCity-'+dialog.city.belongDialog">
+				<font class="dialog-item dialog-item1" :title="item1.value" :id="'item1-'+item1.id" :key="item1.id" v-for="(item1,index) in hotCity.list" :class="{'active':item1.id==itemTemp2.id}">
+					<input type="checkbox" @click="sltDialogItem('city',item1,$event,1)" :checked="tool.findIndexInArr(slt.city.id,item1.id)"/>
+					<font v-text="item1.value" @click="showItemlevel2(item1,index,$event,'city','hotCity')"></font>
+					<i @click="showItemlevel2(item1,index,$event,'city','hotCity')" v-if="hotCity.showLevel3"></i>
+				</font>
+				<div class="dialog-item2-wrap" :dialog-item2-wrap="itemTemp2.id" v-show="item2WrapBelong=='hotCity' && itemTemp2.id">
+					<label class="dialog-item" title="" v-for="(item2,index1) in itemTemp2.childList">
+						<!-- 如果父级选择了，子级取消已选择的 -->
+						<input type="checkbox" :data-id="item2.id" :checked="!tool.findIndexInArr(slt.city.id,itemTemp2.id) && tool.findIndexInArr(slt.city.id,item2.id)"
+							 @click="sltDialogItem('city',item2,$event)" :disabled="tool.findIndexInArr(slt.city.id,itemTemp2.id)"/>
+						<font v-text="item2.value"></font>
+					</label>
+				</div>
+			</div>
+			<p class="hr-pt10 hr-pb10"><strong>省市</strong></p>
+			<div class="dialog-item1-wrap clearfix cityLevel1 allCity" :class="'allCity-'+dialog.city.belongDialog">
+				<font class="dialog-item dialog-item1" :title="item1.value" :id="'item1-'+item1.id" :key="item1.id" v-for="(item1,index) in cityList.list" :class="{'active':item1.id==itemTemp2.id}">
+					<input type="checkbox" @click="sltDialogItem('city',item1,$event,1)" :checked="tool.findIndexInArr(slt.city.id,item1.id)" v-if='cityList.level1CanSelect'/>
+					<font v-text="item1.value" @click="showItemlevel2(item1,index,$event,'city','allCity')"></font>
+					<i @click="showItemlevel2(item1,index,$event,'city','allCity')"></i>
+				</font>
+				<div class="dialog-item2-wrap" :dialog-item2-wrap="itemTemp2.id" v-show="item2WrapBelong=='allCity' && itemTemp2.id">
+					<font class="dialog-item dialog-item2" title="" v-for="(item2,index2) in itemTemp2.childList" :key="item2" :class="{'active':item2.id==itemTemp3.id && cityList.showLevel3}">
+						<!-- 如果父级选择了，子级取消已选择的 -->
+						<input type="checkbox" :data-id="item2.id" :checked="!tool.findIndexInArr(slt.city.id,itemTemp2.id) && tool.findIndexInArr(slt.city.id,item2.id)"
+							 @click="sltDialogItem('city',item2,$event)" :disabled="tool.findIndexInArr(slt.city.id,itemTemp2.id)"/>
+						<font v-text="item2.value" @click="showItemlevel3(item2,index2,$event,'city','allCity')"></font>
+						<i @click="showItemlevel3(item2,index2,$event,'city','allCity')" v-show="cityList.showLevel3 && item2.childList && item2.childList.length>0"></i>
+					</font>
+					<div class="dialog-item3-wrap" :dialog-item3-wrap="itemTemp3.id" v-show="cityList.showLevel3">
+						<font class="dialog-item" v-for="(item3,index3) in itemTemp3.childList" :key="item3">
+							<input type="checkbox" :data-id="itemTemp3.id+'-'+item3.id" :title="itemTemp3.value+'-'+item3.value" :checked="!tool.findIndexInArr(slt.city.id,itemTemp3.id) && tool.findIndexInArr(slt.city.id,item3.id)"
+								 @click="sltDialogItem('city',item3,$event,'end')" :disabled="tool.findIndexInArr(slt.city.id,itemTemp3.id)"/>
+							<font v-text="item3.value"></font>
+						</font>
+					</div>
+				</div>
+			</div>
+		</div>
+		<span slot="footer" class="dialog-footer">
+			<a class="hr-btn hr-btn-default" @click="dialog.city.status=false">取 消</a>
+			<a class="hr-btn hr-btn-yellow" @click="dialogConfirm('city');">确 定</a>
+		</span>
+	</el-dialog>
+	<!-- 对话框开始 end-->
+</div>

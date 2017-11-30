@@ -1,0 +1,144 @@
+@charset "utf-8";
+/* CSS Document */
+@import "../common/base_variable";
+@import "../common/base_tool";
+
+#app{
+    min-width: 1200px;
+}
+.sign-wrap {
+    background-color: #fff;
+    min-height: 100%;
+    background: url(/img/sigin/bg-sign.png) 50% 50% no-repeat;
+//  background-size: cover;
+}
+.sign-form-wrap{
+    width: 530px;
+    color: #888;
+//  border-radius: 3px;  
+    border: 5px solid rgba(255, 255, 255, 0.1);
+    position: absolute;
+    left: 50%;
+    top: 50%; 
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    .sign-logo { 
+        position: absolute;
+        top: -80px;
+        left: 50%;
+        margin-left: -90px;
+    }
+    .sign-form{
+        background-color: #fff;
+        .sign-title{
+            background-color: #f4f4f4;
+            font-size: 16px;
+            padding: 13px 40px;
+            color: #333;
+            font-weight: 700;
+        }
+        .sign-con{
+            padding: 20px 42px 30px;
+            .input-wrap{
+                .input-title{
+                    color: #555;
+                    font-size: 14px;
+                    font-weight: 700;
+                    display: block;
+                    margin: 0px 0 5px;
+                    &.active:after{
+                        content: '*';
+                        color: red;
+                    }
+                }
+                input[type='text'],input[type='password']{ 
+                    width: 100%;
+                    padding: 8px 0;
+                    color: #333; 
+                    text-indent: 12px;
+                    border-radius: 3px;
+                    border: 2px solid #eee;
+                    box-shadow: 0 0 0 1000px #fff inset;
+                }
+                .err{
+                    color: red;
+                    line-height: 25px;
+                    height: 25px; 
+                }
+                .input-wrap-email,.input-wrap-phone{
+                    width: 205px;
+                }
+                &.input-wrap-code{ 
+                    
+                    .el-input{
+                        width: 305px;
+                        margin-right: 25px;
+                    }
+                    .codeBtn{ 
+                        height: 34px;
+                        width: 100px;
+                        font-size: 14px;
+                        padding: 6px 5px;
+                        cursor: pointer;
+                        box-shadow: 0 1px -1 #fcc270;
+                        border: 1px solid #e0972e;
+                        text-shadow: 0 -1px 0 #de8300;
+                        &.codeBtning{
+                            background: #ccc;
+                            border: 1px solid #ccc;
+                            box-shadow: 0 1px 0 #ccc inset;
+                            cursor: no-drop;
+                            text-shadow: none;
+                        }
+                    }
+                }
+                &.input-verCode{
+                    .el-input{
+                        width: 205px;
+                        margin-right: 16px;
+                    }
+                    img{
+                        margin: 0 10px;
+                        vertical-align: middle;
+                    }
+                    a{
+                        color: $g_blueColor; 
+                        margin-left: 10px;
+                    }
+                }
+            }
+            .sign-btn{
+                margin-top: 7px;
+                button{
+                    width: 100%;
+                    height: 43px;
+                    font-size: 16px; 
+                    cursor: pointer;
+                    font-family: "Microsoft YaHei","微软雅黑","Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB",SimHei,Arial,sans-serif;
+                    outline: none;
+                    border: 1px solid #e59732;
+                    &:hover{
+                        background: linear-gradient(#fcbe64,#fea01c);
+                    }
+                }
+            } 
+            .sign-footr{
+                margin: 20px 0 0;
+                text-align: center;
+                color: #333;
+                span{
+                    margin: 0 15px;
+                }
+                a{
+                    color: $g_blueColor;
+                    margin: 0 3px;
+                }
+            }
+        }
+    }
+}
+@media (min-width: 1921px) {
+    .sign-wrap {
+        background-size: cover;
+    }
+}

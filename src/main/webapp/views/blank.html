@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>多简历-全网邀约</title>
+	<meta name="keywords" content="多简历,免费简历,人才库,简历库">
+	<meta name="description" content="多简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让多简历成为企业与人才之间沟通的桥梁。">
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, no-siteapp">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Expires" content="0">
+	<link rel="shortcut icon" href="../img/common/logo.ico">
+	<link rel="stylesheet" type="text/css" href="../js/lib/element/element.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/common/base.css" />
+	<script type="text/javascript" src="../js/require-config.js" defer="true"></script>
+	<script data-main="../js/controller/blank.js" src="../js/lib/require/require.js" defer="true"></script>
+</head>
+<body>
+<div id="app">
+	<base-page ref="basePageChild"></base-page>
+	<header-page :userinfo="userinfo" ></header-page>
+	<div class="hr-page-description">
+		<div class="hr-wrap">
+			<h1 v-text="pageDes.name"></h1>
+			<h2 v-if="pageDes.des" v-text="'-- '+pageDes.des"></h2>
+		</div>
+	</div>
+	<div class="hr-main-page">
+		blank
+	</div>
+</div>
+</body>
+</html>

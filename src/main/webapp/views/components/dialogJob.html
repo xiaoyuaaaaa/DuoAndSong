@@ -1,0 +1,73 @@
+<div class="dialog-job-wrap" :class="[{'jobTheam2':jobTheme == '2'}, dialog.job.belongDialog]">
+	<!-- 对话框开始 start-->
+	<el-dialog :visible.sync="dialog.job.status" :close-on-click-modal="false" custom-class="dialog-multi dialog-job">
+		<span slot="title">
+		 	<span v-text="(slt.job.item.length < 1?'请选择':'已选择') + dialog.job.title+'：'"></span>
+		 	<span class="dialog-select-wrap">
+		 		<span v-for="(item,index) in slt.job.item" v-text="item.value" @click="removeSltItem('job',index)"></span>
+		 	</span>
+	 		<slot name="titleSlot"></slot>
+		</span>
+		<div class="dialog-body">
+			<div class="dialog-item1-wrap clearfix jobLevel1" v-if="jobTheme != '2'">
+				<font class="dialog-item dialog-item1" :title="item1.value" :id="'item1-'+item1.id" :key="item1.id" v-for="(item1,index) in jobList" :class="{'active':item1.id==itemTemp2.id}">
+					<input type="checkbox" @click="sltDialogItem('job',item1,$event,1)" :checked="tool.findIndexInArr(slt.job.id,item1.id)" v-if="jobLevelCanSelet"/>
+					<font v-text="item1.value" @click="showItemlevel2(item1,index,$event,'job')"></font>
+					<i @click="showItemlevel2(item1,index,$event,'job','1')" v-show="item1.childList && item1.childList.length>0"></i>
+				</font>
+				<div class="dialog-item2-wrap" :dialog-item2-wrap="itemTemp2.id" v-show="itemTemp2.id">
+					<label class="dialog-item" title="" v-for="(item2,index1) in itemTemp2.childList">
+						<input type="checkbox" :data-id="item2.id" :checked="!tool.findIndexInArr(slt.job.id,itemTemp2.id) && tool.findIndexInArr(slt.job.id,item2.id)"
+							 @click="sltDialogItem('job',item2,$event,'2')" :disabled="tool.findIndexInArr(slt.job.id,itemTemp2.id)"/>
+						<font v-text="item2.value"></font>
+					</label>
+				</div>
+			</div>
+			<div class="dialog-item1-wrap clearfix jobLevel1" v-if="jobTheme == '2'">
+				<div class="level1-wrap" v-for="(item,index) in jobList" :key="item.id">
+					<div class="level1-name" v-text="item.value"></div>
+					<div class="level2-wrap">
+						<font class="dialog-item dialog-item1" :title="item1.value" :id="'item1-'+item1.id" :key="item1.id" v-for="(item1,index1) in item.childList" :class="{'active':item1.id==itemTemp2.id}">
+							<input type="checkbox" @click="sltDialogItem('job',item1,$event,1)" :checked="tool.findIndexInArr(slt.job.id,item1.id)" v-if="jobLevelCanSelet"/>
+							<font v-text="item1.value" @click="showItemlevel2(item1,index1,$event,'job')"></font>
+							<i @click="showItemlevel2(item1,index1,$event,'job','1')" v-show="item1.childList && item1.childList.length>0"></i>
+						</font>
+					</div>
+				</div>
+				<div class="dialog-item2-wrap" :dialog-item2-wrap="itemTemp2.id" v-show="itemTemp2.id">
+					<label class="dialog-item" title="" v-for="(item2,index2) in itemTemp2.childList">
+						<input type="checkbox" :data-id="item2.id" :checked="!tool.findIndexInArr(slt.job.id,itemTemp2.id) && tool.findIndexInArr(slt.job.id,item2.id)"
+							 @click="sltDialogItem('job',item2,$event,'2')" :disabled="tool.findIndexInArr(slt.job.id,itemTemp2.id) && maxSelect > 1"/>
+						<font v-text="item2.value"></font>
+					</label>
+				</div>
+			</div>
+			<div v-if="dialog.job.belongDialog=='language'" class="languageSkill-detail">
+				<div class="detail-list" v-for="(item,index) in slt.job.item">
+					{{init(item,'read','')}}{{init(item,'listen','')}}
+					<span class="name" v-text="item.value+'：'"></span>
+					读写能力：<select name="" v-model="item.read" @change="sltLanguage(item)" :id="'languageSkillRead-'+item.id" class="read hr-mr20">
+						<option value="">不限</option>
+						<option value="100">一般</option>
+						<option value="200">良好</option>
+						<option value="300">熟练</option>
+						<option value="400">精通</option>
+					</select>
+					听说能力：<select name="" v-model="item.listen" :id="'languageSkillListen-'+item.id" class="listen">
+						<option value="" v-if="item.read==''">不限</option>
+						<option value="100">一般</option>
+						<option value="200">良好</option>
+						<option value="300">熟练</option>
+						<option value="400">精通</option>
+					</select>
+					<span class="close" @click="removeSltItem('job',index)">×</span>
+				</div>
+			</div>
+		</div>
+		<span slot="footer" class="dialog-footer">
+			<a class="hr-btn hr-btn-default" @click="dialog.job.status=false">取 消</a>
+			<a class="hr-btn hr-btn-yellow" @click="dialogConfirm('job');">确 定</a>
+		</span>
+	</el-dialog>
+	<!-- 对话框开始 end-->
+</div>

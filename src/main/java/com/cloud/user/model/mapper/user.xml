@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.cloud.user.dao.UserDao">  
+    
+    <!-- 用户注册 -->
+    <select id="getUserInfo" parameterType="map" resultType="com.cloud.user.model.User" >  
+        select 
+        	a.*,
+        	ifnull(b.storageCount,0) storageCount,
+        	ifnull(c.gainCount,0) gainCount,
+        	ifnull(d.noticeNum,0) noticeNum 
+        from (
+	        select 
+	        	userId,
+	        	isSuccess,
+	        	status,
+	        	isNormal,
+	        	email,
+	        	telephone,
+	        	name,
+	        	jobTitle,
+	        	shareCode,
+	        	gainNum,
+	        	headImg,
+	        	nickName,
+	        	QQ,
+	        	industry 
+	        from registration where userId=#{0}
+		) a	
+		left join (select count(*) storageCount,userId from storage_logs where userId=#{0}) b on a.userId=b.userId 
+		left join (select count(*) gainCount,userId from gain_logs where userId=#{0}) c on a.userId=c.userId 
+		left join (select count(*) noticeNum,userId from notice_read_logs where userId=#{0} and isRead=1) d on a.userId=d.userId 
+    </select> 
+    
+    <!-- 获取用户邮箱验证状态 -->
+    <select id="getIsSuccess" parameterType="String" resultType="java.lang.Integer" >  
+        select isSuccess from registration where userId=#{0}
+    </select>
+    
+    <!-- 用户注册 -->
+    <select id="emailCheck" statementType="CALLABLE" resultType="String" >  
+        {
+        	call email_check(
+        		#{userId,mode=IN,jdbcType=DECIMAL},
+        		#{resultMessage,mode=OUT,jdbcType=VARCHAR},
+        		#{resultNumber,mode=OUT,jdbcType=DECIMAL}
+        	)
+        } 
+    </select>
+    
+</mapper> 

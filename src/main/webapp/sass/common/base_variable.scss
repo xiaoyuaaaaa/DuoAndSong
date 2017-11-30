@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+/**************全局变量********************/
+//颜色
+$g_headerBgColor: #264863;
+
+$g_greyColor: #e5e6e6;
+$g_greyBorderColor: #E1E1E1;
+$g_lightGreyColor: #F4F4F4;
+$g_greenColor: #50C14E; //#83b544;
+$g_redColor: #e73a40;//#FF5E1D;//#e64346;
+$g_blueColor:#0089EC;
+$g_blueColor2:#1995e3;
+$g_blackColor: #262E39;
+$g_brownColor: #B29956;
+
+
+//输入框
+$g_inpPlhdTextColor: #b5b5b5;    //placeholder文字颜色
+$g_inputBorderColor: #d5dadf;    //边框
+
+//高宽
+$g_headerH: 84px;   
+$g_pageMinW: 1024px;
+$g_pageDesH: 80px;
+$g_boxPadding: 15px;
+
+$g_leftPageW: 200px;
+$g_headerHome: 60px;     //登录之后的头部高度
+$g_leftPl: 80px;
+$g_footerH: 45px;
+$g_pageMinH: 600px;
+$g_hrMainPagePadding: 10px;
+
+//字体
+$g_textSize: 10px;
+$g_textColor: #333;
+$g_textRed: #FE5A59;
+
+//主要用于z-index
+$g_indexLevel0: 1;
+$g_indexLevel1: 10;
+$g_indexLevel2: 20;
+$g_indexLevel3: 30;
+$g_indexLevel4: 9999;
+
+
+//导航条
+$g_navItemH:40px;  //导航条高度
+$g_navTestColor:#838fad;  //导航条字体色
+$g_navBGColor:initial;  //导航条点景色
+$g_navActiveTestColor:#cdd9f3;  //导航条点亮字体色
+$g_navActiveBGColor:#3d4c75;  //导航条点亮背景色

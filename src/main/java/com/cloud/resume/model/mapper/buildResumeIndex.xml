@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.cloud.resume.dao.BuildResumeIndexDao">  
+    
+    <sql id="sqlConditions">
+		<if test="startUserId!=null and endUserId">
+			AND userId BETWEEN #{startUserId} AND #{endUserId}
+		</if>
+		<if test="userId!=null">
+			AND userId=#{userId}
+		</if>
+		<if test="userIdList!=null">
+			AND userId IN
+	  		<foreach item="item" index="index" collection="userIdList" open="(" separator="," close=")">  
+				#{item}  
+			</foreach>  
+		</if>
+	</sql>
+	
+	<select id="getResumeInfoList" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT a.*,
+		STR_TO_DATE(DATE_FORMAT(a.lastTime,'%Y-%m-%d'), '%Y-%m-%d %H:%i:%s') AS lastTime_dt,
+		(select group_concat(`name`) from areas where find_in_set(id,a.expectIndustry)) industryName,
+		(select group_concat(`name`) from jobs where find_in_set(id,a.jobTitle)) jotTitleName,
+		IFNULL((select group_concat(`name`) from cities where find_in_set(id,a.city)),'0') cityName3,
+		IFNULL((select group_concat(`name`) from cities where find_in_set(id,(SELECT superId FROM cities WHERE id=a.city))),'0') cityName2,
+		IFNULL((select group_concat(`name`) from cities where find_in_set(id,(SELECT superId FROM cities WHERE id=(SELECT superId FROM cities WHERE id=a.city)))),'0') cityName1,
+		IFNULL(b.superId,'0') superId,IFNULL(b.firstSuperId,'0') firstSuperId,IFNULL(a.city,'') cityId
+		FROM resume a LEFT JOIN cities b ON a.city=b.id  
+		<where>
+			<include refid="sqlConditions"/>
+		</where>
+	</select>
+	
+	<select id="getWorkList" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT id,userId,compName,jobTitle,workDesc,startTime,endTime FROM work_experiences 
+		<where>
+			<include refid="sqlConditions"/>
+		</where>
+	</select>
+	
+	<select id="getWorkListById" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT id,userId,compName,jobTitle,workDesc,startTime,endTime FROM work_experiences where userId=#{0} order by startTime desc
+	</select>
+	
+	<select id="getProjectList" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT id,userId,projectName,projectDesc,responsibilityDesc FROM projects
+		<where>
+			<include refid="sqlConditions"/>
+		</where>
+	</select>
+	
+	<select id="getEducationList" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT id,userId,schoolName,specialty,startTime,endTime FROM educations 
+		<where>
+			<include refid="sqlConditions"/>
+		</where>
+	</select>
+	
+	<select id="getEducationListById" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT id,userId,schoolName,specialty,startTime,endTime,education FROM educations where userId=#{0} order by startTime desc
+	</select>
+	
+	<select id="getProfeSkillList" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT id,userId,skillName FROM profeskill  
+		<where>
+			<include refid="sqlConditions"/>
+		</where>
+	</select>
+	
+	<select id="getCityList" resultType="java.util.HashMap"
+		parameterType="java.util.HashMap">
+		SELECT * FROM cities
+	</select>
+	
+	<select id="getMaxUserId" resultType="java.lang.Integer">
+		SELECT AUTO_INCREMENT AS userId FROM information_schema.`TABLES` WHERE TABLE_SCHEMA='resume_cloud' AND TABLE_NAME='resume'
+	</select>
+    
+    <select id="getChildList" parameterType="String" resultType="String">
+    	select getChildList(#{0},#{1});
+    </select>
+    
+    <select id="getParentList" parameterType="String" resultType="String">
+    	select getParentList(#{0},#{1});
+    </select>
+</mapper> 

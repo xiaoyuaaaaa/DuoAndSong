@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper  
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">  
+<mapper namespace="com.cloud.resume.dao.ResumeDao">  
+    
+    <resultMap id="resumeAllResultMap" type="com.cloud.resume.model.NewResume">  
+        <id property="userId" column="userId" javaType="java.lang.Integer" jdbcType="DECIMAL"/>  
+        <collection property="projectList" column="userId" select="queryProjectList"></collection>
+        <collection property="eduList" column="userId" select="queryEducationList"></collection>
+        <collection property="workList" column="userId" select="queryWorkExList"></collection>
+        <collection property="trainList" column="userId" select="queryTraining"></collection>
+        <collection property="skillsList" column="userId" select="queryProfeSkill"></collection>
+        <collection property="languagesList" column="userId" select="queryLanguage"></collection>
+    </resultMap>
+    
+    <resultMap id="resumeListDetailMap" type="com.cloud.resume.model.NewResume">  
+        <id property="userId" column="userId" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="resumeName" column="resumeName" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="lastTime" column="lastTime" javaType="java.lang.String" jdbcType="VARCHAR"/> 
+        <id property="resumeNumber" column="resumeNumber" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="email" column="email" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="telephone" column="telephone" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="sex" column="sex" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="maritalStatus" column="maritalStatus" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="education" column="education" javaType="java.lang.Integer" jdbcType="DECIMAL"/> 
+        <id property="jobYear" column="jobYear" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="age" column="age" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="birthYear" column="birthYear" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="city" column="city" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="province" column="province" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="hukouProvince" column="hukouProvince" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="hukouCity" column="hukouCity" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="jobTitle" column="jobTitle" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="expectWorkType" column="expectWorkType" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="expectCity" column="expectCity" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="expectSalary" column="expectSalary" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="expectIndustry" column="expectIndustry" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <id property="jobState" column="jobState" javaType="java.lang.Integer" jdbcType="DECIMAL"/>
+        <id property="selfEvaluate" column="selfEvaluate" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <collection property="projectList" column="userId" select="queryProjectList"></collection>
+        <collection property="eduList" column="userId" select="queryEducationList"></collection>
+        <collection property="workList" column="userId" select="queryWorkExList"></collection>
+        <collection property="trainList" column="userId" select="queryTraining"></collection>
+        <collection property="skillsList" column="userId" select="queryProfeSkill"></collection>
+        <collection property="languagesList" column="userId" select="queryLanguage"></collection>
+    </resultMap> 
+    
+    <select id="queryResumeByResumeId" parameterType="java.lang.Integer" resultMap="resumeAllResultMap">
+		SELECT a.*,
+			fn_city(expectCity) AS expectCityName,
+			(select group_concat(`name`) from areas where find_in_set(id,a.expectIndustry)) industryName,
+			(select group_concat(`name`) from jobs where find_in_set(id,a.jobTitle)) jotTitleName,b.schoolName,b.specialty 
+		FROM resume a  LEFT JOIN (SELECT * FROM educations WHERE userId=#{0} ORDER BY startTime DESC LIMIT 1) b ON a.userId=b.userId WHERE a.userId=#{0}
+	</select>
+    
+    <!-- 导出EXCEL时获取简历信息 -->
+    <select id="queryResumeByResumeIdList" resultType="com.cloud.resume.model.NewResume" parameterType="map" resultMap="resumeListDetailMap">
+		select userId,
+		resumeName,
+		lastTime,
+		resumeNumber,
+		name,
+		email,
+		telephone,
+		sex,
+		maritalStatus,
+		education,
+		jobYear,
+		age,
+		birthYear,
+		province,
+		hukouProvince,
+		expectWorkType,
+		expectSalary,
+		expectIndustry,
+		jobState,
+		source,
+		selfEvaluate,
+		(select group_concat(`name`) from jobs where find_in_set(id,jobTitle)) jobTitle,
+		(select group_concat(`name`) from cities where find_in_set(id,city)) city,
+		(select group_concat(`name`) from cities where find_in_set(id,expectCity)) expectCity,
+		(select group_concat(`name`) from cities where find_in_set(id,hukouCity)) hukouCity 
+		from resume where userId in (${resumeIds}) 
+	</select>
+    
+    <select id="queryTraining" resultType="com.cloud.resume.model.NewTraining" 
+  		parameterType="java.lang.Integer">
+  		SELECT * FROM training WHERE userId=#{0} ORDER BY startTime DESC
+  	</select>
+  	
+  	<select id="queryLanguage" resultType="com.cloud.resume.model.NewLanguage" 
+  		parameterType="java.lang.Integer">
+  		SELECT * FROM language WHERE userId=#{0}
+  	</select>
+  	
+  	<select id="queryProfeSkill" resultType="com.cloud.resume.model.NewProfeSkill" 
+  		parameterType="java.lang.Integer">
+  		SELECT * FROM profeskill WHERE userId=#{0}
+  	</select>
+  	
+  	 <!-- 获取教育经历 -->
+	<select id="queryEducationList" resultType="com.cloud.resume.model.NewEducations" 
+  		parameterType="java.lang.Integer">
+  		SELECT * FROM educations WHERE userId=#{0} ORDER BY startTime DESC
+  	</select>
+  	
+  	 <!-- 获取项目经验 -->
+  	<select id="queryProjectList" resultType="com.cloud.resume.model.NewProjectExp" 
+  		parameterType="java.lang.Integer">
+  		SELECT * FROM projects WHERE userId=#{0} ORDER BY startTime DESC
+  	</select>
+  	
+  	<!-- 获取工作经历 -->
+  	<select id="queryWorkExList" resultType="com.cloud.resume.model.NewWorkExp" 
+  		parameterType="java.lang.Integer">
+  		SELECT *,(select group_concat(`name`) from areas where find_in_set(id,compIndustry)) industryName FROM work_experiences WHERE userId=#{0} ORDER BY startTime DESC
+  	</select>
+    
+    <select id="getUserIdByPhone" parameterType="String" resultType="String">
+    	select userId from resume where telephone=#{0}
+    </select>
+    <!-- 添加简历基本信息 -->
+    <insert id="add_base_info" parameterType="map">
+	 	insert into resume  
+	 	(
+	 		expectCity,expectSalary,creatTime,lastTime,jobTitle,jobYear,name,sex,age,education,jobState,email,password,telephone,
+			resumeName,resumeNumber,maritalStatus,birthYear,city,province,hukouProvince,hukouCity,expectWorkType,expectIndustry,selfEvaluate,source,zlResumeId 
+	 	
+	 	) values (
+	 		#{resume.expectCity},#{resume.expectSalary},NOW(),
+	 		#{resume.lastTime},#{resume.jobTitle},#{resume.jobYear},
+	 		#{resume.name},#{resume.sex},#{resume.age},#{resume.education},#{resume.jobState},#{resume.email},'honglingjing123',#{resume.telephone},
+	 		#{resume.resumeName},#{resume.resumeNumber},#{resume.maritalStatus},#{resume.birthYear},
+	 		#{resume.city},#{resume.province},#{resume.hukouProvince},#{resume.hukouCity},
+	 		#{resume.expectWorkType},SUBSTRING(#{resume.expectIndustry},200),#{resume.selfEvaluate},#{resume.source},#{resume.resumeNumber}
+	 	);
+    </insert>
+    
+    <insert id="updateResumeInfo" parameterType="map">
+	 	update resume set 
+			expectCity=#{resume.expectCity},
+			expectSalary=#{resume.expectSalary},
+			lastTime=#{resume.lastTime},
+			jobTitle=#{resume.jobTitle},
+			jobYear=#{resume.jobYear},
+			name=#{resume.name},
+			sex=#{resume.sex},
+			age=#{resume.age},
+			email=#{resume.email},
+			education=#{resume.education},
+			jobState=#{resume.jobState},
+			resumeName=#{resume.resumeName},
+			resumeNumber=#{resume.resumeNumber},
+			zlResumeId=#{resume.resumeNumber},			
+			maritalStatus=#{resume.maritalStatus},
+			birthYear=#{resume.birthYear},
+			city=#{resume.city},
+			province=#{resume.province},
+			hukouProvince=#{resume.hukouProvince},
+			hukouCity=#{resume.hukouCity},
+			expectWorkType=#{resume.expectWorkType},
+			expectIndustry=SUBSTRING(#{resume.expectIndustry},200),
+			selfEvaluate =#{resume.selfEvaluate},
+			source=#{resume.source} 
+	 	where userId = #{userId}
+    </insert>
+        
+    <insert id="add_resume_detail" parameterType="map">
+	 	<if test="resume.eduList != null">
+	 		delete from educations where userId=#{userId};
+			INSERT INTO educations (userId,startTime,endTime,schoolName,specialty,education)
+			VALUES
+			<foreach collection="resume.eduList" item="edu" index="eduIndex" separator="," >  
+				(#{userId},#{edu.startTime},#{edu.endTime},#{edu.schoolName},#{edu.specialty},#{edu.education})
+			</foreach>;
+		</if>
+		<if test="resume.workList != null">
+			delete from work_experiences where userId=#{userId};
+			INSERT INTO work_experiences (
+				userId,startTime,endTime,compName,jobTitle,salary,workDesc,compIndustry,compProperty,compSize
+			)
+			VALUES
+			<foreach collection="resume.workList" item="work" index="workIndex" separator="," >  
+				(
+					#{userId},#{work.startTime},#{work.endTime},SUBSTRING(#{work.compName},1,198),
+					SUBSTRING(#{work.jobTitle},1,99),#{work.salary},SUBSTRING(#{work.workDesc},1,2000),
+					#{work.compIndustry},#{work.compProperty},#{work.compSize}
+				)
+			</foreach>;
+		</if>
+		<if test="resume.projectList != null">
+			delete from projects where userId=#{userId};
+			INSERT INTO projects (
+				userId,projectName,startTime,endTime,projectDesc,software,hardware,devTools,responsibilityDesc
+			)
+			VALUES
+			<foreach collection="resume.projectList" item="pro" index="proIndex" separator="," >  
+				(
+					#{userId},SUBSTRING(#{pro.projectName},1,100),#{pro.startTime},#{pro.endTime},
+					SUBSTRING(#{pro.projectDesc},1,1000),#{pro.software},#{pro.hardware},
+					#{pro.devTools},#{pro.responsibilityDesc}
+				)
+			</foreach>;
+		</if>
+		<if test="resume.languagesList != null">
+			delete from language where userId=#{userId};
+			INSERT INTO language (userId,languageName,readWriteSkill,hearSpeakSkill)
+			VALUES
+			<foreach collection="resume.languagesList" item="language" index="languageIndex" separator="," >  
+				(#{userId},#{language.languageName},#{language.readWriteSkill},#{language.hearSpeakSkill})
+			</foreach>;
+		</if>
+		<if test="resume.skillsList != null">
+			delete from profeskill where userId=#{userId};
+			INSERT INTO profeskill (userId,skillName,usedMonths,masterDegree)
+			VALUES
+			<foreach collection="resume.skillsList" item="skill" index="skillIndex" separator="," >  
+				(#{userId},SUBSTRING(#{skill.skillName},1,200),#{skill.usedMonths},#{skill.masterDegree})
+			</foreach>;
+		</if>
+		<if test="resume.trainList != null">
+			delete from training where userId=#{userId};
+			INSERT INTO training (userId,startTime,endTime,trainName,certificateName,address,machinery)
+			VALUES
+			<foreach collection="resume.trainList" item="train" index="trainIndex" separator="," >  
+				(
+					#{userId},#{train.startTime},#{train.endTime},#{train.trainName},
+					#{train.certificateName},#{train.address},#{train.machinery}
+				)
+			</foreach>;
+		</if>
+    </insert>
+    
+    <!-- 导出EXCEL时获取简历信息 -->
+    <select id="getExportExcelResume" parameterType="map" resultType="map">		
+		select a.*,b.schoolName,b.specialty from (select userId,name,sex,age,telephone,email,education,jobYear,
+		(select group_concat(`name`) from jobs where find_in_set(id,jobTitle)) jobTitle,
+		(select group_concat(`name`) from cities where find_in_set(id,city)) city,
+		(select group_concat(`name`) from cities where find_in_set(id,expectCity)) expectCity,
+		(select group_concat(`name`) from cities where find_in_set(id,hukouCity)) hukouCity 
+		from resume where userId in (${resumeIds})) a 
+		left join (select * from educations where userId in (${resumeIds}) 
+		group by userId order by startTime desc) b on a.userId =b.userId
+	</select>
+	
+	<!-- 获取下载简历列表 -->
+    <select id="getBatchDownUser" parameterType="map" resultType="map">
+    	SELECT resumeId FROM gain_logs WHERE userId=#{compUserId} AND resumeId IN (${resumeId}) 
+    </select>
+</mapper> 
