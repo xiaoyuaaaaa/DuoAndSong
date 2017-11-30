@@ -4,14 +4,30 @@
 @import "../common/base_tool";
 
 .resumeSearch-header{
-    height: 45px;
-    line-height: 42px;
     border: 1px solid $g_greyBorderColor;
-    border-top: 2px solid $g_blueColor;
-    padding: 0 $g_boxPadding;
+    padding: 20px;
+    background-color: white;
     box-shadow: 0 2px 2px #ebebeb;
     >*{
         display: inline-block;
+    }
+    .list{
+        width: 25%;
+        .el-input--small .el-input__inner{
+            cursor: text;
+        }
+    }
+    .icon-triangle-copy{
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        font-size: 21px;
+        transform:translateY(9%);
+        transition: .3s;
+        &.up{
+            transform: translateY(35%) rotateZ(180deg);;
+            transition: .3s;
+        }
     }
 }
 .resumeSearch-condition{
@@ -21,24 +37,23 @@
         //width: $conditionW;
         width: 100%;
         border: 1px solid $g_greyBorderColor;
-        background-color: $g_lightGreyColor;
+        background-color: $g_bodybgColor;
         border-radius: 2px;
-        padding: $g_boxPadding 0;
-        box-shadow: 0 2px 2px #ebebeb;
+        padding-top: $g_boxPadding;
+        padding-right: 10%;
         .list{
             margin-bottom: 20px;
             padding: 0 15px;
             width: 33%;
             display: inline-block;
             vertical-align: text-bottom;
+            color: #999;
             .title{
                 font-weight: bold;
                 margin-bottom: 5px;
+                display: none;
             }
-            .hr-btn-yellow{
-                box-shadow: 0 1px -1 #fcc270;
-                border: 1px solid #e0972e;
-                text-shadow: 0 -1px 0 #de8300;
+            .hr-btn-green{
                 .search-btn{
                     display: inline-block;
                     width: 14px;
@@ -51,7 +66,6 @@
                 height: 32px;
                 font-size: 12px;
                 border: 1px solid #d4d4d4;
-                border-radius: 0;
                 &[readonly]{
                     cursor: pointer;
                 }
@@ -81,9 +95,6 @@
            
         }
     }
-    .el-input--small .el-input__inner{
-        box-shadow: inset 0px 4px 8px -4px #ccc;
-    }
     .el-input__inner{
         &:hover{
             border-color: #8391a5;
@@ -94,8 +105,11 @@
     }
 }
 .resumeTable{
-    box-shadow: 0 2px 2px #ebebeb;
+
     font-size: 13px;
+    .el-table__header-wrapper{
+        background-color: $g_bodybgColor;
+    }
     .jobTitle{
         &.visited{
             span{
@@ -123,29 +137,27 @@
     }
     .hr-icon{
         &:hover{
-            box-shadow: 0 1px -1 #fcc270;
-            border: 1px solid #e0972e;
-            text-shadow: 0 -1px 0 #de8300;
-            background: linear-gradient(#FBB144, #F38E00);
             color: #fff;
-            .icon-view{
-                background: url("../../img/search/view-hover.png") no-repeat;
-            }
+            background: $g_mainColor;
+            border-color:$g_mainColor;
             .icon-temporary{
-                background: url("../../img/search/temporary-hover.png") no-repeat;
+                background: url("../../img/search/icon-search.png")  48px 47px;
+            }
+            .icon-view{
+                background: url("../../img/search/icon-search.png")  48px 68px;
             }
         }
         .icon-view{
             display: inline-block;
             width: 18px;
-            height: 9px;
-            background: url("../../img/search/view.png") no-repeat;
+            height: 16px;
+            background: url("../../img/search/icon-search.png") 25px 68px;
         }
         .icon-temporary{
             display: inline-block;
             width: 14px;
-            height: 11px;
-            background: url("../../img/search/temporary.png") no-repeat;
+            height: 14px;
+            background: url("../../img/search/icon-search.png") 25px 118px;
             margin-right:5px;
         }
     }
@@ -156,6 +168,7 @@
     border: 1px solid $g_greyBorderColor;
     border-bottom: 0;
     position: relative;
+    background-color: white;
     .conditionShowStr{
         max-width: 99%;
         overflow: hidden;
@@ -203,8 +216,29 @@
     }
 }
 
+.el-input__icon{
+    font-family: iconfont!important;
+    font-size: 22px;
+    color: #a8a8a8;
+    transform: translateY(-50%);
+    &.el-icon-caret-top{
+        &:before{
+            content: "\e600";
+        }
+    }
+    &.el-icon-menu{
+        transform: translateY(0);
+        font-size: 18px;
+        &:before{
+            content: "\e781";
+        }
+    }
+    &.is-reverse{
+        transform: translateY(-50%) rotateZ(180deg);
+    }
+}
 .history-btn{
-    padding: 5px 15px;
+    padding: 5px 27px 5px 15px;
 }
 
 .history-drop {
@@ -216,4 +250,14 @@
             background:#f4f4f4;
         }
     }
+}
+
+
+@media (max-width: 1245px) {
+    .resumeSearch-condition{
+        .hr-search-wrap{
+            padding-right: 0;
+        }
+    }
+    
 }

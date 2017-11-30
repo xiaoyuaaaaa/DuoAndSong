@@ -2,7 +2,7 @@
 	<!-- 对话框开始 start-->
 	<el-dialog :visible.sync="dialog.job.status" :close-on-click-modal="false" custom-class="dialog-multi dialog-job">
 		<span slot="title">
-		 	<span v-text="(slt.job.item.length < 1?'请选择':'已选择') + dialog.job.title+'：'"></span>
+		 	<span class="hr-text-bold" v-text="(slt.job.item.length < 1?'请选择':'已选择') + dialog.job.title+'：'"></span>
 		 	<span class="dialog-select-wrap">
 		 		<span v-for="(item,index) in slt.job.item" v-text="item.value" @click="removeSltItem('job',index)"></span>
 		 	</span>
@@ -66,7 +66,7 @@
 		</div>
 		<span slot="footer" class="dialog-footer">
 			<a class="hr-btn hr-btn-default" @click="dialog.job.status=false">取 消</a>
-			<a class="hr-btn hr-btn-yellow" @click="dialogConfirm('job');">确 定</a>
+			<a class="hr-btn hr-btn-green" @click="dialogConfirm('job');">确 定</a>
 		</span>
 	</el-dialog>
 	<!-- 对话框开始 end-->

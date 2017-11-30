@@ -18,6 +18,7 @@ define(["text!../../views/components/header.html", "tool", "ajaxUser"],
 			},
 			mounted: function() {
 				var that = this;
+				that.getNotice()
 			},
 			components: {
 
@@ -36,6 +37,11 @@ define(["text!../../views/components/header.html", "tool", "ajaxUser"],
 						}
 					});
 				},
+				getNotice:function () {
+					var that = this;
+
+                },
+
 			}
 		};
 		return headerPage;

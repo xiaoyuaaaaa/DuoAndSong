@@ -47,7 +47,7 @@
     <!-- 更新阅读状态 -->
     <update id="updateNoticeReadStatus" parameterType="map">
         update notice_read_logs set isRead=1,readTime=NOW() where userId=#{userId} and isRead=0 
-        <if test="noticeId !=null">
+        <if test="noticeIds !=null">
             and noticeId in (${noticeIds})
         </if>
     </update>

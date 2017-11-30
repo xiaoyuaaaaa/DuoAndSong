@@ -1,7 +1,7 @@
-require(['$', 'vue', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePage", 'headerPage',
-        'dialogJob', 'dialogCity', 'pagination', 'ajaxData'],
-    function ($, Vue, vueMethods, ELEMENT, _, info, tool, basePage, headerPage,
-              dialogJob, dialogCity, pagination, ajaxData) {
+require(['$', 'vue', 'VueRouter', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePage", 'headerPage',
+        'dialogJob', 'dialogCity', 'pagination', 'ajaxData', 'leftPage'],
+    function ($, Vue, VueRouter, vueMethods, ELEMENT, _, info, tool, basePage, headerPage,
+              dialogJob, dialogCity, pagination, ajaxData, leftPage) {
         "use strict";
 
         Vue.use(ELEMENT);
@@ -27,6 +27,7 @@ require(['$', 'vue', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePa
             components: {
                 'base-page': basePage,
                 'header-page': headerPage,
+                'left-page': leftPage,
                 'dialog-job': dialogJob,
                 'dialog-city': dialogCity,
                 'pagination': pagination,
@@ -38,6 +39,7 @@ require(['$', 'vue', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePa
                         name: '简历搜索',
                         des: '通过企业验证才能获取简历+简历获取次数哟'
                     },
+                    showConditionAll: true,
                     info: info,
                     tool: tool,
                     checkAll: false,

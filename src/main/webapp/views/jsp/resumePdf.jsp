@@ -5,7 +5,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta charset="UTF-8">
 	<title>简历云-简历详情</title>
 	<style type="text/css">
     	body,pre{font-family:"KaiTi_GB2312"}
@@ -13,13 +13,14 @@
 		table{border-collapse:collapse}
 		pre{white-space:pre-wrap;line-height: 30px;font-size: 12px;}
 		.content2 .content2-tr3,.mr-span-wrap span,.mr-wrap *{margin-right:12px}
-		.content1{height:50px;font-size:16px;background-color:#fff}
+		.content1{height:60px;font-size:16px;background-color:#fff}
 		.content1 .time{border-left:1px solid #ddd;padding-left:10px}
-		.content2{background-color:#4276b5;color:#fff;height:100px;font-size:14px}
+		.content2{color:#333;height:100px;font-size:14px}
 		.content2 .content2-td td{height: 34px;}
 		.content2 .content2-ico{position:relative;top:2px}
-		.content3-wrap{padding:25px 25px 10px;background:#fff;color:#333}
-		.content3-wrap .mail-title{position:relative;color:#0089ec;background-color:#edf6fb;padding:8px 25px}
+		.content3-wrap{padding:25px 0px 10px;background:#fff;color:#333}
+		.content3-wrap .mail-title{position:relative;border-bottom: 1px solid #e5e6e6;}
+		.content3-wrap .mail-title span{color: #fff;background-color: #13c5a5;width: 75px;text-align: center;line-height: 32px;margin-left: 30px;display: inline-block;}
 		.content3-wrap .main-wrap{padding:0 0 20px 20px}
 		.content3-wrap .main-wrap .main{margin-top:20px}
 		.content3-wrap .main-wrap .main td{height:30px}
@@ -32,11 +33,11 @@
 <body>
 	<table border="0" cellpadding="0" cellspacing="0" style="margin: 0 auto;border: 1px solid #ddd;" width="100%">
 		<tr>
-			<td>
+			<td style="border-bottom: 3px solid #13c5a5;">
 				<table class="content1" border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<td style="padding: 0 10px 0 25px;">
-							<img src="/img/detail/ico-logo-x110.png"/>
+							<img src="/img/detail/animate-sz.png"/>
 						</td>
 						<td>
 							<span class="time">更新时间：${resume.lastTime}</span>
@@ -46,11 +47,18 @@
 			</td>
 		</tr>
 		<tr>
-			<td style="background-color: #4276b5;padding: 25px 0;">
+			<td style="padding: 25px 0;">
 				<table class="content2" border="0" cellspacing="0" cellpadding="0" width="100%">
 					<tr>
 						<td>
-							<img src="/img/detail/avatar.png" style="margin-left: 25px;"/>
+							<c:choose>  
+							    <c:when test="${resume.sex=='1'}">
+									<img src="/img/detail/avatar_b.png" style="margin-left: 25px;"/>
+							    </c:when>  
+							    <c:otherwise>
+							    	<img src="/img/detail/avatar_g.png" style="margin-left: 25px;"/>
+							    </c:otherwise>  
+							</c:choose>
 						</td>
 						<td>
 							<table class="content2-td" border="0" cellspacing="0" cellpadding="0">
@@ -66,11 +74,11 @@
 								</tr>
 								<tr class="content2-tr2">
 									<td>
-										<img class="content2-ico" src="/img/detail/dreducation.png"/>
+										<img class="content2-ico" src="/img/detail/dreducation_sz.png"/>
 										<span>${resume.schoolName}</span>
-										<span> | </span>
+										<span style="color: #D9D9D9;"> | </span>
 										<span>${resume.specialty}</span>
-										<span> | </span>
+										<span style="color: #D9D9D9;"> | </span>
 										<span>
 											<c:choose>  
 											    <c:when test="${resume.education=='1'}">初中</c:when>
@@ -91,7 +99,7 @@
 								</tr>
 								<tr class="content2-tr3">
 									<td class="mr-span-wrap">
-										<img class="content2-ico" src="/img/detail/druser.png"/>
+										<img class="content2-ico" src="/img/detail/druser_sz.png"/>
 										<span>${resume.name}</span>
 										<span>
 											<c:choose>  
@@ -108,9 +116,9 @@
 											</c:choose>
 										</span>
 										<span>${resume.age}岁</span>
-										<img class="content2-ico" src="/img/detail/drtel.png"/>
+										<img class="content2-ico" src="/img/detail/drtel_sz.png"/>
 										<span>${resume.telephone}</span>
-										<img class="content2-ico" src="/img/detail/dremail.png"/>
+										<img class="content2-ico" src="/img/detail/dremail_sz.png"/>
 										<span>${resume.email}</span>
 									</td>
 								</tr>
@@ -124,7 +132,7 @@
 			<td class="content3-wrap">
 				<table class="content3" border="0" cellspacing="0" cellpadding="0" width="100%">
 					<tr>
-						<td class="mail-title">求职意向</td>
+						<td class="mail-title"><span>求职意向</span></td>
 					</tr>
 					<tr>
 						<td class="main-wrap">
@@ -184,7 +192,7 @@
 						</td>
 					</tr>
 					<tr>
-						<td class="mail-title">自我评价</td>
+						<td class="mail-title"><span>自我评价</span></td>
 					</tr>
 					<tr>
 						<td class="main-wrap">
@@ -206,7 +214,7 @@
 					</tr>
 					<c:if test="${workEx!=null && workEx.size()>0}">
 						<tr>
-							<td class="mail-title">工作经历</td>
+							<td class="mail-title"><span>工作经历</span></td>
 						</tr>
 						<tr>
 							<td class="main-wrap">
@@ -285,7 +293,7 @@
 					
 					<c:if test="${projects!=null && projects.size()>0}">
 						<tr>
-							<td class="mail-title">项目经历</td>
+							<td class="mail-title"><span>项目经历</span></td>
 						</tr>
 						<tr>
 							<td class="main-wrap">
@@ -338,7 +346,7 @@
 					
 					<c:if test="${educations!=null && educations.size()>0}">
 						<tr>
-							<td class="mail-title">教育经历</td>
+							<td class="mail-title"><span>教育经历</span></td>
 						</tr>
 						<tr>
 							<td class="main-wrap">
@@ -387,7 +395,7 @@
 					
 					<c:if test="${languages!=null && languages.size()>0}">
 						<tr>
-							<td class="mail-title">语言能力</td>
+							<td class="mail-title"><span>语言能力</span></td>
 						</tr>
 						<tr>
 							<td class="main-wrap">
@@ -408,7 +416,7 @@
 					
 					<c:if test="${trainings!=null && trainings.size()>0}">
 						<tr>
-							<td class="mail-title">培训经历</td>
+							<td class="mail-title"><span>培训经历</span></td>
 						</tr>
 						<tr>
 							<td class="main-wrap">
@@ -448,7 +456,7 @@
 					
 					<c:if test="${profeSkills!=null && profeSkills.size()>1}">
 						<tr>
-							<td class="mail-title">掌握技能</td>
+							<td class="mail-title"><span>掌握技能</span></td>
 						</tr>
 						<tr>
 							<td class="main-wrap">

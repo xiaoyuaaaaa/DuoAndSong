@@ -20,5 +20,6 @@
        <mapper resource="com/cloud/user/model/mapper/edit.xml"/>
        <mapper resource="com/cloud/user/model/mapper/forget.xml"/>
        <mapper resource="com/cloud/notice/model/mapper/notice.xml"/>
+       <mapper resource="com/cloud/common/model/mapper/pvuv.xml"/>
     </mappers>  
 </configuration> 

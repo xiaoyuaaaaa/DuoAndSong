@@ -5,10 +5,7 @@
 #app{
     min-width: 1200px;
 }
-.hr-main-page{
-    padding-top: 23px;
 
-}
 .gold-record-head{
     .head-item{
         p{
@@ -17,32 +14,23 @@
         button{
             width: 84px;
             height: 30px;
-            border: 1px solid #d2d2d2;
+            border: none;
             outline: none;
             cursor: pointer;
-            color: #797979;
-            border-radius: 3px;
-            background: linear-gradient(#f6f6f6,#e5e5e5);
-            box-shadow: 0 1px 0 #fff inset;
-            &.hr-btn-yellow{
-                color: #fff;
-                box-shadow: 0 1px 0 #fcc270 inset;
-                border: 1px solid #e0972e;
-                text-shadow: 0 -1px 0 #de8300;
-                background: linear-gradient(#fab047,#f38e00);
+            background:none;
+            font-size: 16px;
+            color: #666666;
+            padding-bottom:12px;
+            font-weight: bold;
+            &.active{
+                border-bottom: 3px solid $g_blueColor;
+                color: $g_blueColor;
             }
+
         }
     }
 }
-.line{
-    width: 100%;
-    height: 8px;
-    background: linear-gradient(#e1e1e1,#ededed);
-    border-radius: 4px;
-    margin-top: 11px;
-}
 .gold-record-main{
-    margin-top: 20px;
     box-shadow: 0 2px 2px #ebebeb;
     table{
         width: 100%;
@@ -62,71 +50,133 @@
         td{
             border-top: 1px dotted #d6d6d6;
         }
-        &.gold-main{
-            border: 1px solid #e1e1e1;
-            border-radius: 2px;
-            th,td{
+
+    }
+    //金币
+    .gold-main{
+        border: 1px solid #dbdbdb;
+        background: #fff;
+        padding:20px 25px;
+        .gold-list{
+           max-width: 1450px;
+            width: 100%;
+            li{
+                overflow: hidden;
+                border: 1px solid #dcdde1;
+                border-radius: 3px;
+                height: 60px;
+                line-height: 60px;
+                margin-bottom: 14px;
+                p{
+                    float: left;
+                    margin:0 12px;
+                    &:first-child{
+                        width: 50%;
+                        text-overflow:ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        margin-left:74px;
+                    }
+                    &:nth-child(2){
+                        width:230px;
+                    }
+                    &:last-child{
+                        width: 100px;
+                        text-align: center;
+                        float: right;
+                    }
+                    .hr-btn-green{
+                        padding:6px 15px;
+                    }
+                    .btn-grey{
+                        padding:6px 15px;
+                        background: #c0c0c0;
+                        border-radius: 2px;
+                        color: #fff;
+                    }
+                }
                 &:first-child{
-                    width: 550px;
+                    background:#f2f3f5 url("/img/goldRecord/icon-gold-record.png") no-repeat 0 0;
+                }
+                &:nth-child(2){
+                    background:#f2f3f5 url("/img/goldRecord/icon-gold-record.png") no-repeat 0 -66px;
+                }
+                &:nth-child(3){
+                    background:#f2f3f5 url("/img/goldRecord/icon-gold-record.png") no-repeat 0 -141px;
+                }
+                &:nth-child(4){
+                    background:#f2f3f5 url("/img/goldRecord/icon-gold-record.png") no-repeat 0 -216px;
+                }
+                &:last-child{
+                    background:#f2f3f5 url("/img/goldRecord/icon-gold-record.png") no-repeat 0 -293px;
                 }
             }
         }
     }
+    //记录
     .record-main{
-        border: 1px solid #e1e1e1;
+        border: 1px solid #dedfe1;
         border-radius: 2px;
-        table{
-            th,td{
-                &:first-child{
-                    width: 190px;
+        .record-list{
+            .gold-tip{
+                padding:0 24px;
+            }
+            li{
+                overflow: hidden;
+                height: 43px;
+                border-bottom: 1px solid #dadee1;
+                background: #fff;
+                line-height: 43px;
+                &:nth-of-type(even){
+                    background: #f4f4f4;
                 }
-
-                &:nth-child(2){
-                    width: 420px;
-                    text-align: center;
-                }
-                &:nth-child(3){
-                    text-align: center;
+                p{
+                    float: left;
+                    margin:0 24px;
+                    &:first-child{
+                        min-width: 180px;
+                        width: 20%;
+                    }
+                    &:last-child{
+                        width: 100px;
+                        float: right;
+                        text-align: right;
+                    }
+                    &:nth-child(2){
+                        width: 35%;
+                    }
+                    &:nth-child(3){
+                        width: 15%;
+                    }
                 }
             }
         }
         .hr-pagination-wrap{
             padding:8px 15px;
-            background: #f4f4f4;
+            background: #fff;
             text-align: right;
-            border-top: 1px dotted #e1e1e1;
             .hr-pagination{
                 background:none;
-
                 a{
                     min-width: 28px;
                     text-align: center;
                 }
             }
-            .hr-active a{
-                border-color: #e19730;
-                background: linear-gradient(#fbb149,#f28e00);
-            }
         }
     }
 }
-.el-select-dropdown__item.selected{
-    background: linear-gradient(#fbb149,#f28e00);
-}
+
 .invitation{
     width: 600px;
     .el-dialog__header{
-        padding:60px 30px 40px;
-        background: url("../../img/user/share-link.png") no-repeat;
+        padding:125px 30px;
+        background: url("/img/goldRecord/invite.png") no-repeat;
         background-size:100% 100%;
         position: relative;
         .el-dialog__headerbtn{
             position: absolute;
-            right: 30px;
+            right: 20px;
             top: 20px;
-        }
-        p{
-            line-height: 24px;
         }
     }
     .invitation-link{
@@ -142,8 +192,7 @@
     .copy-btn{
         width: 84px;
         height: 30px;
-        border: 1px solid #e1972e;
-        box-shadow: 0 1px 0 #fbc370 inset;
+        border: none;
         outline: none;
         margin-top: 20px;
         border-radius: 2px;

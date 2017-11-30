@@ -50,7 +50,7 @@ define(["text!../../views/detailComponents/diaPayment.html","$", 'loadash',
 	                    	}else{
 	                    		that.$root.$refs.detail_tem.detailInfo.isOwn = 1;
 	                    	}
-                        	that.gainNum = that.gainNum-that.$root.$refs.detail_tem.dealMoney;
+                        	that.$root.gainNum = that.gainNum = that.gainNum-that.$root.$refs.detail_tem.dealMoney;
                         	that.$root.$refs.detail_tem.detailInfo.gainNum = that.gainNum;
                             that.$root.$refs.detail_tem.isGain('','',response)
                         }

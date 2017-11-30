@@ -1,13 +1,18 @@
 package com.cloud.user.service.impl;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 import com.cloud.common.model.ResultBaseModel;
 import com.cloud.user.dao.EditDao;
 import com.cloud.user.model.EditUser;
@@ -15,6 +20,7 @@ import com.cloud.user.service.UserEditService;
 import com.cloud.util.CheckUtil;
 import com.cloud.util.MD5Util;
 import com.cloud.util.SendCloudThread;
+import com.cloud.util.SysConfig;
 
 /** 
  * @author tobber
@@ -33,6 +39,10 @@ public class UserEditServiceImpl implements UserEditService{
 			user.setUserId(Integer.parseInt(request.getSession().getAttribute("userId")+""));
 			int num = editDao.editBaseInfo(user);
 			if(num>0){
+				if(user.getHeandImg()!=null){
+					FileUtils.copyFile(new File(SysConfig.getString("UPLOAD_TEMPORARAY_PATH")+user.getHeandImg()), 
+							new File(SysConfig.getString("UPLOAD_HEADIMG_PATH")+user.getHeandImg()));
+				}
 				return new ResponseEntity<ResultBaseModel>(new ResultBaseModel(200,"修改成功"), HttpStatus.OK);
 			}else{
 				return new ResponseEntity<ResultBaseModel>(new ResultBaseModel(301,"修改失败"), HttpStatus.OK);
@@ -91,7 +101,7 @@ public class UserEditServiceImpl implements UserEditService{
 						}else{
 							int mobile_code = (int)((Math.random()*9+1)*100000);
 							String substitution_vars = "{\"to\": [\""+email+"\"], \"sub\" : { \"%emailCode%\" : [\""+mobile_code+"\"]}}";
-	                        new Thread(new SendCloudThread("rm_email_check", substitution_vars, "多简历验证码",false)).start();
+	                        new Thread(new SendCloudThread("rm_email_check", substitution_vars, "简历云验证码",false)).start();
 	                        request.getSession().setAttribute("email_code", mobile_code+"AA_AA"+email);
 							return new ResponseEntity<ResultBaseModel>(new ResultBaseModel(200,"发送成功"), HttpStatus.OK);
 						}

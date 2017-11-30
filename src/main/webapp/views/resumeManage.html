@@ -2,9 +2,9 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>多简历-全网邀约</title>
-	<meta name="keywords" content="多简历,免费简历,人才库,简历库">
-	<meta name="description" content="多简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让多简历成为企业与人才之间沟通的桥梁。">
+	<title>送简历-全网邀约</title>
+	<meta name="keywords" content="送简历,免费简历,人才库,简历库">
+	<meta name="description" content="送简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让送简历成为企业与人才之间沟通的桥梁。">
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,91 +23,97 @@
 <div id="app" v-cloak>
 	<base-page ref="basePageChild"></base-page>
 	<header-page :userinfo="userinfo" :pagename="'resumeManage'"></header-page>
-	<div class="hr-page-description">
-		<div class="hr-wrap">
-			<h1 v-text="pageDes.name"></h1>
-			<h2 v-if="pageDes.des" v-text="'-- '+pageDes.des"></h2>
-		</div>
-	</div>
 	
 	<div class="hr-main-page">
-		
-		<!-- 搜索条件 start-->
-		<div class="resumeManage-condition hr-container-title">
-			<div class="hr-bg-grey-light hr-table-title">
+		<left-page pagename="resumeManage"></left-page>
+		<div class="hr-container-title">
+			<div class="hr-bg-grey-light hr-table-title hr-fontsize16">
 				<ul>
-					<li :class="{'active': manageType==1}" @click="changeType(1)">已下载简历</li>
-					<li :class="{'active': manageType==2}" @click="changeType(2)">暂存简历</li>
+					<li :class="{'active': manageType==1}" @click="changeType(1)">已下载简历(<span v-text="userinfo.gainCount || 0"></span>)</li>
+					<li :class="{'active': manageType==2}" @click="changeType(2)">暂存简历(<span v-text="userinfo.storageCount || 0"></span>)</li>
 				</ul>
 			</div>
-			<!-- 已下载简历搜索条件 start-->
-			<div class="hr-search-wrap">
-				<!--<div class="list">
-					<p class="title">关键字</p>
-					<el-input v-model="tempSearch.searches.value" size="small" @keyup.native.enter="submitResumeManage" placeholder="请输入职位关键字"></el-input>
-				</div>-->
-				<div class="list">
-					<p class="title">选择职业</p>
-					<el-input placeholder="请选择职业（限1个）" :readonly="true" icon="menu" size="small" :title="tempSearch.job.value" v-model="tempSearch.job.value" @click.native="openDialog('job')"> </el-input>
+		</div>
+		<!-- 搜索条件 start-->
+		<div class="resumeSearch-header">
+			<div class="resumeManage-condition hr-container-title">
+				<div class="hr-vertical-middle-container">
+					<div class="list">
+						<el-input placeholder="请选择职业（限1个）" :readonly="true" icon="menu" size="small" :title="tempSearch.job.value" v-model="tempSearch.job.value" @click.native="openDialog('job')"> </el-input>
+					</div>
+					<div class="list hr-ml20">
+						<a class="hr-btn hr-btn-green hr-mr10 hr-vertical-middle-container" @click="submitResumeManage(1)"><img src="../img/search/search-icon.png"/> <span>搜索</span></a>
+						<a class="hr-btn hr-btn-default" @click="clearCondition">清空搜索</a>
+					</div>
+					<a class="hr-color-blue hr-pt5 hr-mt2 hr-fr" @click="showConditionAll = !showConditionAll">{{showConditionAll?'收起条件':'展开条件'}}<i class="iconfont icon-triangle-copy" :class="showConditionAll?'up':''"></i></a>
 				</div>
-				<div class="list" v-show="manageType==1">
-					<p class="title">姓名</p>
-					<el-input v-model="tempSearch.name.value" size="small" @keyup.native.enter="submitResumeManage" placeholder="请输入姓名"></el-input>
+				<!-- 已下载简历搜索条件 start-->
+				<el-collapse-transition>
+				<div class="hr-search-wrap hr-mt20" v-show="showConditionAll">
+					<!--<div class="list">
+						<p class="title">关键字</p>
+						<el-input v-model="tempSearch.searches.value" size="small" @keyup.native.enter="submitResumeManage" placeholder="请输入职位关键字"></el-input>
+					</div>-->
+					<!--<div class="list">
+						<p class="title">选择职业</p>
+						<el-input placeholder="请选择职业（限1个）" :readonly="true" icon="menu" size="small" :title="tempSearch.job.value" v-model="tempSearch.job.value" @click.native="openDialog('job')"> </el-input>
+					</div>-->
+					<div class="list" v-show="manageType==1">
+						<p class="title">姓名</p>
+						<el-input v-model="tempSearch.name.value" size="small" @keyup.native.enter="submitResumeManage" placeholder="请输入姓名"></el-input>
+					</div>
+					<div class="list" v-show="manageType==1">
+						<p class="title">电话</p>
+						<el-input v-model="tempSearch.tel.value" :maxlength='11' size="small" @keyup.native.enter="submitResumeManage" placeholder="请输入联系电话"></el-input>
+					</div>
+					<div class="list" v-show="manageType==1">
+						<p class="title">邮箱</p>
+						<el-input v-model="tempSearch.email.value" size="small" @keyup.native.enter="submitResumeManage" placeholder="请输入联系邮箱"></el-input>
+					</div>
+					<div class="list">
+						<p class="title">期望城市</p>
+						<el-input placeholder="请选择期望城市（限1个）" :readonly="true" icon="menu" size="small" :title="tempSearch.city.value" v-model="tempSearch.city.value" @click.native="openDialog('city')"> </el-input>
+					</div>
+					<div class="list" v-show="manageType==2">
+						<p class="title">暂存时间</p>
+						<el-select v-model="tempSearch.updateTime.item" placeholder="请选择暂存时间" size="small" class="hr-width-percent100">
+						    <el-option
+						      v-for="item in updateTimeList"
+						      :key="item.value"
+						      :label="item.value"
+						      :value="item">
+						    </el-option>
+						</el-select>
+					</div>
+					<div class="list" v-show="manageType==2">
+						<p class="title">学历</p>
+						<el-select v-model="tempSearch.edu1.item" title="请选择学历" placeholder="请选择学历" size="small" class="hr-width-percent100">
+						    <el-option
+						      v-for="(item,index) in educationList1"
+						      :key="item.value"
+						      :label="item.value"
+						      :value="item">
+						    </el-option>
+						</el-select>
+					</div>
+					<div class="list" v-show="manageType==2">
+						<p class="title">工作经验</p>
+						<el-row>
+							<el-col :span="11">
+								<el-input v-model="resumeManage.startYear" @keyup.native.enter="submitResumeManage" @blur="yearJudge('startYear','endYear')" size="small" min="0" max="99" placeholder="最小工龄" :maxlength="2"></el-input>
+							</el-col>
+							<el-col :span="2" class='hr-text-center hr-pt5'>
+								-
+							</el-col>
+							<el-col :span="11">
+								<el-input v-model="resumeManage.endYear" @keyup.native.enter="submitResumeManage" @blur="yearJudge('endYear','startYear')" size="small" min="0" max="99" placeholder="最大工龄" :maxlength="2"></el-input>
+							</el-col>
+						</el-row>
+					</div>
 				</div>
-				<div class="list" v-show="manageType==1">
-					<p class="title">电话</p>
-					<el-input v-model="tempSearch.tel.value" :maxlength='11' size="small" @keyup.native.enter="submitResumeManage" placeholder="请输入联系电话"></el-input>
-				</div>
-				<div class="list" v-show="manageType==1">
-					<p class="title">邮箱</p>
-					<el-input v-model="tempSearch.email.value" size="small" @keyup.native.enter="submitResumeManage" placeholder="请输入联系邮箱"></el-input>
-				</div>
-				<div class="list">
-					<p class="title">期望城市</p>
-					<el-input placeholder="请选择期望城市（限1个）" :readonly="true" icon="menu" size="small" :title="tempSearch.city.value" v-model="tempSearch.city.value" @click.native="openDialog('city')"> </el-input>
-				</div>
-				<div class="list" v-show="manageType==2">
-					<p class="title">暂存时间</p>
-					<el-select v-model="tempSearch.updateTime.item" placeholder="请选择暂存时间" size="small" class="hr-width-percent100">
-					    <el-option
-					      v-for="item in updateTimeList"
-					      :key="item.value"
-					      :label="item.value"
-					      :value="item">
-					    </el-option>
-					</el-select>
-				</div>
-				<div class="list" v-show="manageType==2">
-					<p class="title">学历</p>
-					<el-select v-model="tempSearch.edu1.item" title="请选择学历" placeholder="请选择学历" size="small" class="hr-width-percent100">
-					    <el-option
-					      v-for="(item,index) in educationList1"
-					      :key="item.value"
-					      :label="item.value"
-					      :value="item">
-					    </el-option>
-					</el-select>
-				</div>
-				<div class="list" v-show="manageType==2">
-					<p class="title">工作经验</p>
-					<el-row>
-						<el-col :span="11">
-							<el-input v-model="resumeManage.startYear" @keyup.native.enter="submitResumeManage" @blur="yearJudge('startYear','endYear')" size="small" min="0" max="99" placeholder="最小工龄" :maxlength="2"></el-input>
-						</el-col>
-						<el-col :span="2" class='hr-text-center hr-pt5'>
-							-
-						</el-col>
-						<el-col :span="11">
-							<el-input v-model="resumeManage.endYear" @keyup.native.enter="submitResumeManage" @blur="yearJudge('endYear','startYear')" size="small" min="0" max="99" placeholder="最大工龄" :maxlength="2"></el-input>
-						</el-col>
-					</el-row>
-				</div>
-				<div class="list">
-					<a class="hr-btn hr-btn-yellow hr-mr10" @click="submitResumeManage(1)"><i class="icon-search"></i>搜索</a>
-					<a class="hr-btn hr-btn-default" @click="clearCondition">清空搜索</a>
-				</div>
+				</el-collapse-transition>
+				<!-- 暂存简历搜索条件 end-->
 			</div>
-			<!-- 暂存简历搜索条件 end-->
 		</div>
 		<!-- 搜索条件 end-->
 		
@@ -125,12 +131,12 @@
 			    			<el-checkbox size="small" :label="scope.row"></el-checkbox>
 					    </template>
 			    	</el-table-column>
-		        <el-table-column label="职位名称" min-width="120">
+		        <el-table-column label="职位名称" min-width="180">
 		        	<template scope="scope">
 				        <a :href="'/cv/cv_detail?userId='+scope.row.resumeId+'&searchId='+scope.row.searchId+'&token='+scope.row.searchToken+'&source=rc'"
 				        	target="_blank" class="jobTitle">
-				        	<div class="hr-text-truncate" :title="mapJobOrCity('job',scope.row.jobTitle)">
-				        		<span class="hr-color-blue" v-text="mapJobOrCity('job',scope.row.jobTitle) || '其他'"></span>
+				        	<div class="hr-text-truncate" :title="scope.row.jobTitle_name">
+				        		<span class="hr-color-blue" v-text="scope.row.jobTitle_name || '其他'"></span>
 				        	</div>
 				        </a>
 		        	</template>
@@ -142,8 +148,8 @@
 		        </el-table-column>
 		        <el-table-column label="城市" min-width="70">
 		        	<template scope="scope">
-		        		<div class="hr-text-truncate" :title="mapJobOrCity('city',scope.row.expectCity)">
-		        			<span v-text="mapJobOrCity('city',scope.row.expectCity) || '--'"></span>
+		        		<div class="hr-text-truncate" :title="scope.row.expectCity_name">
+		        			<span v-text="scope.row.expectCity_name || '--'"></span>
 		        		</div>
 				    </template>
 		        </el-table-column>
@@ -157,14 +163,19 @@
 				        <div :title="scope.row.email" v-text="scope.row.email || '--'" class="hr-text-truncate"></div>
 				    	</template>
 		        </el-table-column>
-		        <el-table-column prop="updateTime" label="获取时间" min-width="120">
+		        <el-table-column  label="获取时间" min-width="150">
 		        	<template scope="scope">
 				        <span v-text="scope.row.creatTime || '--'"></span>
 				    	</template>
 		        </el-table-column>
-		        <el-table-column prop="updateTime" label="更新时间" min-width="100">
+		        <el-table-column  label="更新时间" min-width="100">
 		        	<template scope="scope">
 				        <span v-text="scope.row.lastTime || '--'"></span>
+				    	</template>
+		        </el-table-column>
+		        <el-table-column  label="下载" min-width="70">
+		        	<template scope="scope">
+				        <a class="hr-color-blue" @click="downResume(scope.row.resumeId)">下载</a>
 				    	</template>
 		        </el-table-column>
 		    	</el-table>
@@ -184,13 +195,13 @@
 		        <el-table-column label="职位名称" min-width="200">
 		        	<template scope="scope">
 				        <a v-if="userinfo.status" target="_blank" :href="'/cv/cv_detail?userId='+scope.row.resumeId+'&searchId='+scope.row.searchId+'&token='+scope.row.searchToken+'&source=rc'" class="jobTitle">
-				        	<div class="hr-text-truncate" :title="mapJobOrCity('job',scope.row.jobTitle)">
-				        		<span class="hr-color-blue" v-text="mapJobOrCity('job',scope.row.jobTitle) || '其他'"></span>
+				        	<div class="hr-text-truncate" :title="scope.row.jobTitle_name">
+				        		<span class="hr-color-blue" v-text="scope.row.jobTitle_name || '其他'"></span>
 				        	</div>
 				        </a>
 				        <a v-if="!userinfo.status" @click="needCompanyVerify()" class="jobTitle">
-				        	<div class="hr-text-truncate" :title="mapJobOrCity('job',scope.row.jobTitle)">
-				        		<span class="hr-color-blue" v-text="mapJobOrCity('job',scope.row.jobTitle) || '其他'"></span>
+				        	<div class="hr-text-truncate" :title="scope.row.jobTitle_name">
+				        		<span class="hr-color-blue" v-text="scope.row.jobTitle_name || '其他'"></span>
 				        	</div>
 				        </a>
 		        	</template>
@@ -211,8 +222,8 @@
 				    	</template>
 		        </el-table-column>
 		        <el-table-column label="城市" min-width="80">
-		        	<template scope="scope" :title="mapJobOrCity('city',scope.row.expectCity) || '--'">
-				        <div v-text="mapJobOrCity('city',scope.row.expectCity) || '--'" class="hr-text-truncate" :title="scope.row.cityName"></div>
+		        	<template scope="scope" :title="scope.row.expectCity_name || '--'">
+				        <div v-text="scope.row.expectCity_name || '--'" class="hr-text-truncate" :title="scope.row.cityName"></div>
 				    	</template>
 		        </el-table-column>
 		        <el-table-column label="经验" min-width="70">
@@ -243,9 +254,9 @@
 			<div class="resumeManage-page-wrap hr-bg-grey-light hr-text-right" v-show="resumeAjaxData.totalPage">
 				<div class="hr-fl">
 					<el-checkbox size="small" :indeterminate="false" v-model="checkAll" class="hr-mr10" @change="handleCheckAllChange">全选</el-checkbox>
-					<a @click="operResume(1)" class="hr-btn hr-btn-sm hr-btn-default hr-ml15 hr-icon" v-show="manageType==1"><i class="icon-download"></i>下 载</a>
-					<!--<a @click="operResume(2)" class="hr-btn hr-btn-sm hr-btn-default hr-ml15 hr-mr10" v-show="manageType==2">查 看</a>-->
-					<a @click="operResume(3)" class="hr-btn hr-btn-sm hr-btn-default" v-show="manageType==2">取消暂存</a>
+					<a @click="operResume(1)" class="hr-btn hr-btn-sm hr-btn-default hr-ml15 download" v-show="manageType==1"><i class="icon-download"></i>下 载</a>
+					<a @click="operResume(2)" class="hr-btn hr-btn-sm hr-btn-default hr-ml15 hr-mr10 view" v-show="manageType==2"><i class="icon-view"></i>查 看</a>
+					<a @click="operResume(3)" class="hr-btn hr-btn-sm hr-btn-default temporary" v-show="manageType==2"><i class="icon-temporary"></i>取消暂存</a>
 				</div>
 				<pagination ref="pagination" :page-size-hide="false" :current-page="resumeAjaxData.page" @changesize="changePageSize" :total-page="resumeAjaxData.totalPage" @change="changePage"></pagination>
 			</div>

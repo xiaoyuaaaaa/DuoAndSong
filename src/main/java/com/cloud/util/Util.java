@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
  */
 public class Util {
 	
-	public void responesWriter(HttpServletResponse response,String content) throws IOException {
+	public static void responesWriter(HttpServletResponse response,String content) throws IOException {
         response.setContentType("application/json;charset=UTF-8");  
         response.setCharacterEncoding("UTF-8");  
         PrintWriter out = response.getWriter();
@@ -34,7 +34,6 @@ public class Util {
         }
     }
 
-	
 	/**
 	 * 清空session和cokie
 	 * @param length
@@ -53,5 +52,25 @@ public class Util {
 				response.addCookie(cookie);  
 			}
 		}
+	}
+	
+	/**
+	 * 获取客户端的外网IP
+	 * @param request
+	 * @return
+	 */
+	public static String getIpAddr(HttpServletRequest request) {
+	    String ip = request.getHeader("x-forwarded-for");
+	    if(ip == null || ip.length() == 0 ||"unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getHeader("Proxy-Client-IP");
+	    }
+	    if(ip == null || ip.length() == 0 ||"unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getHeader("WL-Proxy-Client-IP");
+	    }
+	    if(ip == null || ip.length() == 0 ||"unknown".equalsIgnoreCase(ip)) {
+	        ip = request.getRemoteAddr();
+	    }
+	    ip = ip.equals("0:0:0:0:0:0:0:1")?"127.0.0.1":ip;
+	    return ip;
 	}
 }

@@ -2,30 +2,38 @@
 
 /**************全局变量********************/
 //颜色
-$g_headerBgColor: #264863;
-
+$g_headerBgColor: #2E3440;
+$g_bodybgColor: #F2F3F5;
 $g_greyColor: #e5e6e6;
-$g_greyBorderColor: #E1E1E1;
+$g_greyBorderColor: #D9D9D9;
 $g_lightGreyColor: #F4F4F4;
-$g_greenColor: #50C14E; //#83b544;
+$g_greenColor: #13C5A5; 
 $g_redColor: #e73a40;//#FF5E1D;//#e64346;
-$g_blueColor:#0089EC;
+$g_blueColor:#2c7ed0;
 $g_blueColor2:#1995e3;
 $g_blackColor: #262E39;
 $g_brownColor: #B29956;
 
+//按钮颜色,主题颜色
+$g_mainColor: #13c5a5;
+$g_mainToColor: #12bb9c;
+
+
+//边框颜色
+$g_greenBorderColor: #12b195;
+$g_greyBtnBorderColor: #cfcfcf;
+
 
 //输入框
 $g_inpPlhdTextColor: #b5b5b5;    //placeholder文字颜色
-$g_inputBorderColor: #d5dadf;    //边框
+$g_inputBorderColor: #cfcfcf;    //边框
 
 //高宽
-$g_headerH: 84px;   
-$g_pageMinW: 1024px;
-$g_pageDesH: 80px;
+$g_headerH: 50px;   
+$g_pageMinW: 1200px;
 $g_boxPadding: 15px;
 
-$g_leftPageW: 200px;
+$g_leftPageW: 150px;
 $g_headerHome: 60px;     //登录之后的头部高度
 $g_leftPl: 80px;
 $g_footerH: 45px;

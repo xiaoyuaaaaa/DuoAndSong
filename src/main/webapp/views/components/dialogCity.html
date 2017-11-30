@@ -2,7 +2,7 @@
 	<!-- 对话框开始 start-->
 	<el-dialog :visible.sync="dialog.city.status" :close-on-click-modal="false" custom-class="dialog-multi dialog-city">
 		<span slot="title">
-		 	<span v-text="(slt.city.item.length < 1?'请选择':'已选择') + dialog.city.title+'：'"></span>
+		 	<span class="hr-text-bold" v-text="(slt.city.item.length < 1?'请选择':'已选择') + dialog.city.title+'：'"></span>
 		 	<span class="dialog-select-wrap">
 		 		<span v-for="(item,index) in slt.city.item" v-text="item.value" @click="removeSltItem('city',index)"></span>
 		 	</span>
@@ -58,7 +58,7 @@
 		</div>
 		<span slot="footer" class="dialog-footer">
 			<a class="hr-btn hr-btn-default" @click="dialog.city.status=false">取 消</a>
-			<a class="hr-btn hr-btn-yellow" @click="dialogConfirm('city');">确 定</a>
+			<a class="hr-btn hr-btn-green" @click="dialogConfirm('city');">确 定</a>
 		</span>
 	</el-dialog>
 	<!-- 对话框开始 end-->

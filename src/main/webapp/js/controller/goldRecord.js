@@ -1,5 +1,5 @@
-require(['$', 'vue', 'VueRouter', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePage", 'headerPage', 'pagination','ajaxData','ajaxUser','Clipboard'],
-    function ($, Vue, VueRouter, vueMethods, ELEMENT, _, info, tool, basePage, headerPage, pagination,ajaxData,ajaxUser,Clipboard) {
+require(['$', 'vue', 'VueRouter', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePage", 'headerPage', 'pagination','ajaxData','ajaxUser','Clipboard','leftPage'],
+    function ($, Vue, VueRouter, vueMethods, ELEMENT, _, info, tool, basePage, headerPage, pagination,ajaxData,ajaxUser,Clipboard,leftPage) {
         "use strict";
 
         Vue.use(ELEMENT);
@@ -23,15 +23,12 @@ require(['$', 'vue', 'VueRouter', 'vueMethods', 'ELEMENT', 'loadash', 'info', 't
                 'base-page': basePage,
                 'header-page': headerPage,
                 'pagination': pagination,
+                'left-page': leftPage,
             },
             data: function () {
                 return {
                     userinfo: {
                         userId:''
-                    },
-                    pageDes: {
-                        name: '金币记录',
-                        des: ''
                     },
                     type:true,
                     recordList:{

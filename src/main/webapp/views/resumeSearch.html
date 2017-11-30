@@ -1,307 +1,331 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<title>多简历-全网邀约</title>
-	<meta name="keywords" content="多简历,免费简历,人才库,简历库">
-	<meta name="description" content="多简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让多简历成为企业与人才之间沟通的桥梁。">
-	<meta name="renderer" content="webkit|ie-comp|ie-stand">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, no-siteapp">
-	<meta http-equiv="Pragma" content="no-cache">
-	<meta http-equiv="Expires" content="0">
-	<link rel="shortcut icon" href="../img/common/logo.ico">
-	<link rel="stylesheet" type="text/css" href="../js/lib/element/element.min.css" />
-	<link rel="stylesheet" type="text/css" href="../js/lib/element/element.min.css"/>
-	<link rel="stylesheet" type="text/css" href="../css/common/base.css" />
-	<link rel="stylesheet" type="text/css" href="../css/controller/resumeSearch.css"/>
-	<script type="text/javascript" src="../js/require-config.js" defer="true"></script>
-	<script data-main="../js/controller/resumeSearch.js" src="../js/lib/require/require.js" defer="true"></script>
+    <meta charset="utf-8"/>
+    <title>送简历-全网邀约</title>
+    <meta name="keywords" content="送简历,免费简历,人才库,简历库">
+    <meta name="description"
+          content="送简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让送简历成为企业与人才之间沟通的桥梁。">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, no-siteapp">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <link rel="shortcut icon" href="../img/common/logo.ico">
+    <link rel="stylesheet" type="text/css" href="../js/lib/element/element.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../js/lib/element/element.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/common/base.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/controller/resumeSearch.css"/>
+    <script type="text/javascript" src="../js/require-config.js" defer="true"></script>
+    <script data-main="../js/controller/resumeSearch.js" src="../js/lib/require/require.js" defer="true"></script>
 </head>
 <body>
 <div id="app" v-cloak>
 	<base-page ref="basePageChild"></base-page>
-	<header-page :userinfo="userinfo" :pagename="'resumeSearch'"></header-page>
-	<div class="hr-page-description">
-		<div class="hr-wrap">
-			<h1 v-text="pageDes.name"></h1>
-			<h2 v-text="'-- '+pageDes.des"></h2>
-		</div>
-	</div>
-	
+	<header-page :userinfo="userinfo" ></header-page>
 	<div class="hr-main-page">
+		<left-page pagename="resumeSearch"></left-page>
 		<!-- 最近搜索 start-->
-		<div class="resumeSearch-header hr-bg-grey-light">
-			<el-dropdown trigger="click" :menu-align="'start'" v-if="historyData.length>0">
-			  <a class="el-dropdown-link history-btn hr-btn-default">
-			  	<span class="hr-color-blue hr-fontsize14">最近搜索条件</span>
-			  </a>
-			  <el-dropdown-menu slot="dropdown" class="history-drop">
-			    <el-dropdown-item @click.native="selectHistory(item)" :title="item.conditionStr"
-			    	 v-for="(item,index) in historyData" :key="item" v-text="item.conditionStr"></el-dropdown-item>
-			  </el-dropdown-menu>
-			</el-dropdown>
-			<div class="hr-fr">
+		<div class="resumeSearch-header hr-vertical-middle-container">
+			<div class="list">
+				<el-input v-model="tempSearch.searches.value" size="small" @keyup.native.enter="submitResumeSearch" placeholder="请输入简历关键字，多关键字空格分隔"></el-input>
+			</div><div class="list hr-ml20">
+				<el-row>
+					<el-col :span="17">
+						<el-input v-model="tempSearch.company.value" :maxlength="50" @keyup.native.enter="submitResumeSearch" size="small" placeholder="请输入公司名称"></el-input>
+					</el-col>
+					<el-col :span="6" :offset="1" class="hr-pt5 hr-mt2">
+						<el-checkbox v-model="tempSearch.latelyCompName.value" size="small">当前公司</el-checkbox>
+					</el-col>
+				</el-row>
+			</div>
+			<div>
+				<a class="hr-btn hr-btn-green hr-mr10 hr-ml30 hr-vertical-middle-container" @click="submitResumeSearch"><img src="../img/search/search-icon.png"/> <span>搜索</span></a>
+				<a class="hr-btn hr-btn-default hr-mr10" @click="clearCondition">清空搜索</a>
+				<el-dropdown trigger="click" :menu-align="'start'" v-if="historyData.length>0" style="line-height: 31px;">
+				  <a class="el-dropdown-link history-btn hr-btn-default">
+				  	<span class="hr-color-blue hr-fontsize14"><i class="el-input__icon el-icon-caret-top" style="top: 15px;"></i>最近搜索的条件</span>
+				  </a>
+				  <el-dropdown-menu slot="dropdown" class="history-drop">
+				    <el-dropdown-item @click.native="selectHistory(item)" :title="item.conditionStr"
+				    	 v-for="(item,index) in historyData" :key="item" v-text="item.conditionStr"></el-dropdown-item>
+				  </el-dropdown-menu>
+				</el-dropdown>
+			</div>
+			<a class="hr-color-blue hr-pt5 hr-mt2 hr-fr " @click="showConditionAll = !showConditionAll">
+                {{showConditionAll?'收起条件':'展开条件'}}<i class="iconfont icon-triangle-copy" :class="showConditionAll?'up':''"></i></a>
+
+			<!-- 搜索条件 start-->
+			<el-collapse-transition>
+			<div class="resumeSearch-condition" v-show="showConditionAll">
+				<div class="hr-search-wrap hr-mt20">
+					<div class="list">
+						<p class="title">选择职业</p>
+						<el-input placeholder="请选择职业（限3个）" :readonly="true" icon="menu" size="small" :title="tempSearch.job.value" v-model="tempSearch.job.value" @click.native="openDialog('job')"> </el-input>
+					</div>
+					<div class="list">
+						<p class="title">期望城市</p>
+						<el-input placeholder="请选择期望城市（限3个）" :readonly="true" icon="menu" size="small" :title="tempSearch.city.value" v-model="tempSearch.city.value" @click.native="openDialog('city')"> </el-input>
+					</div>
+					<div class="list">
+						<p class="title">期望薪资</p>
+						<el-select v-model="tempSearch.salary.item" placeholder="请选择期望薪资" size="small" class="hr-width-percent100">
+						    <el-option
+						      v-for="item in salaryList"
+						      :key="item.value"
+						      :label="item.value"
+						      :value="item">
+						    </el-option>
+						</el-select>
+					</div>
+					<div class="list">
+						<p class="title">求职状态</p>
+						<el-select v-model="tempSearch.jobState.item" placeholder="请选择求职状态" size="small" class="hr-width-percent100">
+						    <el-option
+						      v-for="item in jobStateList"
+						      :key="item.value"
+						      :label="item.value"
+						      :value="item">
+						    </el-option>
+						</el-select>
+					</div>
+					<div class="list">
+						<p class="title">性别</p>
+						<el-select v-model="tempSearch.sex.item" placeholder="请选择性别" size="small" class="hr-width-percent100">
+						    <el-option
+						      v-for="item in sexList"
+						      :key="item.value"
+						      :label="item.value"
+						      :value="item">
+						    </el-option>
+						</el-select>
+					</div>
+					<div class="list">
+						<p class="title">更新日期</p>
+						<el-select v-model="tempSearch.updateTime.item" placeholder="请选择更新日期" size="small" class="hr-width-percent100">
+						    <el-option
+						      v-for="item in updateTimeList"
+						      :key="item.value"
+						      :label="item.value"
+						      :value="item">
+						    </el-option>
+						</el-select>
+					</div>
+					<div class="list">
+						<p class="title">学历</p>
+						<el-row>
+							<el-col :span="showEducationList2?11:24">
+								<el-select v-model="tempSearch.edu1.item" title="最低学历" placeholder="最低学历" size="small" class="hr-width-percent100" @change="select2Option('education','edu1','edu2','edu1')">
+								    <el-option
+								      v-for="(item,index) in educationList1"
+								      :key="item.value"
+								      :label="item.value"
+								      :value="item">
+								    </el-option>
+								</el-select>
+							</el-col>
+							<el-col :span="2" class='hr-text-center hr-pt5' v-show="showEducationList2">
+								-
+							</el-col>
+							<el-col :span="11" v-show="showEducationList2">
+								<el-select v-model="tempSearch.edu2.item" title="最高学历" placeholder="最高学历" size="small" class="hr-width-percent100" @change="select2Option('education','edu1','edu2')">
+								    <el-option
+								      v-for="item in educationList2"
+								      :key="item.value"
+								      :label="item.value"
+								      :value="item">
+								    </el-option>
+								</el-select>
+							</el-col>
+						</el-row>
+					</div>
+					<div class="list">
+						<p class="title">年龄</p>
+						<el-row>
+							<el-col :span="11">
+								<el-input v-model="resumeSearch.startAge" @keyup.native.enter="submitResumeSearch" @blur="ageJudge('startAge','endAge')" size="small" min="18" max="99" placeholder="最小年龄" :maxlength="2"></el-input>
+							</el-col>
+							<el-col :span="2" class='hr-text-center hr-pt5'>
+								-
+							</el-col>
+							<el-col :span="11">
+								<el-input v-model="resumeSearch.endAge" @keyup.native.enter="submitResumeSearch" @blur="ageJudge('endAge','startAge')" size="small" min="18" max="99" placeholder="最大年龄" :maxlength="2"></el-input>
+							</el-col>
+						</el-row>
+					</div>
+					<div class="list">
+						<p class="title">工作经验</p>
+						<el-row>
+							<el-col :span="11">
+								<el-input v-model="resumeSearch.startYear" @keyup.native.enter="submitResumeSearch" @blur="yearJudge('startYear','endYear')" size="small" min="0" max="99" placeholder="最小工龄" :maxlength="2"></el-input>
+							</el-col>
+							<el-col :span="2" class='hr-text-center hr-pt5'>
+								-
+							</el-col>
+							<el-col :span="11">
+								<el-input v-model="resumeSearch.endYear" @keyup.native.enter="submitResumeSearch" @blur="yearJudge('endYear','startYear')" size="small" min="0" max="99" placeholder="最大工龄" :maxlength="2"></el-input>
+							</el-col>
+						</el-row>
+					</div>
+				</div>
+			</div>
+			</el-collapse-transition>
+			<!-- 搜索条件 end-->
+		
+			<!--<div class="hr-fr">
 				下载剩余：<span class="hr-color-red" v-text="userinfo.gainNum/5 || 0"></span>份简历
 				(<span v-text="userinfo.gainNum"></span>个金币)
 				<a href="/record/main?type=2" class="hr-color-blue hr-ml20">暂存简历</a>(<span v-text="userinfo.storageCount || 0"></span>份)
 				<a href="/record/main?type=1" class="hr-color-blue hr-ml20">已下载简历</a>(<span v-text="userinfo.gainCount || 0"></span>份)
-			</div>
+			</div>-->
 		</div>
 		<!-- 最近搜索 end-->
-		
-		<!-- 搜索条件 start-->
-		<div class="resumeSearch-condition">
-			<div class="hr-search-wrap hr-mt10">
-				<div class="list">
-					<p class="title">关键字</p>
-					<el-input v-model="tempSearch.searches.value" size="small" @keyup.native.enter="submitResumeSearch" placeholder="请输入简历关键字，多关键字空格分隔"></el-input>
-				</div>
-				<div class="list">
-					<p class="title">最近公司</p>
-					<el-row>
-						<el-col :span="17">
-							<el-input v-model="tempSearch.company.value" :maxlength="50" @keyup.native.enter="submitResumeSearch" size="small" placeholder="请输入公司名称"></el-input>
-						</el-col>
-						<el-col :span="6" :offset="1" class='hr-pt5'>
-							<el-checkbox v-model="tempSearch.latelyCompName.value" size="small">当前公司</el-checkbox>
-						</el-col>
-					</el-row>
-				</div>
-				<div class="list">
-					<p class="title">选择职业</p>
-					<el-input placeholder="请选择职业（限3个）" :readonly="true" icon="menu" size="small" :title="tempSearch.job.value" v-model="tempSearch.job.value" @click.native="openDialog('job')"> </el-input>
-				</div>
-				<div class="list">
-					<p class="title">期望城市</p>
-					<el-input placeholder="请选择期望城市（限3个）" :readonly="true" icon="menu" size="small" :title="tempSearch.city.value" v-model="tempSearch.city.value" @click.native="openDialog('city')"> </el-input>
-				</div>
-				<div class="list">
-					<p class="title">期望薪资</p>
-					<el-select v-model="tempSearch.salary.item" placeholder="请选择期望薪资" size="small" class="hr-width-percent100">
-					    <el-option
-					      v-for="item in salaryList"
-					      :key="item.value"
-					      :label="item.value"
-					      :value="item">
-					    </el-option>
-					</el-select>
-				</div>
-				<div class="list">
-					<p class="title">求职状态</p>
-					<el-select v-model="tempSearch.jobState.item" placeholder="请选择求职状态" size="small" class="hr-width-percent100">
-					    <el-option
-					      v-for="item in jobStateList"
-					      :key="item.value"
-					      :label="item.value"
-					      :value="item">
-					    </el-option>
-					</el-select>
-				</div>
-				<div class="list">
-					<p class="title">性别</p>
-					<el-select v-model="tempSearch.sex.item" placeholder="请选择性别" size="small" class="hr-width-percent100">
-					    <el-option
-					      v-for="item in sexList"
-					      :key="item.value"
-					      :label="item.value"
-					      :value="item">
-					    </el-option>
-					</el-select>
-				</div>
-				<div class="list">
-					<p class="title">更新日期</p>
-					<el-select v-model="tempSearch.updateTime.item" placeholder="请选择更新日期" size="small" class="hr-width-percent100">
-					    <el-option
-					      v-for="item in updateTimeList"
-					      :key="item.value"
-					      :label="item.value"
-					      :value="item">
-					    </el-option>
-					</el-select>
-				</div>
-				<div class="list">
-					<p class="title">学历</p>
-					<el-row>
-						<el-col :span="showEducationList2?11:24">
-							<el-select v-model="tempSearch.edu1.item" title="最低学历" placeholder="最低学历" size="small" class="hr-width-percent100" @change="select2Option('education','edu1','edu2','edu1')">
-							    <el-option
-							      v-for="(item,index) in educationList1"
-							      :key="item.value"
-							      :label="item.value"
-							      :value="item">
-							    </el-option>
-							</el-select>
-						</el-col>
-						<el-col :span="2" class='hr-text-center hr-pt5' v-show="showEducationList2">
-							-
-						</el-col>
-						<el-col :span="11" v-show="showEducationList2">
-							<el-select v-model="tempSearch.edu2.item" title="最高学历" placeholder="最高学历" size="small" class="hr-width-percent100" @change="select2Option('education','edu1','edu2')">
-							    <el-option
-							      v-for="item in educationList2"
-							      :key="item.value"
-							      :label="item.value"
-							      :value="item">
-							    </el-option>
-							</el-select>
-						</el-col>
-					</el-row>
-				</div>
-				<div class="list">
-					<p class="title">年龄</p>
-					<el-row>
-						<el-col :span="11">
-							<el-input v-model="resumeSearch.startAge" @keyup.native.enter="submitResumeSearch" @blur="ageJudge('startAge','endAge')" size="small" min="18" max="99" placeholder="最小年龄" :maxlength="2"></el-input>
-						</el-col>
-						<el-col :span="2" class='hr-text-center hr-pt5'>
-							-
-						</el-col>
-						<el-col :span="11">
-							<el-input v-model="resumeSearch.endAge" @keyup.native.enter="submitResumeSearch" @blur="ageJudge('endAge','startAge')" size="small" min="18" max="99" placeholder="最大年龄" :maxlength="2"></el-input>
-						</el-col>
-					</el-row>
-				</div>
-				<div class="list">
-					<p class="title">工作经验</p>
-					<el-row>
-						<el-col :span="11">
-							<el-input v-model="resumeSearch.startYear" @keyup.native.enter="submitResumeSearch" @blur="yearJudge('startYear','endYear')" size="small" min="0" max="99" placeholder="最小工龄" :maxlength="2"></el-input>
-						</el-col>
-						<el-col :span="2" class='hr-text-center hr-pt5'>
-							-
-						</el-col>
-						<el-col :span="11">
-							<el-input v-model="resumeSearch.endYear" @keyup.native.enter="submitResumeSearch" @blur="yearJudge('endYear','startYear')" size="small" min="0" max="99" placeholder="最大工龄" :maxlength="2"></el-input>
-						</el-col>
-					</el-row>
-				</div>
-				<div class="list">
-					<a class="hr-btn hr-btn-yellow hr-mr10" @click="submitResumeSearch"><i class="search-btn"></i> 搜索</a>
-					<a class="hr-btn hr-btn-default" @click="clearCondition">清空搜索</a>
-				</div>
-			</div>
-		</div>
-		<!-- 搜索条件 end-->
-		
-		<!-- 小详情 start-->
-		<table>
-			<tr class="detail-list hr-hide" v-for="(shortDetail,index) in resumeAjaxData.resumeList" :key="index" :class="'detail-list'+index">
-				<td colspan="9">
-					<div class="detail-list-content">
-						<span v-show="shortDetail.lateCityName">居住地：<span v-text="shortDetail.lateCityName"></span> <br /></span>
-						当前状态：<span v-text="getKeyMap(info.getNewJobStatusKeyMap(),shortDetail.jobStatus,'--')"></span>
-						<div>
-							<strong>最近工作</strong> <br />
-							<strong v-text="shortDetail.lateCompTime" class="hr-mr5"></strong>
-							<strong v-text="shortDetail.lateCompName" v-show="shortDetail.lateCompName"></strong><br />
-							<strong v-text="shortDetail.lateJobTitle"></strong>
-							<div v-html="shortDetail.lateCompDesc">最近工作</div>
-						</div>
-						<div>
-							<strong>最高学历</strong> <br />
-							<div>
-								<span v-text="shortDetail.lateEduTime" class="hr-mr5"></span>
-								<span v-text="shortDetail.lateSchoolName" class="hr-mr5"></span>
-								<span v-text="shortDetail.lateMajor"></span>
-								
-							</div>
-						</div>
-		    	</div>
-				</td>
-			</tr>
-		</table>
-		<!-- 小详情 end-->
-			
-		<!-- 结果列表 start-->
-		<div class="hr-resumeList-wrap">
-			<div class="search-condition">
-				<span class="hr-ml15">您搜索的是：<span v-text="conditionShowStr || '暂无条件'"></span></span>
-			</div>
-			<div class="resumeSearch-showCondition hr-vertical-middle-container hr-bg-grey-light">
-				<span>共找到 <span v-text="(resumeAjaxData.rowcount > 1000 ?'1000+':resumeAjaxData.rowcount) || 0" class="hr-color-blue hr-text-bold"></span> 份简历</span>
-				<!--<span class="hr-ml15 conditionShowStr">您搜索的是：<span v-text="conditionShowStr || '暂无条件'"></span></span>-->
-			</div>
-			<template>
-				<el-checkbox-group v-model="checkUserId" @change="handleCheckedSingleChange">
-		    	<el-table :data="resumeAjaxData.resumeList" class="resumeTable" row-class-name="resumeRow">
-		        <el-table-column width="30">
-			    		<template scope="scope">
-			    			<el-checkbox size="small" :label="scope.row"></el-checkbox>
-					    </template>
-			    	</el-table-column>
-		        <el-table-column label="职位名称" min-width="250">
-		        	<template scope="scope">
-				        <a v-if="userinfo.status" :href="'/cv/cv_detail?userId='+scope.row.userId+'&searchId='+resumeAjaxData.searchId+'&token='+resumeAjaxData.searchCode+'&source=rc&keyword='+tempSearch.searches.value"
-				        	 class="jobTitle" target="_blank" :class="{'visited': scope.row.isRead}">
-				        	<div class="hr-text-truncate" :title="scope.row.jobTitle">
-				        		<span class="hr-color-blue" v-text="scope.row.jobTitle || '其他'"></span>
-				        	</div>
-				        </a>
-				        <a v-if="!userinfo.status" @click="needCompanyVerify()" class="jobTitle">
-				        	<div class="hr-text-truncate" :title="scope.row.jobTitle">
-				        		<span class="hr-color-blue" v-text="scope.row.jobTitle || '其他'"></span>
-				        	</div>
-				        </a>
-				        <a class="upselect" @click="appendDetail(scope)" :class="{'up':scope.row.showDetail}"></a>
-		        	</template>
-		        </el-table-column>
-		        <el-table-column label="城市" min-width="100">
-		        	<template scope="scope">
-				        <div v-text="scope.row.cityName || '--'" class="hr-text-truncate" :title="scope.row.cityName"></div>
-				    	</template>
-		        </el-table-column>
-		        <el-table-column label="学历" min-width="80">
-		        	<template scope="scope">
-				        <div v-text="getKeyMap(info.getEducationKeyMap(),scope.row.education,'--') || '--'" class="hr-text-truncate"></div>
-				    	</template>
-		        </el-table-column>
-		        <el-table-column label="经验" min-width="80">
-		        	<template scope="scope">
-				        <span v-text="scope.row.jobYear+'年'"></span>
-				    	</template>
-		        </el-table-column>
-		        <el-table-column label="性别" min-width="70">
-		        	<template scope="scope">
-				        <span v-text="scope.row.sex == 2? '女' : '男' || '--'"></span>
-				    	</template>
-		        </el-table-column>
-		        <el-table-column label="年龄" min-width="70">
-		        	<template scope="scope">
-				        <span v-text="scope.row.age+'岁'"></span>
-				    </template>
-		        </el-table-column>
-		        <el-table-column label="期望薪资" min-width="120">
-		        	<template scope="scope">
-				        <div v-text="getKeyMap(info.getSalaryKeyMap(),scope.row.expectedSalary,'--')" class="hr-text-truncate" :title="getKeyMap(info.getSalaryKeyMap(),scope.row.expectedSalary,'--')"></div>
-				    	</template>
-		        </el-table-column>
-		        <el-table-column prop="updateTime" label="更新时间" align="right" min-width="120">
-		        	<template scope="scope">
-				        <span v-text="tool.formatDate(scope.row.updateTime,'yyyy-MM-dd') || '--'"></span>
-				    	</template>
-		        </el-table-column>
-		    	</el-table>
-				</el-checkbox-group>
-			</template>
-			<div class="resumeSearch-page-wrap hr-bg-grey-light hr-text-right" v-show="resumeAjaxData.page">
-				<div class="hr-fl">
-					<el-checkbox size="small" :indeterminate="false" v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
-					<a v-if="userinfo.status" @click="operResume(1)" class="hr-icon hr-btn hr-btn-sm hr-btn-default hr-ml15 hr-mr10"><i class="icon-view"></i> 查 看</a>
-					<a v-if="!userinfo.status" @click="needCompanyVerify()" class="hr-icon hr-btn hr-btn-sm hr-btn-default hr-ml15 hr-mr10"><i class="icon-view"></i>查 看</a>
-					<a @click="operResume(2)" class="hr-icon hr-btn hr-btn-sm hr-btn-default"><i class="icon-temporary"></i>暂 存</a>
-				</div>
-				<pagination ref="pagination" :page-size-hide="false" :current-page="resumeAjaxData.page" :total-page="resumeAjaxData.totalPage" @changesize="changePageSize" @change="changePage"></pagination>
-			</div>
-		</div>
-		<!-- 结果列表 end-->
-	</div>
-	
-	<!-- 弹窗组件 start-->
-	<dialog-job ref="jobChild" :dialog="dialog" :job-list="jobList" :job-level-canSelet="true" :max-select="3" @submit="getDialogJobData"></dialog-job>
-	<dialog-city ref="cityChild" :dialog="dialog" :city-list="cityList" :hot-city="hotCity" :max-select="3" @submit="getDialogCityData"></dialog-city>
-	<!-- 弹窗组件 end-->
+
+
+        <!-- 小详情 start-->
+        <table>
+            <tr class="detail-list hr-hide" v-for="(shortDetail,index) in resumeAjaxData.resumeList" :key="index"
+                :class="'detail-list'+index">
+                <td colspan="9">
+                    <div class="detail-list-content">
+                        <span v-show="shortDetail.lateCityName">居住地：<span
+                                v-text="shortDetail.lateCityName"></span> <br/></span>
+                        当前状态：<span v-text="getKeyMap(info.getNewJobStatusKeyMap(),shortDetail.jobStatus,'--')"></span>
+                        <div>
+                            <strong>最近工作</strong> <br/>
+                            <strong v-text="shortDetail.lateCompTime" class="hr-mr5"></strong>
+                            <strong v-text="shortDetail.lateCompName" v-show="shortDetail.lateCompName"></strong><br/>
+                            <strong v-text="shortDetail.lateJobTitle"></strong>
+                            <div v-html="shortDetail.lateCompDesc">最近工作</div>
+                        </div>
+                        <div>
+                            <strong>最高学历</strong> <br/>
+                            <div>
+                                <span v-text="shortDetail.lateEduTime" class="hr-mr5"></span>
+                                <span v-text="shortDetail.lateSchoolName" class="hr-mr5"></span>
+                                <span v-text="shortDetail.lateMajor"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <!-- 小详情 end-->
+
+        <!-- 结果列表 start-->
+        <div class="hr-resumeList-wrap">
+            <div class="search-condition">
+                <span class="">您搜索的是：<span v-text="conditionShowStr || '暂无条件'"></span></span>
+            </div>
+            <div class="resumeSearch-showCondition hr-vertical-middle-container">
+                <span>共找到 <span v-text="(resumeAjaxData.rowcount > 1000 ?'1000+':resumeAjaxData.rowcount) || 0"
+                                class="hr-color-blue hr-text-bold"></span> 份简历</span>
+                <!--<span class="hr-ml15 conditionShowStr">您搜索的是：<span v-text="conditionShowStr || '暂无条件'"></span></span>-->
+            </div>
+            <template>
+                <el-checkbox-group v-model="checkUserId" @change="handleCheckedSingleChange">
+                    <el-table :data="resumeAjaxData.resumeList" class="resumeTable" row-class-name="resumeRow">
+                        <el-table-column width="30">
+                            <template scope="scope">
+                                <el-checkbox size="small" :label="scope.row"></el-checkbox>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="职位名称" min-width="250">
+                            <template scope="scope">
+                                <a v-if="userinfo.status"
+                                   :href="'/cv/cv_detail?userId='+scope.row.userId+'&searchId='+resumeAjaxData.searchId+'&token='+resumeAjaxData.searchCode+'&source=rc&keyword='+tempSearch.searches.value"
+                                   class="jobTitle" target="_blank" :class="{'visited': scope.row.isRead}">
+                                    <div class="hr-text-truncate" :title="scope.row.jobTitle">
+                                        <span class="hr-color-blue" v-text="scope.row.jobTitle || '其他'"></span>
+                                    </div>
+                                </a>
+                                <a v-if="!userinfo.status" @click="needCompanyVerify()" class="jobTitle">
+                                    <div class="hr-text-truncate" :title="scope.row.jobTitle">
+                                        <span class="hr-color-blue" v-text="scope.row.jobTitle || '其他'"></span>
+                                    </div>
+                                </a>
+                                <a class="upselect" @click="appendDetail(scope)"
+                                   :class="{'up':scope.row.showDetail}"></a>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="城市" min-width="100">
+                            <template scope="scope">
+                                <div v-text="scope.row.cityName || '--'" class="hr-text-truncate"
+                                     :title="scope.row.cityName"></div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="学历" min-width="80">
+                            <template scope="scope">
+                                <div v-text="getKeyMap(info.getEducationKeyMap(),scope.row.education,'--') || '--'"
+                                     class="hr-text-truncate"></div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="经验" min-width="80">
+                            <template scope="scope">
+                                <span v-text="scope.row.jobYear+'年'"></span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="性别" min-width="70">
+                            <template scope="scope">
+                                <span v-text="scope.row.sex == 2? '女' : '男' || '--'"></span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="年龄" min-width="70">
+                            <template scope="scope">
+                                <span v-text="scope.row.age+'岁'"></span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="状态" min-width="120">
+                            <template scope="scope">
+                                <span  v-text="getKeyMap(info.getNewJobStatusKeyMap(),scope.row.jobStatus,'--')"
+                                     class="hr-text-truncate"
+                                     :title="getKeyMap(info.getNewJobStatusKeyMap(),scope.row.jobStatus,'--')"></span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column label="期望薪资" min-width="120">
+                            <template scope="scope">
+                                <div v-text="getKeyMap(info.getSalaryKeyMap(),scope.row.expectedSalary,'--')"
+                                     class="hr-text-truncate"
+                                     :title="getKeyMap(info.getSalaryKeyMap(),scope.row.expectedSalary,'--')"></div>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="updateTime" label="更新时间" align="right" min-width="120">
+                            <template scope="scope">
+                                <span v-text="tool.formatDate(scope.row.updateTime,'yyyy-MM-dd') || '--'"></span>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                </el-checkbox-group>
+            </template>
+            <div class="resumeSearch-page-wrap hr-bg-grey-light hr-text-right" v-show="resumeAjaxData.page">
+                <div class="hr-fl">
+                    <el-checkbox size="small" :indeterminate="false" v-model="checkAll" @change="handleCheckAllChange">
+                        全选
+                    </el-checkbox>
+                    <a v-if="!userinfo.status" @click="operResume(1)"
+                       class="hr-icon hr-btn hr-btn-sm hr-btn-default hr-ml15 hr-mr10 view"><i class="icon-view"></i> 查
+                        看</a>
+                    <a v-if="userinfo.status" @click="needCompanyVerify()"
+                       class="hr-icon hr-btn hr-btn-sm hr-btn-default hr-ml15 hr-mr10 view"><i class="icon-view"></i>查 看</a>
+                    <a @click="operResume(2)" class="hr-icon hr-btn hr-btn-sm hr-btn-default temporary"><i
+                            class="icon-temporary"></i>暂 存</a>
+                </div>
+                <pagination ref="pagination" :page-size-hide="false" :current-page="resumeAjaxData.page"
+                            :total-page="resumeAjaxData.totalPage" @changesize="changePageSize"
+                            @change="changePage"></pagination>
+            </div>
+        </div>
+        <!-- 结果列表 end-->
+    </div>
+
+    <!-- 弹窗组件 start-->
+    <dialog-job ref="jobChild" :dialog="dialog" :job-list="jobList" :job-level-canSelet="true" :max-select="3"
+                @submit="getDialogJobData"></dialog-job>
+    <dialog-city ref="cityChild" :dialog="dialog" :city-list="cityList" :hot-city="hotCity" :max-select="3"
+                 @submit="getDialogCityData"></dialog-city>
+    <!-- 弹窗组件 end-->
 </div>
 </body>
 </html>

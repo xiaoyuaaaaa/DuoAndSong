@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cloud.common.model.ResultBaseModel;
 import com.cloud.common.service.FileUploadService;
+import com.cloud.util.resp.ResponseResult;
 
 /** 
  * @author tobber
@@ -34,10 +35,9 @@ public class FileUploadController {
     private FileUploadService fileUploadService;
     
     @ApiOperation(value="头像上传",httpMethod="POST")
-	@ApiResponse(code=200,message="上传成功",response=ResultBaseModel.class)
     @RequestMapping(value = "heandImgUpload",method=RequestMethod.POST)
     @ResponseBody
-	public ResponseEntity<ResultBaseModel> heandImgUpload(HttpServletRequest request,MultipartFile file,HttpServletResponse response) {
+	public ResponseEntity<ResponseResult<String>> heandImgUpload(HttpServletRequest request,MultipartFile file,HttpServletResponse response) {
     	return fileUploadService.heandImgUpload(file,response, request);
 	}
 }

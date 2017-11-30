@@ -2,6 +2,31 @@
 /* CSS Document */
 @import "../common/base_variable";
 @import "../common/base_tool";
+body{
+    background-color: transparent;
+}
+.hr-wrap-1000{
+    width: 1100px;
+}
+#header{
+    height: 50px;
+    padding: 25px 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    .hr-btn{
+        font-weight: bold;
+    }
+    .hr-btn-green{
+        padding: 6px 25px;
+    }
+    .hr-btn-default{
+        background-color: transparent;
+        color: white;
+        border-color: transparent;
+    }
+}
 .header-line{
     display: inline-block;
     width: 100%;
@@ -12,63 +37,95 @@
 }
 .banner{
     width: 100%;
+    height: 580px;
     min-width: $g_pageMinW;
-    background: url("../../img/index/banner.jpg") no-repeat;
-    background-size:100% 100%;
-    text-align: right;
+    background: url("../../img/index/top-banner.jpg") center center no-repeat;
+    text-align: center;
+    padding-top:233px ;
     color: #fff;
-    padding:7% 0;
     .text-strong{
         display: block;
         font-size: 42px;
     }
     .text-p{
-        font-size: 22px;
-        height: 41px;
-        line-height: 41px;
-        margin-top: 18px;
-        span{
-            display: inline-block;
-            width: 23px;
-            height: 41px;
-            background: url("../../img/index/banner-span.png") no-repeat ;
+        font-size: 24px;
+        font-weight: bold;
+        margin: 40px 0 80px 0;
+    }
+    .hr-btn{
+        font-size: 18px; 
+        padding: 12px 40px;
+    }
+}
+.banner-else{
+    background: url("../../img/index/middle-bg.png") center top no-repeat;
+}
+.middle{
+    position: relative;
+    padding-top: 95px;
+    
+    .float-tip{
+        height: 470px;
+        width: 400px;
+        position: absolute;
+        top: 140px;
+        left: -238px;
+        display: none;
+        opacity: 0;
+        background: white;
+        text-align: left;
+        padding: 80px 50px;
+        box-shadow: -10px 0px 30px #ccc;
+        .dot{
+            position: absolute;
+            top: 35px;
+            left: 35px;
+        }
+        .sz-bottom{
+            position: absolute;
+            bottom: 25px;
+            right: 35px;
+        }
+        p{
+            font-weight: bold;
+            font-size: 24px;
             text-align: center;
+            margin-bottom: 20px;
+        }
+        div{
+            font-size: 16px;
+            text-indent: 2em;
+            line-height: 40px;
         }
     }
 }
+.company-list{
+    p{
+        font-size: 18px;
+        color: #4c535a;
+        margin: 85px 0 30px 0;
+    }
+}
 .list{
-    padding:60px 0;
+    padding:145px 0 100px 0;
     .item{
-        width: 290px;
+        width: 325px;
+        border: 1px solid $g_greyBorderColor;
         float: left;
-        margin-left: 80px;
+        margin-left: 62px;
+        padding: 23px 0 30px 23px;
+        background-color: white;
+        border-radius: 5px;
+        transition: all .2s linear;
         &:first-child{
             margin-left:0;
         }
-        &:last-child{
-            width: 260px;
-            .item-con{
-                border-right: none;
-            }
-        }
-        .item-head{
-            overflow: hidden;
-            .item-head-img{
-                width: 56px;
-                height: 56px;
-                border-radius: 50%;
-                float: left;
-            }
-            .item-head-title{
-                color: #343434;
-                font-size: 22px;
-                float: left;
-                line-height: 56px;
-                margin-left: 13px;
-            }
+        &:hover{
+            border-color: $g_greenColor;
+            box-shadow: 0px 0px 16px 5px #d7e2e0;
+            transform: translate3d(0, -2px, 0);
         }
         .item-con{
-            border-right: 1px solid #d9d9d9;
             p{
                 color: #666;
                 font-size: 14px;
@@ -78,7 +135,7 @@
                     display: inline-block;
                     width: 4px;
                     height: 4px;
-                    background: #146f9b;
+                    background: $g_greenColor;
                     margin-right: 4px;
                     vertical-align: 3px;
                 }
@@ -86,73 +143,14 @@
         }
     }
 }
-.company{
-    background: #118cd2;
-    padding: 38px 0;
-    min-width: $g_pageMinW;
-    .hr-wrap{
-        .company-list{
-            margin-bottom: 44px;
-            li{
-                width: 100px;
-                height: 100px;
-                border-radius: 50%;
-                float: left;
-                background: #ccc;
-                margin-right:80px;
-                transition: .1s;
-
-                &:hover{
-                    transform: scale(1.1);
-                    transition: .1s;
-                }
-                &:last-child{
-                    margin-right:0;
-                }
-            }
-        }
-        @at-root .message{
-            text-align: center;
-            .title-white{
-                color: #fff;
-                font-size: 20px;
-            }
-            .title-black{
-                color: #333;
-                font-size: 20px;
-            }
-            .text{
-                line-height: 24px;
-                margin-top: 16px;
-            }
-            a{
-                width: 96px;
-                height: 32px;
-                text-align: center;
-                line-height: 32px;
-                color: #fff;
-                display: inline-block;
-                background: linear-gradient(#fbb146,#f38e00);
-                border-radius: 3px;
-                margin-top: 14px;
-                box-shadow: 0 1px 0 #fcc270 inset;
-                text-shadow: 0px -1px 0px #f28623;
-            }
-        }
-    }
-}
-.hr-btn-yellow{
-    background: linear-gradient(#FBB144, #F38E00);
-    border: 1px solid #19374f;
-    color: white;
-    box-shadow: 0 1px 0 #4c5f7a, 0 1px 0 #fcc270 inset;
+.hr-btn-green{
 }
 #footer{
-    background: linear-gradient(#2e5069,#1b3d58);
+    background: $g_bodybgColor;
     height: 61px;
+    color: #666;
     min-width: $g_pageMinW;
     .footer-text{
         line-height: 61px;
-        color: #fff;
     }
 }

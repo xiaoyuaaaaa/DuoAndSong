@@ -17,6 +17,9 @@
 	        <if test="jobTitle != null">
 	            jobTitle=#{jobTitle},
 	        </if>
+	        <if test="heandImg != null">
+	            headImg=#{heandImg},
+	        </if>
 	        <if test="QQ != null">
 	            QQ=#{QQ},
 	        </if>

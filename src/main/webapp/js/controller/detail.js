@@ -29,7 +29,6 @@ require([
             mounted: function () {
                 this.$nextTick(function () {
                 	var that = this;
-                	tool.addPvUv();
                 	tool.loading(true);
                 	this.souce = this.source=='rc'?-1:this.source=='zl'?0:this.source=='qc'?1:2;//来源
                 	this.userStatuJudge(); 
@@ -88,6 +87,25 @@ require([
             		this.$refs.detail_tem.getResumeInfo();
             	},
             	
+                /*统计PV、UV*/
+                addPvUv:function(){
+                	var that = this;
+		        	var browser = tool.getBrowserVersion();
+		        	var config = {
+		        		name: browser?browser[0]:'',
+		        		version:browser?browser[1].split('.')[0]:''
+		        	}
+		        	ajaxResumeDetail.addPvUv(config,function(result){})
+		        	
+		        	/*百度统计*/
+		        	var _hmt = _hmt || [];
+					(function() {
+					  var hm = document.createElement("script");
+					  hm.src = "https://hm.baidu.com/hm.js?6ad35cf26b7649c617b759e87e59ae1f";
+					  var s = document.getElementsByTagName("script")[0]; 
+					  s.parentNode.insertBefore(hm, s);
+					})();
+                },
             }
         });
 

@@ -1,0 +1,11 @@
+<div class="hr-leftPage">
+	<ul class="hr-left-channel">
+		<li class="icon icon1" :class="{'active': pagename=='resumeSearch'}"><a href="/search/index"><i></i>简历搜索</a></li>
+		<li class="icon icon2" :class="{'active': pagename=='resumeManage'}"><a href="/record/main"><i></i>简历管理</a></li>
+		<li class="icon icon3" :class="{'active': pagename=='goldRecord'}"><a href="/record/gold"><i></i>金币记录</a></li>
+		<li class="icon icon4" :class="{'active': pagename=='companyAuth'}"><a href="/user/auth"><i></i>企业验证</a></li>
+		<li class="icon icon5" :class="{'active': pagename=='userCenter'}"><a href="/user/user"><i></i>个人中心</a></li>
+		<!--<li class="icon icon5" :class="{'active': pagename=='notice'}"><a href="/user/user"><i></i>消息通知</a></li>-->
+		<li class="icon icon6"><a @click="userCancel()"><i></i>退出</a></li>
+	</ul>
+</div>

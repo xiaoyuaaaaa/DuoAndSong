@@ -1,6 +1,15 @@
 if (typeof define !== 'function') {
   var define = require('amdefine')(module);
 }
+require.config({
+  paths:{
+  	'accountSet': '../../js/components/accountSet.js',
+    'companyAuthentication': '../../js/components/companyAuthentication.js',
+    'password': '../../js/components/password.js',
+    'emailCheck': '../../js/components/emailCheck.js',
+    'phoneCheck': '../../js/components/phoneCheck.js',
+  }
+});
 
 define([], function(){
   var router = [

@@ -69,7 +69,6 @@ public class RecordController {
 		@ApiResponse(code=200,message="返回信息",response=RecordListModel.class)
 	})
 	@RequestMapping(value="getStorageLogs",method=RequestMethod.POST)
-	@ResponseBody
 	public ResponseEntity<RecordListModel> getStorageLogs(StorageQueryModel storageQueryModel,HttpServletResponse response,HttpServletRequest request){
 		return recordService.getStorageLogs(storageQueryModel,response, request);
 	}
@@ -83,7 +82,6 @@ public class RecordController {
 		@ApiResponse(code=200,message="返回信息",response=GoldResultModel.class)
 	})
 	@RequestMapping(value="getGoldLogs",method=RequestMethod.POST)
-	@ResponseBody
 	public ResponseEntity<GoldResultModel> getGoldLogs(Integer page,Integer pageSize,
 			HttpServletResponse response,HttpServletRequest request){
 		return recordService.getGoldLogs(page,pageSize,response, request);

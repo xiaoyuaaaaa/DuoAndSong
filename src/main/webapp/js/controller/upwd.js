@@ -2,14 +2,20 @@ if(typeof define !== 'function') {
 	var define = require('amdefine')(module);
 }
 
-requirejs(['vue', 'vueMethods', 'ELEMENT', 'loadash', 'tool', "$", "ajaxUser"],
+define(['vue', 'vueMethods', 'ELEMENT', 'loadash', 'tool', "$", "ajaxUser"],
 function(Vue, vueMethods, ELEMENT, _, tool,$, ajaxUser) {
 	Vue.use(ELEMENT);
 	var signin = new Vue({
 		el: '#app',
 		mounted: function(){
 			this.$nextTick(function(){
-				tool.addPvUv();
+				var _hmt = _hmt || [];
+				(function() {
+				  var hm = document.createElement("script");
+				  hm.src = "https://hm.baidu.com/hm.js?50d13d049948122f57a3031f16ed6a58";
+				  var s = document.getElementsByTagName("script")[0]; 
+				  s.parentNode.insertBefore(hm, s);
+				})();
 			})
 		},
 		data: function() {

@@ -42,6 +42,13 @@ public class UserController {
 		return new ModelAndView("user");
 	}
 	
+	@ApiOperation(value="企业认证路由",httpMethod="GET")
+	@RequestMapping(value="auth",method=RequestMethod.GET)
+	public ModelAndView auth(HttpServletResponse response,HttpServletRequest request){
+		response.setContentType("text/html;charset=UTF-8");
+		return new ModelAndView("companyAuth");
+	}
+	
 	@ApiOperation(value="获取用户信息接口",httpMethod="GET")
 	@ApiResponses({
 		@ApiResponse(code=200,message="返回信息",response=User.class)

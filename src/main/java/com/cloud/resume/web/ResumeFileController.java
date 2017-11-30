@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cloud.resume.service.ResumeFileService;
@@ -29,7 +28,6 @@ public class ResumeFileController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="userId",value = "简历ID",required = true,dataType="String",paramType="query"),
 	})
-	@ResponseBody
 	public ModelAndView initPdf(String userId,HttpServletResponse response,HttpServletRequest request){
 		ModelAndView mdoe = resumeFileService.initPdf(userId, request, response);
 		return mdoe;
@@ -41,7 +39,6 @@ public class ResumeFileController {
 	@ApiImplicitParams({
 		@ApiImplicitParam(name="userId",value = "简历ID",required = true,dataType="String",paramType="query"),
 	})
-	@ResponseBody
 	public ModelAndView initWord(String userId,HttpServletResponse response,HttpServletRequest request){
 		ModelAndView mdoe = resumeFileService.initWord(userId, request, response);
 		return mdoe;

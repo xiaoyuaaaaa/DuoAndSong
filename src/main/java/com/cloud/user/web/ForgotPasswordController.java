@@ -50,8 +50,8 @@ public class ForgotPasswordController {
 	@ApiResponses({
 		@ApiResponse(code=200,message="修改成功",response=ResultBaseModel.class)
 	})
-	@ResponseBody
 	@RequestMapping(value="forgotPassword",method=RequestMethod.POST)
+	@ResponseBody
 	public ResponseEntity<ResultBaseModel> forgetPassword(String mobile_code,String telephone,String password,HttpServletResponse response,HttpServletRequest request){
 		return forgetService.forgetPassword(mobile_code,telephone,password,response, request);
 	}

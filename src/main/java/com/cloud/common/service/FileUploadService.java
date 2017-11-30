@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.cloud.common.model.ResultBaseModel;
+import com.cloud.util.resp.ResponseResult;
 
 /** 
  * @author tobber
@@ -19,7 +20,7 @@ public interface FileUploadService {
      * @param request
      * @return
      */
-    public ResponseEntity<ResultBaseModel> heandImgUpload(
+    public ResponseEntity<ResponseResult<String>> heandImgUpload(
     		MultipartFile file,
     		HttpServletResponse response,
     		HttpServletRequest request

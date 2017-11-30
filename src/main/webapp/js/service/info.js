@@ -26,7 +26,7 @@ define([], function() {
         getResumeSearches:function (){
 			return [{
 				id: 'yf',
-				value: '多简历',
+				value: '亿封简历',
 				shorthand:'亿封',
 				href:'/cv/cvpool'
 			},{
@@ -779,7 +779,7 @@ define([], function() {
 				value: '已下架'
 			}]			
 		},
-		/*选择多简历来源*/
+		/*选择亿封简历来源*/
         getYiFengResumSource:function (){
 			return [{
 				id: '0',

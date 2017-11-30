@@ -1,0 +1,127 @@
+@charset "utf-8";
+/* CSS Document */
+@import "../common/base_variable";
+@import "../common/base_tool";
+#app{
+    min-width: 1200px;
+}
+.hr-auth-con{
+    border: 1px solid #dbdbdb;
+    border-radius: 2px;
+    background: #fff;
+    padding: 50px;
+    margin-top: 15px;
+    box-shadow: 0 2px 2px #ebebeb;
+    .company-list{
+        overflow: hidden;
+        li{
+            width: 318px;
+            border: 1px solid #e1e1e1;
+            padding:5px 4px 15px;
+            text-align: center;
+            border-radius: 3px;
+            float: left;
+            margin-right: 49px;
+            margin-bottom: 30px;
+            button{
+                border: none;
+                outline: none;
+                width: 88px;
+                height: 32px;
+                border-radius: 16px;
+                cursor: pointer;
+                &:disabled{
+                    color: #9a9a9a;
+                    background: linear-gradient(#f7f5f6,#e5e5e5);
+                    cursor: inherit;
+                    border: 1px solid #d2d2d2;
+                }
+
+            }
+            .company-list-msg{
+                margin: 17px 0;
+            }
+        }
+    }
+}
+.bind-wrap{
+    .el-dialog--small{
+        width: 450px;
+    }
+    .el-dialog__header{
+        display: none;
+    }
+    .el-dialog__body{
+        padding: 30px 40px 60px;
+        .bind-content-top{
+            text-align: center;
+            position: relative;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            &:after{
+                content: '';
+                position: absolute;
+                bottom: -20px;
+                left: 0;
+                width: 100%;
+                background: url(/img/user/ico-shadow.png);
+                height: 18px;
+            }
+        }
+        .form-content{
+            padding: 0 20px;
+            .el-input-group{
+                box-shadow: inset 0 0 12px 0px #ddd;
+                border-radius: 4px;
+                .el-input-group__prepend,.el-input__inner{
+                    border-color: #E5E5E5;
+                    background-color: transparent;
+                    height: 40px;
+                }
+                .el-input__inner{
+                    padding: 7.5px 10px;
+                }
+                .el-input-group__prepend{
+                    color: #999;
+                    line-height: 1;
+                    width: 40px;
+                    padding: 7.5px 9px;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    &.dialog-qc{
+        .el-form-item__content{
+            .el-button--primary{
+                background-color: #4c89fb;
+                border-color: #4c89fb;
+            }
+        }
+    }
+    &.dialog-zl{
+        .el-form-item__content{
+            .el-button--primary{
+                background: linear-gradient(to top,#fa7100,#fa9e00);
+                border: 0;
+                height: 36px;
+                &.tongcheng{
+                    background: linear-gradient(#ff866b,#fe552c);
+                }
+                &.liepin{
+                    background: linear-gradient(#fbb146,#f28f00);
+                }
+                &.lagou{
+                    background: #00b38b;
+                }
+                &.ganji{
+                    background: #39bc30;
+                }
+                &.yingcai{
+                    background: #e94141;
+                }
+            }
+
+        }
+    }
+}

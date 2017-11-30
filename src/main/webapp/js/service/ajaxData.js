@@ -53,15 +53,16 @@ define(['tool'], function(tool) {
         getNoticeList: function(data,successFn){
             tool.ajax('/notice/getNoticeList',data,successFn,'',true);
         },
-		/*根据消息通知ID获取通知详情*/
+		/*获取消息通知列表*/
         getNoticeInfo: function(data,successFn){
-            tool.ajax('/notice/getNoticeInfo',data,successFn,'',true);
+            tool.ajax('/notice/getNoticeInfo',data,successFn);
         },
 		/*更新消息通知阅读状态*/
         editNoticeStatus: function(data,successFn){
             tool.ajax('/notice/editNoticeStatus',data,successFn,'',true,'get');
         },
-		
+
+
 	};
 
 	return ajaxData;

@@ -6,56 +6,55 @@
             
             <div class="resume-head">
                 <div class="avatar hr-fl" >
-                    <img  :src="detailInfo.sex=='女'?'/img/detail/avatar-woman.png':'/img/detail/avatar.png'" alt="">
+                    <img  :src="detailInfo.sex=='女'?'/img/detail/avatar_g.png':'/img/detail/avatar_b.png'" alt="">
                 </div>
                 <ul class="resume-baseinfo hr-fl">
                     <li class="position eachHighlight" :title="detailInfo.jobTitle">{{detailInfo.jobTitle}}</li>
                     <li class="hr-vertical-middle-container">
                         <!--<p v-if="userInfo.telephone"><i class="hr-icon hr-icon-drtel"></i><span>{{userInfo.telephone}}</span></p>
                         <p v-if="userInfo.email"><i class="hr-icon hr-icon-dremail"></i><span>{{userInfo.email}}</span></p>-->
-                    	<!--<i class="hr-icon hr-icon-dreducation"></i>-->
-                    	<img src="/img/detail/dreducation.png"/>
+                    	<!--<i class="detail-dreducation"></i>-->
+                    	<img src="/img/detail/dreducation_sz.png"/>
                     	<span class="eachHighlight hr-mr3" v-if="detailInfo.eduList.length>0">{{detailInfo.eduList[0].schoolName}}</span>
-                    	<span class="hr-mr3" v-if="detailInfo.eduList.length>0&&detailInfo.eduList[0].schoolName&&(detailInfo.eduList[0].specialty||detailInfo.education)">|</span>
+                    	<span class="hr-mr3" style="color: #d9d9d9;" v-if="detailInfo.eduList.length>0&&detailInfo.eduList[0].schoolName&&(detailInfo.eduList[0].specialty||detailInfo.education)">|</span>
                     	<span class="eachHighlight hr-mr3" v-if="detailInfo.eduList.length>0">{{detailInfo.eduList[0].specialty}}</span>
-                    	<span class="hr-mr3" v-if="detailInfo.eduList.length>0&&(detailInfo.eduList[0].major||detailInfo.education)&&detailInfo.education">|</span>
+                    	<span class="hr-mr3" style="color: #d9d9d9;" v-if="detailInfo.eduList.length>0&&(detailInfo.eduList[0].major||detailInfo.education)&&detailInfo.education">|</span>
                     	<span class="eachHighlight" v-if="detailInfo.education!=undefined">{{detailInfo.education}}</span>
                         <span class="eachHighlight" v-if="detailInfo.jobYear!=undefined">{{detailInfo.jobYear}}{{$root.source!='58'?'年工作经验':''}}</span>
                     </li>
                     <li class="hr-vertical-middle-container">
-                        <!--<i class="hr-icon hr-icon-druser"></i>-->
-                        <img src="/img/detail/druser.png"/>
-                        <span class="eachHighlight" v-if="!userInfo.name||!detailInfo.name">{{userInfo.name||detailInfo.name}}</span>
+                        <!--<i class="detail-druser"></i>-->
+                        <img src="/img/detail/druser_sz.png"/>
+                        <span class="eachHighlight" v-if="userInfo.name||detailInfo.name">{{userInfo.name||detailInfo.name}}</span>
                         <span class="eachHighlight" v-if="detailInfo.sex!=undefined">{{detailInfo.sex}}</span>
                         <span class="eachHighlight" v-if="detailInfo.maritalStatus">{{!detailInfo.maritalStatus?'未填':detailInfo.maritalStatus == 1?'未婚': detailInfo.maritalStatus == 2? '已婚' : '离异'}}</span>
                         
                         
                         <span class="eachHighlight" v-if="detailInfo.age!=undefined">{{detailInfo.age}}{{$root.source!='58'?'岁':''}}</span>
-                        <!--<i class="hr-icon hr-icon-drtel" v-if="userInfo.telephone||detailInfo.telephone"></i>-->
-                        <img src="/img/detail/drtel.png" v-if="userInfo.telephone||detailInfo.telephone"/>
+                        <!--<i class="detail-drtel" v-if="userInfo.telephone||detailInfo.telephone"></i>-->
+                        <img src="/img/detail/drtel_sz.png" v-if="userInfo.telephone||detailInfo.telephone"/>
                         <span>{{userInfo.telephone||detailInfo.telephone}}</span>
                         <span v-if="userInfo.telephoneKey||detailInfo.telephoneKey">密号失效时间：{{userInfo.telephoneKey||detailInfo.telephoneKey}}</span>
-                        <!--<i class="hr-icon hr-icon-dremail" v-if="userInfo.email||detailInfo.telephone"></i>-->
-                       	<img src="/img/detail/dremail.png" v-if="userInfo.email||detailInfo.telephone"/>
+                        <!--<i class="detail-dremail" v-if="userInfo.email||detailInfo.email"></i>-->
+                       	<img src="/img/detail/dremail_sz.png" v-if="userInfo.email||detailInfo.email"/>
                        	<span>{{userInfo.email||detailInfo.email}}</span>
                     </li>
                 </ul>
                 <div class="resume-baseinfo-right">
-                    <div class="resume-updatetime right-item" v-if="$root.source=='rc'">剩余（{{tool.towDecimal($root.gainNum)}}金币）</div>
-                    <div class="resume-updatetime right-item" v-else>剩余全网金币： {{tool.towDecimal($root.gainNum||0)}}</div>
+                    <div class="resume-updatetime right-item" v-if="$root.source=='rc'">剩余 <span class="hr-color-red">{{tool.towDecimal($root.gainNum/5)||0}}份</span> 简历下载（{{tool.towDecimal($root.gainNum)}}金币）</div>
                     <div class="right-item">
 
                     	<!--<el-button @click="interviewState == 'qc'?$root.$refs.dia_interview_qc.interviewDialogQc = true:$root.$refs.dia_interview_zl.interviewDialogZl = true" v-if="interviewState&&detailInfo.isSendMessage===0">发送面试</el-button>-->
                         <!--<el-button @click="$root.$refs.dia_invitation.invitationDialog" v-if="!userInfo&&detailInfo.emailCheck=='1'">立即邀约</el-button>-->
-                        <el-button class="hr-btn-yellow" @click="$root.$refs.dia_payment.payment.dialog=true" v-if="!detailInfo.isPay">获取简历</el-button>
-                        <el-button class="hr-btn-green" @click="$root.$refs.dia_download.download.dialog=true" v-else-if="detailInfo.isPay" type="success">下载简历</el-button>
+                        <el-button type="success" class="hr-btn-green" @click="$root.$refs.dia_payment.payment.dialog=true" v-if="!detailInfo.isPay">获取简历</el-button>
+                        <el-button type="success" class="hr-btn-green" @click="$root.$refs.dia_download.download.dialog=true" v-else-if="detailInfo.isPay">下载简历</el-button>
                         <!--<div v-if="userInfo&&detailInfo.emailCheck=='0'" class="hr-share"><a href="javascript:void(0)"><i class="hr-icon hr-icon-peraccount"></i>分享简历</a></div>-->
                     </div>
                 </div>
             </div>
             <div class="resume-com ">
                 <div class="resume-com-item">
-                    <p class="item-title">求职意向</p>
+                    <p class="item-title"><span>求职意向</span></p>
                     <div class="item-con item-intention clearfix">
                         <p v-if="detailInfo.expectWorkType!=undefined">期待工作性质：<span class="eachHighlight">{{detailInfo.expectWorkType=='0'?'不限':detailInfo.expectWorkType}}</span></p>
                         <p v-if="detailInfo.expectCity">期待城市：<span class="eachHighlight">{{detailInfo.expectCity}}</span></p>
@@ -65,13 +64,13 @@
                     </div>
                 </div>
                 <div class="resume-com-item" v-if="detailInfo.selfEvaluate">
-                    <p class="item-title">自我评价</p>
+                    <p class="item-title"><span>自我评价</span></p>
                     <div class="item-con">
                         <pre class="eachHighlight" v-html="detailInfo.selfEvaluate"></pre>
                     </div>
                 </div>
                 <div class="resume-com-item" v-if="detailInfo.workList.length>0">
-                    <p class="item-title">工作经历</p>
+                    <p class="item-title"><span>工作经历</span></p>
                     <div class="item-con experience" v-for="(item,i) in detailInfo.workList">
                         <div class="clearfix">
                             <h3 class="hr-fl eachHighlight">{{item.compName}}</h3>
@@ -91,7 +90,7 @@
                     </div>
                 </div>
                 <div class="resume-com-item " v-if="detailInfo.projectList.length>0">
-                    <p class="item-title">项目经验</p>
+                    <p class="item-title"><span>项目经验</span></p>
                     <div class="item-con experience" v-for="(item,i) in detailInfo.projectList">
                         <div class="clearfix">
                             <h3 class="hr-fl eachHighlight">{{item.projectName}}</h3>
@@ -109,7 +108,7 @@
                     </div>
                 </div>
                 <div class="resume-com-item " v-if="detailInfo.eduList.length>0">
-                    <p class="item-title">教育经历</p>
+                    <p class="item-title"><span>教育经历</span></p>
                     <div class="item-con experience" v-for="(item,i) in detailInfo.eduList">
                         <div class="linetext">
                             <span>{{item.startTime.split(' ')[0]}}</span> — <span>{{item.endTime.split(' ')[0]}}</span>
@@ -120,7 +119,7 @@
                     </div>
                 </div>
                 <div class="resume-com-item " v-if="detailInfo.languagesList.length>0">
-                    <p class="item-title">语言能力</p>
+                    <p class="item-title"><span>语言能力</span></p>
                     <div class="item-con experience" v-for="(item,i) in detailInfo.languagesList">
                         <div class="linetext">
                             <span class="eachHighlight" v-if="item.languageName">{{item.languageName}}</span>
@@ -130,7 +129,7 @@
                     </div>
                 </div>
                 <div class="resume-com-item " v-if="detailInfo.trainList.length>0">
-                    <p class="item-title">培训经历</p>
+                    <p class="item-title"><span>培训经历</span></p>
                     <div class="item-con experience" v-for="(item,i) in detailInfo.trainList">
                         <p class="text-black">{{item.startTime.split(' ')[0]}} — {{item.endTime=="0"?"至今":item.endTime.split(' ')[0]}} <span class="eachHighlight"
                                 style="margin-left:10px;">{{item.machinery}}</span></p>
@@ -142,7 +141,7 @@
                     </div>
                 </div>
                 <div class="resume-com-item " v-if="detailInfo.skillsList.length>0">
-                    <p class="item-title">掌握技能</p>
+                    <p class="item-title"><span>掌握技能</span></p>
                     <div class="item-con experience item-con-label">
                         <div class="text-border" v-for="(item,i) in detailInfo.skillsList">
                             <p>

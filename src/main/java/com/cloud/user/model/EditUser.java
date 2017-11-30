@@ -22,7 +22,7 @@ public class EditUser {
 	@ApiModelProperty(value = "用户职位（长度：1~50）", required = false)
 	private String jobTitle;
 	
-	@ApiModelProperty(value = "用户头像（正则：[0-9]{1,10}）", required = false)
+	@ApiModelProperty(value = "用户头像（正则：[0-9a-zA-Z,]{2,50}）", required = false)
 	private String heandImg;
 	
 	@ApiModelProperty(value = "用户昵称（长度：1~50）", required = false)
@@ -92,7 +92,7 @@ public class EditUser {
 	 * @param heandImg the heandImg to set
 	 */
 	public void setHeandImg(String heandImg) {
-		if(CheckUtil.matcheVerify(heandImg, "[0-9]{1,10}")){
+		if(CheckUtil.matcheVerify(heandImg, "[0-9a-zA-Z.]{2,50}")){
 			this.heandImg = heandImg;
 		}
 	}

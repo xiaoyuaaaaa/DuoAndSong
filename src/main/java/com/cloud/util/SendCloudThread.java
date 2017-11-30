@@ -48,8 +48,8 @@ public class SendCloudThread implements Runnable{
 		    	 nvps.add(new BasicNameValuePair("api_user", SysConfig.getValue("api_user").toString())); //使用api_user和api_key进行验证
 		    }
 		    nvps.add(new BasicNameValuePair("api_key", SysConfig.getValue("api_key").toString()));
-		    nvps.add(new BasicNameValuePair("from", "suggestion@duojianli.com"));// 发信人，用正确邮件地址替代
-		    nvps.add(new BasicNameValuePair("fromname", "多简历"));// 发信人名称
+		    nvps.add(new BasicNameValuePair("from", "yifengjianli@yifengjianli.com"));// 发信人，用正确邮件地址替代
+		    nvps.add(new BasicNameValuePair("fromname", "简历云"));// 发信人名称
 		    nvps.add(new BasicNameValuePair("subject", subject));//邮件标题
 		    httpost.setEntity(new UrlEncodedFormEntity(nvps, "UTF-8"));
 		

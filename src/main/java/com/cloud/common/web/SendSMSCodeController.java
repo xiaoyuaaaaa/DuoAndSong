@@ -66,10 +66,10 @@ public class SendSMSCodeController {
 							client.getParams().setContentCharset("UTF-8");
 							method.setRequestHeader("ContentType","application/x-www-form-urlencoded;charset=UTF-8");
 							int mobile_code = (int)((Math.random()*9+1)*100000);
-						    String content = new String("您的验证码是："+mobile_code+"。请不要把验证码泄露给其他人。如非本人操作，可不用理会！"); 
+						    String content = new String("您的验证码是："+mobile_code+"。"); 
 							NameValuePair[] data = {//提交短息
-								    new NameValuePair("account", "C00100433"),  
-								    new NameValuePair("password", "58f2617496a60340f2a2bc252f3786ae"), //密码可以使用明文或者使用32位MD5加密
+								    new NameValuePair("account", "cf_jackchenxm"),  
+								    new NameValuePair("password", "43216836a"), //密码可以使用明文或者使用32位MD5加密
 								    new NameValuePair("mobile", mobile), 
 								    new NameValuePair("content", content),
 							};

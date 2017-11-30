@@ -92,81 +92,27 @@ public class BuildResumeIndexController {
 			Map<String,Object> condition = new HashMap<String,Object>();
 			
 			List<String> userList = FileUtils.readLines(new File("C:/Users/fangshaomin/Desktop/resume.txt"));
-			for (int i = 870000; i < userList.size(); i++) {
+			for (int i = 0; i < userList.size(); i++) {
 				try{
 					Map<String,Object> map = HttpUtil.sendHttp("http://www.yifengjianli.com/common/getResumeById?userId="+userList.get(i), null, null, "GET");
 					JSONObject json = JSONObject.fromObject(map.get("result").toString());
 					if(json.get("code") !=null && json.get("code").toString().equals("200")){
 						json = JSONObject.fromObject(json.get("resume").toString());
-						System.out.println(i+"=="+userList.get(i)+"=="+json.toString());
 						NewResume resume = ResumeUtil.converted(json);
-						if(resume.getName() !=null && resume.getName().length()>2){
-							resume.setName(resume.getName().replace(" ", ""));
-							if(resume.getExpectSalary() !=null && "".equals(resume.getExpectSalary())){
-								resume.setExpectSalary("0000000000");
-							}
-							condition.clear();
-							condition.put("resume", resume);
-							String userId = resumeDao.getUserIdByPhone(resume.getTelephone());
+						condition.clear();
+						condition.put("resume", resume);
+						String userId = resumeDao.getUserIdByPhone(resume.getTelephone());
+						if(userId !=null && Integer.parseInt(userId)>0){
+							condition.put("userId", userId);
+							resumeDao.updateResumeInfo(condition);
+							resumeDao.add_resume_detail(condition);
+						}else{
+							resumeDao.add_base_info(condition);
+							
+							userId = resumeDao.getUserIdByPhone(resume.getTelephone());
 							if(userId !=null && Integer.parseInt(userId)>0){
 								condition.put("userId", userId);
-								resumeDao.updateResumeInfo(condition);
 								resumeDao.add_resume_detail(condition);
-							}else{
-								resumeDao.add_base_info(condition);
-								
-								userId = resumeDao.getUserIdByPhone(resume.getTelephone());
-								if(userId !=null && Integer.parseInt(userId)>0){
-									condition.put("userId", userId);
-									resumeDao.add_resume_detail(condition);
-								}
-							}
-						}						
-					}
-				}catch(Exception e){
-					e.printStackTrace();
-				}
-			}			
-			
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-	}
-	
-	@RequestMapping(value="importResumeSecond",method=RequestMethod.GET)
-	public void importResumeSecond(HttpServletResponse response,HttpServletRequest request){
-		try{
-			Map<String,Object> condition = new HashMap<String,Object>();
-			
-			List<String> userList = FileUtils.readLines(new File("C:/Users/fangshaomin/Desktop/resume1.txt"));
-			for (int i = 870000; i < userList.size(); i++) {
-				try{
-					Map<String,Object> map = HttpUtil.sendHttp("http://www.yifengjianli.com/common/getResumeById?userId="+userList.get(i), null, null, "GET");
-					JSONObject json = JSONObject.fromObject(map.get("result").toString());
-					if(json.get("code") !=null && json.get("code").toString().equals("200")){
-						json = JSONObject.fromObject(json.get("resume").toString());
-						System.out.println("second=="+i+"=="+userList.get(i)+"=="+json.toString());
-						NewResume resume = ResumeUtil.converted(json);
-						if(resume.getName() !=null && resume.getName().length()>2){
-							resume.setName(resume.getName().replace(" ", ""));
-							if(resume.getExpectSalary() !=null && "".equals(resume.getExpectSalary())){
-								resume.setExpectSalary("0000000000");
-							}
-							condition.clear();
-							condition.put("resume", resume);
-							String userId = resumeDao.getUserIdByPhone(resume.getTelephone());
-							if(userId !=null && Integer.parseInt(userId)>0){
-								condition.put("userId", userId);
-								resumeDao.updateResumeInfo(condition);
-								resumeDao.add_resume_detail(condition);
-							}else{
-								resumeDao.add_base_info(condition);
-								
-								userId = resumeDao.getUserIdByPhone(resume.getTelephone());
-								if(userId !=null && Integer.parseInt(userId)>0){
-									condition.put("userId", userId);
-									resumeDao.add_resume_detail(condition);
-								}
 							}
 						}
 						

@@ -42,6 +42,7 @@ public class DetailController {
 		@ApiImplicitParam(name="userId",value = "简历ID",required = true,dataType="String",paramType="query"),
 		@ApiImplicitParam(name="token",value = "搜索token",required = true,dataType="String",paramType="query"),
 	})
+	@ResponseBody
 	public ModelAndView cv_detail(String userId,String token,HttpServletResponse response,HttpServletRequest request){
 		response.setContentType("text/html;charset=UTF-8");
 		ModelAndView modelAndView = new ModelAndView(); 

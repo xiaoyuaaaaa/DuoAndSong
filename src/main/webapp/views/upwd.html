@@ -2,9 +2,9 @@
 <html lang="zh-cn">
 <head>
 	<meta charset="UTF-8">
-	<title>多简历-找回密码</title>
-	<meta name="Keywords" content="多简历,免费简历,人才库,简历库">
-	<meta name="Description" content="多简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让多简历成为企业与人才之间沟通的桥梁。">
+	<title>送简历-找回密码</title>
+	<meta name="Keywords" content="送简历,免费简历,人才库,简历库">
+	<meta name="Description" content="送简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让送简历成为企业与人才之间沟通的桥梁。">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -20,16 +20,15 @@
 </head>
 
 <body>
-	<div id="app">
+	<div id="app" v-cloak>
 		<div class="sign-wrap">
 			<form class="sign-form-wrap" @submit.prevent="forgotPassword">
-				<a href="/base/index"><img src="/img/common/ico-logo-x180.png" class="sign-logo"/></a>
 				<div class="sign-form">
+					<a href="/base/index"><img src="/img/common/ico-logo-x160.png" class="sign-logo"/></a>
 					<p class="sign-title">找回密码</p>
 					<div class="sign-con">
 						<div class="input-wrap">
-							<p class="input-title active">手机号</p>
-							<el-input 
+							<el-input
 								v-model="userInfo.telephone"
 								@change="userPhoneErr='';imgCodeCheck=0" 
 								@blur="checkPhone()" 
@@ -51,20 +50,18 @@
 							<div class="err" v-text="imgCodeErr"></div>
 						</div>
 						<div class="input-wrap input-wrap-code">
-							<p class="input-title active">短信验证码</p>
-							<el-input 
+							<el-input
 								v-model="userInfo.mobile_code" 
 								@change="mobileCodeErr=''" 
 								id="mobileCode" 
 								:maxlength="50" 
 								placeholder="请输入短信验证码"></el-input>
-							<a class="codeBtn hr-btn hr-btn-yellow" @click="sendCode()" v-text="supCode" :class="codeBtnType?'codeBtning':''"></a>
+							<a class="codeBtn hr-btn hr-btn-green" @click="sendCode()" v-text="supCode" :class="codeBtnType?'codeBtning':''"></a>
 							<div class="err" v-text="mobileCodeErr"></div>
 						</div>
 						
 						<div class="input-wrap">
-							<p class="input-title active">新密码</p>
-							<el-input type="password" 
+							<el-input type="password"
 								v-model="userInfo.password" 
 								@change="passWordErr=''" 
 								id="passWord" 
@@ -73,7 +70,7 @@
 							<div class="err" v-text="passWordErr"></div>
 						</div>
 						<div class="sign-btn hr-mb15">
-							<button type="submit" class="hr-btn hr-btn-yellow">重置密码</button>
+							<button type="submit" class="hr-btn hr-btn-green">重置密码</button>
 						</div>
 					</div>
 				</div>

@@ -93,7 +93,7 @@ define(["text!../../views/components/emailCheck.html", "$", 'info', 'ajaxUser', 
 							that.message('邮件验证码已发送，请登录邮箱查收',res.code==200);
 						}else{
 							that.dramImg();
-							that.message(res.message,res.code==200);
+							that.$message.error(res.message);
 						}
 					},'get')
 				},

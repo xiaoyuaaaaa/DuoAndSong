@@ -1,5 +1,5 @@
-require(['$', 'vue', 'VueRouter', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePage", 'headerPage','pagination', 'ajaxData'],
-    function ($, Vue, VueRouter, vueMethods, ELEMENT, _, info, tool, basePage, headerPage,pagination, ajaxData) {
+require(['$', 'vue', 'VueRouter', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePage", 'headerPage','pagination', 'ajaxData','leftPage'],
+    function ($, Vue, VueRouter, vueMethods, ELEMENT, _, info, tool, basePage, headerPage,pagination, ajaxData,leftPage) {
         "use strict";
 
         Vue.use(ELEMENT);
@@ -7,90 +7,106 @@ require(['$', 'vue', 'VueRouter', 'vueMethods', 'ELEMENT', 'loadash', 'info', 't
         var app = new Vue({
             el: '#app',
             mounted: function () {
-                var that = this;
+                var that = this
                 this.$nextTick(function () {
-                    that.getNoticeList();
+                    that.getNoticeList()
                 })
             },
             components: {
                 'base-page': basePage,
                 'header-page': headerPage,
-                'pagination':pagination
+                'pagination':pagination,
+                'left-page': leftPage,
             },
             data: function () {
                 return {
                     userinfo: {
                     },
-                    pageDes: {
-                        name: '消息通知'
-                    },
-                    pageModel:{
+                    notice:{
                         page:1,
-                        pageSize:30
+                        pageSize:30,
                     },
                     listData:[],
+                    noticeDetail:{
+                        noticeImg:''
+                    },
                     bigimg:false,
-                    noticeDetail:{},
+                    bigImgUrl:'',
                     noticeAllId:[],
+                    checkedNotices:[],
+                    checkAll:false
                 }
             },
             methods: {
                 changePageSize:function (pageSize) {
-                    this.pageModel.page = 1;
-                    this.pageModel.pageSize = pageSize;
+                    this.notice.page = 1;
+                    this.notice.pageSize = pageSize;
                     this.getNoticeList()
                 },
                 changePage:function (page) {
-                    this.pageModel.page = page;
+                    this.notice.page = page;
                     this.getNoticeList()
                 },
-                //获取消息通知
+                //获取消息通知列表
                 getNoticeList:function () {
                     var that = this;
-                    ajaxData.getNoticeList(that.pageModel,function (response) {
+                    ajaxData.getNoticeList(that.notice,function (response) {
                         if(response.success){
+                            that.notice = response.pageModel;
                             that.listData = response.listData;
-                            that.pageModel = response.pageModel;
-                            that.noticeAllId = [];
-
-                            //展示更多详情
+                            that.noticeAllId=[];
                             for (var i in that.listData){
-                                that.noticeAllId.push(that.listData[i].id);
-                                that.$set(that.listData[i],'more',false);
-                                if(that.listData[i].title.length+that.listData[i].content.length<60){
-                                    that.$set(that.listData[i],'more',true);
-                                }
+                                that.noticeAllId.push(that.listData[i].id)
                             }
-                            that.editNoticeStatus();
-                            that.$root.$refs.basePageChild.getUserInfo();
                         }
                     })
                 },
-                //获取消息详情
-                getNoticeInfo:function (id,img) {
+                //查看详情
+                viewDetail:function (id) {
                     var that = this;
-                    if (img){
-                        ajaxData.getNoticeInfo({noticeId:id},function (response) {
-                            that.noticeDetail = response.data;
+                    that.editNoticeStatus(id);
+                    ajaxData.getNoticeInfo({noticeId:id},function (response) {
+                        if(response.success){
                             that.bigimg = true;
-                        })
+                            that.noticeDetail = response.data
+                        }else {
+                            that.$message.error(response.message)
+                        }
+                    })
+                },
+                //全部已读
+                allRead:function () {
+                    var that = this;
+                    if(that.checkedNotices.length==0){
+                        that.$message.error('请选择消息通知')
+                    }else {
+                        that.editNoticeStatus(that.checkedNotices.join(','),true)
                     }
 
+
                 },
-                //改变消息状态
-                editNoticeStatus:function () {
+                //改变状态
+                editNoticeStatus:function (id,type) {
                     var that = this;
-                    ajaxData.editNoticeStatus({noticeIds:that.noticeAllId.join(',')})
-                },
-                moreCon:function (item) {
-                    item.more = true;
-                    var that = this;
-                    for(var i in that.listData){
-                        if (item.id == that.listData[i].id){
-                            that.listData[i]=item
+
+                    ajaxData.editNoticeStatus({noticeIds:id},function (response) {
+                        if(type){
+                            that.checkedNotices=[];
+                            that.checkAll = false;
+                            that.$message.success('操作成功')
                         }
-                    }
+                        that.getNoticeList()
+                    })
+                },
+                handleCheckAllChange(event) {
+                    this.checkedNotices = event.target.checked ? this.noticeAllId : [];
+                },
+                handleCheckedNoticeChange:function (value) {
+                    let checkedCount = value.length;
+                    this.checkAll = checkedCount === this.noticeAllId.length;
                 }
+
             },
+
         })
     });

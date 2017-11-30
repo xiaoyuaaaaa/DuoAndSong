@@ -66,18 +66,16 @@ public class DownLoadController {
 		String type, 
 		String userId, 
 		HttpServletResponse response,HttpServletRequest request
-	) throws InterruptedException{
+	){
 		if(CheckUtil.strVerify(type, 1, 5) && CheckUtil.matcheVerify(userId,"[1-9][0-9]{0,10}")){
 			if(type.equals("pdf")){
 				
 				Util.deleteFile(SysConfig.getValue("PDF_FILE_PATH").toString()+userId+".pdf");
 				HttpUtil.sendHttp(SysConfig.getValue("CREAT_PDF_FILE_PATH").toString()+userId, null, null, "GET");
-				Thread.sleep(500);
 			}else if(type.equals("word")){
 				
 				Util.deleteFile(SysConfig.getValue("WORD_FILE_PATH").toString()+userId+".doc");
 				HttpUtil.sendHttp(SysConfig.getValue("CREAT_WORD_FILE_PATH").toString()+userId, null, null, "GET");
-				Thread.sleep(500);
 			}
 			return new ResponseEntity<ResultBaseModel>(new ResultBaseModel(200,"文件生成成功"), HttpStatus.OK);
 		}else{
@@ -201,6 +199,7 @@ public class DownLoadController {
 		@ApiResponse(code=200,message="返回信息",response=ResultBaseModel.class)
 	})
 	@RequestMapping(value="downloadSingleResume",method=RequestMethod.GET)
+	@ResponseBody
 	public ResponseEntity<ResultBaseModel> downloadSingleResume(
 		String userId, 
 		String type, 
@@ -283,6 +282,7 @@ public class DownLoadController {
 		@ApiResponse(code=200,message="返回信息",response=ResultBaseModel.class)
 	})
 	@RequestMapping(value="downloadBatchResume",method=RequestMethod.GET)
+	@ResponseBody
 	public ResponseEntity<ResultBaseModel> downloadBatchResume(
 		String type, 
 		HttpServletResponse response,HttpServletRequest request

@@ -28,16 +28,16 @@
 		</div>
 	</div>
     <div slot="footer">
-        <div type="primary" class="hr-btn hr-btn-yellow" @click="downNext" v-if="!download.downReady">下一步</div>
-        <div type="primary" class="hr-btn hr-btn-yellow" v-if="download.downReady&&download.downFormat!='excel'&&downLength<2">
+        <div type="success" class="hr-btn hr-btn-green" @click="downNext" v-if="!download.downReady">下一步</div>
+        <div type="success" class="hr-btn hr-btn-green" v-if="download.downReady&&download.downFormat!='excel'&&downLength<2">
         	<a :href="'/downLoad/downloadSingleResume?type='+download.downFormat+'&userId='+$root.resumeData.resumeNumber"
 	           target="_blank" @click="download.dialog=false" >确 &nbsp;定</a>
         </div>
-        <div type="primary" class="hr-btn hr-btn-yellow" v-if="download.downReady&&download.downFormat!='excel'&&downLength>1">
+        <div type="success" class="hr-btn hr-btn-green" v-if="download.downReady&&download.downFormat!='excel'&&downLength>1">
         	<a :href="'/downLoad/downloadBatchResume?type='+download.downFormat"
 	           target="_blank" @click="download.dialog=false" >确 &nbsp;定</a>
         </div>
-        <div type="primary" class="hr-btn hr-btn-yellow" v-if="download.downReady&&download.downFormat=='excel'">
+        <div type="success" class="hr-btn hr-btn-green" v-if="download.downReady&&download.downFormat=='excel'">
         	<a :href="'/downLoad/downloadBatchResume?type='+download.downFormat+'&userId='+$root.resumeData.resumeNumber"
         	   target="_blank" @click="download.dialog=false">确 &nbsp;定</a>
         </div>

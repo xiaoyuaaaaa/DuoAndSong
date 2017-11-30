@@ -65,7 +65,7 @@ public class User extends ResultBaseModel{
 	
 	@ApiModelProperty(value = "未读消息数", required = false)
 	private Integer noticeNum;
-	
+
 	public User(Integer code,String message) {
 		super(code,message);
 	}
@@ -216,7 +216,7 @@ public class User extends ResultBaseModel{
 	 * @param heandImg the heandImg to set
 	 */
 	public void setHeandImg(String heandImg) {
-		if(CheckUtil.matcheVerify(heandImg, "[0-9]{1,10}")){
+		if(CheckUtil.matcheVerify(heandImg, "[0-9a-zA-Z.]{2,50}")){
 			this.heandImg = heandImg;
 		}
 	}

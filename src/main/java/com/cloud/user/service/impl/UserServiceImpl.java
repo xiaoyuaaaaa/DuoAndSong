@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
 					}else{
 						int mobile_code = (int)((Math.random()*9+1)*100000);
 						String substitution_vars = "{\"to\": [\""+request.getSession().getAttribute("email")+"\"], \"sub\" : { \"%emailCode%\" : [\""+mobile_code+"\"]}}";
-                        new Thread(new SendCloudThread("rm_email_check", substitution_vars, "多简历验证邮件",false)).start();
+                        new Thread(new SendCloudThread("rm_email_check", substitution_vars, "简历云验证邮件",false)).start();
                         request.getSession().setAttribute("email_code", mobile_code);
 						return new ResponseEntity<ResultBaseModel>(new ResultBaseModel(200,"发送成功"), HttpStatus.OK);
 					}

@@ -14,13 +14,11 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 
-import com.cloud.util.SysConfig;
-
 
 public class SolrService {
     private static SolrService solrService = null;
     private static SolrClient  solrClient=null;
-    private static String url=SysConfig.getValue("SOLR_SERVER_URL").toString();
+    private static String url="http://112.74.27.226:8080/solr/resume";
     
     public static synchronized SolrService getInstance() {
         if (solrService==null){

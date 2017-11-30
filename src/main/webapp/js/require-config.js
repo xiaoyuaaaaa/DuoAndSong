@@ -20,6 +20,7 @@ var requirejs = {
 		'html': '../../js/lib/require/html.js',
 		'basePage': '../../js/components/basePage.js',					//公共页面
   	'headerPage': '../../js/components/headerPage.js',						//头部页面
+  	'leftPage': '../../js/components/leftPage.js',						//左侧页面
 		'mCustomScrollbar': '../../js/lib/mCustomScrollbar/jquery.mCustomScrollbar.js',		   //滚动条插件
 		'mousewheel': '../../js/lib/mCustomScrollbar/jquery.mousewheel.js',		   //滚动条插件
 		'dialogIndustry': '../../js/components/dialogIndustry.js',		//对话框，行业
@@ -39,11 +40,6 @@ var requirejs = {
   	'detailTop': '../../js/detailComponents/detailTop.js',	 			 //简历详情头部功能模块
 		'userRouter': '../../js/service/router.js',	 	 //个人中心路由
     'webuploader':'../../js/lib/webuploader-0.1.5/webuploader.js',	//上传控件
-    'accountSet': '../../js/components/accountSet.js',
-    'companyAuthentication': '../../js/components/companyAuthentication.js',
-    'password': '../../js/components/password.js',
-    'emailCheck': '../../js/components/emailCheck.js',
-    'phoneCheck': '../../js/components/phoneCheck.js',
   },
 	shim: {
 		'$': { exports: '$' },

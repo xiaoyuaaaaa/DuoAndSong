@@ -2,76 +2,87 @@
 /* CSS Document */
 @import "../common/base_variable";
 @import "../common/base_tool";
+.hr-main-page{
+    padding-top: $g_headerH+10;
+}
+.el-input__icon{
+    font-family: iconfont!important;
+    font-size: 22px;
+    color: #a8a8a8;
+    transform: translateY(-50%);
+    &.el-icon-caret-top{
+        &:before{
+            content: "\e600";
+        }
+    }
+    &.el-icon-menu{
+        transform: translateY(0);
+        font-size: 18px;
+        &:before{
+            content: "\e781";
+        }
+    }
+    &.is-reverse{
+        transform: translateY(-50%) rotateZ(180deg);
+    }
+}
+.hr-container-title{
+    .hr-table-title li{
+        font-weight: bold;
+    }
 
-.resumeManage-header{
-    height: 45px;
-    line-height: 45px;
-    border: 1px solid $g_greyBorderColor;
-    border-top: 2px solid $g_blueColor;
-    padding: 0 $g_boxPadding;
-    >*{
-        display: inline-block;
+}
+.resumeManage-condition{
+    border: 1px solid #d9d9d9;
+    .list{
+        width: 25%;
+        .el-input--small .el-input__inner{
+            cursor: text;
+            &[readonly]{
+                    cursor: pointer;
+                }
+            &:hover{
+                border-color: #cfcfcf;
+            }
+        }
     }
 }
 .hr-resumeList-wrap{
     box-shadow: 0 2px 2px #ebebeb;
 }
 .resumeManage-condition{
-    box-shadow: 0 2px 2px #ebebeb;
+    background-color: white;
+    padding: 20px;
     .hr-search-wrap{
         position: relative;
         z-index: 1;
-        //width: $conditionW;
         width: 100%;
-        border-top: 1px solid $g_greyBorderColor;
         border-radius: 2px;
-        padding: $g_boxPadding 0;
+        padding-top: $g_boxPadding;
+        padding-right: 10%;
+        background-color: $g_bodybgColor;
+        border: 1px solid $g_greyBorderColor;
         .list{
             margin-bottom: 20px;
             padding: 0 15px;
             width: 33%;
             display: inline-block;
             vertical-align: text-bottom;
+            color: #999;
             .title{
                 font-weight: bold;
                 margin-bottom: 5px;
-            }
-            .hr-btn-yellow{
-                box-shadow: 0 1px -1 #fcc270;
-                border: 1px solid #e0972e;
-                text-shadow: 0 -1px 0 #de8300;
+                display: none;
             }
             .el-input__inner{
                 height: 32px;
                 font-size: 12px;
                 border: 1px solid #d4d4d4;
-                border-radius: 0;
                 &[readonly]{
                     cursor: pointer;
                 }
             }
-            .el-input__icon{
-                font-family: iconfont!important;
-                font-size: 22px;
-                transform: translateY(-50%);
-                color: #a8a8a8;
-                &.el-icon-menu{
-                    transform: translateY(0);
-                    font-size: 18px;
-                    &:before{
-                        content: "\e781";
-                    }
-                }
-                &.is-reverse{
-                    transform: translateY(-50%) rotateZ(180deg);
-                }
-                &.el-icon-caret-top{
-                    &:before{
-                        content: "\e600";
-                    }
-                }
 
-            }
             .icon-search{
                 display: inline-block;
                 width: 14px;
@@ -83,7 +94,6 @@
         }
     }
     .el-input--small .el-input__inner{
-        box-shadow: inset 0px 4px 8px -4px #ccc;
     }
     .el-input__inner{
         &:hover{
@@ -93,6 +103,40 @@
     .el-input--small .el-input__inner {
         cursor: text;
     }
+    .icon-triangle-copy{
+        display: inline-block;
+        width: 18px;
+        height: 18px;
+        font-size: 21px;
+        transition: .3s;
+        transform:translateY(9%);
+        &.up{
+            transform: translateY(35%) rotateZ(180deg);
+            transition: .3s;
+        }
+    }
+}
+.el-input__icon{
+    font-family: iconfont!important;
+    font-size: 22px;
+    transform: translateY(-50%);
+    color: #a8a8a8;
+    &.el-icon-menu{
+        transform: translateY(0);
+        font-size: 18px;
+        &:before{
+            content: "\e781";
+        }
+    }
+    &.is-reverse{
+        transform: translateY(-50%) rotateZ(180deg);
+    }
+    &.el-icon-caret-top{
+        &:before{
+            content: "\e600";
+        }
+    }
+
 }
 .resumeManage-page-wrap{
     border: 1px solid $g_greyBorderColor;
@@ -102,27 +146,7 @@
         margin-top:8px;
 
     }
-    .hr-icon{
-        &:hover{
-            box-shadow: 0 1px -1 #fcc270;
-            border: 1px solid #e0972e;
-            text-shadow: 0 -1px 0 #de8300;
-            background: linear-gradient(#FBB144, #F38E00);
-            color: #fff;
-            .icon-download{
-                background: url("../../img/search/download-hover.png") no-repeat;
-            }
-        }
-        .icon-download{
-            display: inline-block;
-            width: 14px;
-            height: 11px;
-            background: url("../../img/search/download.png") no-repeat;
-            margin-right: 3px;
-        }
 
-
-    }
     .hr-pagination-wrap{
         display: inline-block;
         padding-right:0;
@@ -135,11 +159,43 @@
             }
         }
     }
+    .hr-btn{
+        &:hover{
+            background: $g_mainColor;
+            border-color: $g_mainColor;
+            color: #fff;
+            .icon-download{
+                background: url("../../img/search/icon-search.png") -8px 27px;
+            }
+            .icon-view{
+                background: url("../../img/search/icon-search.png") -9px 66px;
+            }
+            .icon-temporary{
+                background: url("../../img/search/icon-search.png") -9px 118px;
+            }
+
+        }
+        i{
+            display: inline-block;
+            width: 18px;
+            height: 14px;
+            &.icon-download{
+                background: url("../../img/search/icon-search.png") 26px 27px;
+            }
+            &.icon-view{
+                background: url("../../img/search/icon-search.png") 25px 66px;
+            }
+            &.icon-temporary{
+                background: url("../../img/search/icon-search.png") 25px 118px;
+            }
+        }
+    }
 }
 .resumeManage-showCondition{
     padding: 10px;
     border: 1px solid $g_greyBorderColor;
     border-bottom: 0;
+    background-color: white;
     
     .conditionShowStr{
         max-width: 99%;

@@ -67,6 +67,13 @@
 	        <mvc:exclude-mapping path="/forget/*" />
 	        <bean class="com.cloud.filter.AuthorityInterceptor"/>    
 	    </mvc:interceptor> 
+	    
+	    <mvc:interceptor> 
+	        <!--匹配的是url路径， 如果不配置或/**,将拦截所有的Controller-->
+	        <mvc:mapping path="/**" />  
+	        <!-- 设置不拦截路由 -->
+	        <bean class="com.cloud.filter.PvUvInterceptor"/>    
+	    </mvc:interceptor>
 	    <!--当设置多个拦截器时，先按顺序调用preHandle方法，然后逆序调用每个拦截器的postHandle和afterCompletion方法 --> 
 	</mvc:interceptors>
 

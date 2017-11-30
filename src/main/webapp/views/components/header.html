@@ -1,21 +1,49 @@
-<div>
-	<div id="header">
-		<div class="hr-wrap">
-			<a href="/base/index"></a><img src="../../img/common/logo.png" class="hr-mt25"/>
-			<div class="hr-fr hr-vertical-middle-container hr-pt25">
-				<ul class="hr-header-channel hr-mr10">
-					<li><a href="/search/index" :class="{'active': pagename=='resumeSearch'}">简历搜索</a></li>
-					<li><a href="/record/main" :class="{'active': pagename=='resumeManage'}">简历管理</a></li>
-					<li><a href="/record/gold" :class="{'active': pagename=='goldRecord'}">金币记录</a></li>
-					<li><a href="/user/user#/user/companyAuth" :class="{'active': pagename=='companyAuth'}">企业验证</a></li>
-					<li><a href="/notice/notice" :class="{'active': pagename=='notice'}">消息通知 <i v-if="userinfo.noticeNum>0">{{userinfo.noticeNum}}</i></a></li>
-				</ul>
-				<div class="header-user-oper">
-					<a @click="userCancel" class="hr-btn  hr-btn-grey hr-mr10"><i class="icon-logout"></i>退出</a>
-					<a href="/user/user" class="hr-btn  hr-btn-yellow"><i class="icon-user"></i>个人中心</a>
-				</div>
+<div class="hr-header-page">
+	<div class="logo-wrap"><img src="../../img/common/left-logo.png"/></div>
+	<ul class="hr-header-channel hr-ml20 clearfix">
+		<li>
+			<a :class="" class="hr-vertical-middle-container"><img src="../../img/common/top-icon1.png"/><span class="hr-ml5">金币</span></a>
+			<div class="float-tip hr-fontsize12">
+				剩余
+				<div class="hr-color-red hr-mt2"><span v-text="userinfo.gainNum" class="hr-fontsize16"></span> 金币</div>
 			</div>
+		</li>
+		<li>
+			<a  :class="" class="hr-vertical-middle-container"><img src="../../img/common/top-icon2.png"/><span class="hr-ml5">下载</span></a>
+			<div class="float-tip hr-fontsize12">
+				已下载
+				<div class="hr-color-red"><span v-text="userinfo.gainCount" class="hr-fontsize16"></span> 份简历</div>
+			</div>
+		</li>
+		<li>
+			<a  :class="" class="hr-vertical-middle-container"><img src="../../img/common/top-icon3.png"/><span class="hr-ml5">暂存</span></a>
+			<div class="float-tip hr-fontsize12">
+				已暂存
+				<div class="hr-color-red"><span v-text="userinfo.storageCount" class="hr-fontsize16"></span> 份简历</div>
+			</div>
+		</li>
+	</ul>
+
+	<div class="hr-fr hr-mr30 hr-vertical-middle-container header-user-oper">
+		<img v-if="userinfo.heandImg" :src="'/icloudimg/getHeadImg?v='+userinfo.headTime" onerror="javascript:this.src='../../img/common/top-default-user.png'"/>
+		<img v-else src="../../img/user/user-default.png" alt="">
+		<div>
+			<span class="hr-ml10 hr-mr5">个人中心</span>
+			<i class="triangle"></i>
 		</div>
-		<div class="header-line"></div>
+		<div class="float-tip">
+			<a href="">账号设置</a>
+			<a @click="userCancel()">退出</a>
+		</div>
+	</div>
+	<div class="hr-fr notice">
+		<a href="/notice/notice">
+			<img src="../../img/user/notice.png" alt="">
+			<i v-if="userinfo.noticeNum>0" class="badge">{{userinfo.noticeNum}}</i>
+			消息通知
+		</a>
+	</div>
+		<!--<a href="/base/index"></a><img src="../../img/common/logo.png" class="hr-mt25"/>
+		-->
 	</div>
 </div>

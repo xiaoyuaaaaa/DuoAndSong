@@ -2,9 +2,9 @@
 <html lang="zh-cn">
 <head>
 	<meta charset="UTF-8">
-	<title>多简历-注册</title>
-	<meta name="Keywords" content="多简历,免费简历,人才库,简历库">
-	<meta name="Description" content="多简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让多简历成为企业与人才之间沟通的桥梁。">
+	<title>送简历-注册</title>
+	<meta name="Keywords" content="送简历,免费简历,人才库,简历库">
+	<meta name="Description" content="送简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让送简历成为企业与人才之间沟通的桥梁。">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -20,17 +20,15 @@
 </head>
 
 <body>
-	<div id="app">
+	<div id="app" v-cloak>
 		<div class="sign-wrap">
 			<form class="sign-form-wrap" @submit.prevent="signUp">
-				<a href="/base/index"><img src="/img/common/ico-logo-x180.png" class="sign-logo"/></a>
 				<div class="sign-form">
-					<p class="sign-title">用户注册</p>
+					<a href="/base/index"><img src="/img/common/ico-logo-x160.png" class="sign-logo"/></a>
 					<div class="sign-con">
 						<div class="input-wrap clearfix">
 							<div class="input-wrap-email hr-fl">
-								<p class="input-title active">邮箱</p>
-								<el-input 
+								<el-input
 									v-model="userInfo.userEmail" 
 									@change="userEmailErr=''" 
 									id="userEmail" 
@@ -39,8 +37,7 @@
 								<div class="err" v-text="userEmailErr"></div>
 							</div>
 							<div class="input-wrap-phone hr-fr">
-								<p class="input-title active">手机</p>
-								<el-input 
+								<el-input
 									v-model="userInfo.userPhone"
 									@change="userPhoneErr='';imgCodeCheck=0" 
 									@blur="checkPhone()" 
@@ -50,9 +47,8 @@
 								<div class="err" v-text="userPhoneErr"></div>
 							</div>
 						</div>
-						<div class="input-wrap input-verCode hr-hide" :class="!(tool.verifyMobile(userInfo.userPhone).flag&&!imgCodeCheck)?'hr-hide':'hr-block'">
-							<p class="input-title active">图形验证码<span class="hr-fontWeight-normal">（请输入图形验证码）</span></p>
-							<el-input 
+						<div class="input-wrap input-verCode">
+							<el-input
 								v-model="userInfo.imgCode" 
 								@change="imgCodeErr=''" 
 								id="imgCode" 
@@ -63,20 +59,18 @@
 							<div class="err" v-text="imgCodeErr"></div>
 						</div>
 						<div class="input-wrap input-wrap-code">
-							<p class="input-title active">短信验证码</p>
-							<el-input 
+							<el-input
 								v-model="userInfo.mobileCode" 
 								@change="mobileCodeErr=''" 
 								id="mobileCode" 
 								:maxlength="50" 
 								placeholder="请输入短信验证码"></el-input>
-							<a class="codeBtn hr-btn hr-btn-yellow" @click="sendCode()" v-text="supCode" :class="codeBtnType?'codeBtning':''"></a>
+							<a class="codeBtn hr-btn hr-btn-green" @click="sendCode()" v-text="supCode" :class="codeBtnType?'codeBtning':''"></a>
 							<div class="err" v-text="mobileCodeErr"></div>
 						</div>
 						
 						<div class="input-wrap">
-							<p class="input-title active">密码</p>
-							<el-input type="password" 
+							<el-input type="password"
 								v-model="userInfo.passWord" 
 								@change="passWordErr=''" 
 								id="passWord" 
@@ -85,8 +79,7 @@
 							<div class="err" v-text="passWordErr"></div>
 						</div>
 						<div class="input-wrap">
-							<p class="input-title active">姓名<span class="hr-fontWeight-normal">（您真实姓名）</span></p>
-							<el-input 
+							<el-input
 								v-model="userInfo.userName" 
 								@change="userNameErr=''" 
 								id="userName" 
@@ -94,17 +87,18 @@
 								placeholder="请输入姓名"></el-input>
 							<div class="err" v-text="userNameErr"></div>
 						</div>
+						
 						<div class="input-wrap">
 							<input type="checkbox" v-model="userInfo.agreementBox" @change="agreementErr=''"/>
 							<a href="/regist/agreement" target="_blank">接受用户服务协议</a>
 							<div class="err" v-text="agreementErr"></div>
 						</div>
 						<div class="sign-btn">
-							<button type="submit" class="hr-btn hr-btn-yellow">注&nbsp;&nbsp;册</button>
+							<button type="submit" class="hr-btn hr-btn-green">注&nbsp;&nbsp;册</button>
 						</div>
-						<div class="sign-footr">
-							<span>已有云简历账号，立即<a :href="'/login/login'">登录</a></span>
-						</div>
+					</div>
+					<div class="sign-footer">
+						<span>已有云简历账号，立即<a :href="'/login/login'">登录</a></span>
 					</div>
 				</div>
 			</form>

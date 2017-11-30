@@ -37,7 +37,7 @@ public class NoticeController {
 	@Resource
 	private NoticeService noticeService;
 	
-	@ApiOperation(value="搜索路由",httpMethod="GET")
+	@ApiOperation(value="消息通知路由",httpMethod="GET")
 	@RequestMapping(value="notice",method=RequestMethod.GET)
 	public ModelAndView login(HttpServletResponse response,HttpServletRequest request){
 		response.setContentType("text/html;charset=UTF-8");

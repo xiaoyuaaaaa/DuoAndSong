@@ -196,7 +196,7 @@ $colorDefault: #2b8df2;
                             li{
                                 width: 175px; 
                                 float: left;
-                                background: linear-gradient(#fff,#EDF6FB);
+                                background: #fff;
                                 border-left: 1px solid #d9d9d9;
 //                              border-right: 1px solid #d9d9d9;
 //                              padding: 5.5px 8px;
@@ -204,9 +204,8 @@ $colorDefault: #2b8df2;
                                     border-left: 0;  
                                 }
                                 &.active,&:hover{
-                                    background: linear-gradient(#4879B5,#4869A7);
+                                    background: $g_greenColor;
                                     color: #fff;
-
                                     .icon-close{
                                         background: url("/img/detail/icon-close-active.png") no-repeat;
                                     }
@@ -238,8 +237,8 @@ $colorDefault: #2b8df2;
                     }
                 }
                 .top-box {
-                    height: 50px;
-                    line-height: 48px;
+                    height: 60px;
+                    line-height: 59px;
                     font-size: 16px;
     //              border: 1px solid #d9d9d9;
     //              margin-bottom: 10px;
@@ -248,6 +247,7 @@ $colorDefault: #2b8df2;
     //              border-top-left-radius: 2px;
                     padding: 0 25px;
                     background-color: #fff;
+                    border-bottom: 3px solid $g_greenColor;
                     &.cloud{
                         .yf-lofo-wrap:after{
                             display: none;
@@ -260,11 +260,12 @@ $colorDefault: #2b8df2;
                     .el-button{
                         padding: 8px 12px; 
                         color: #555;
-                        background: linear-gradient(#feffff,#edf6fb);
+                        background: #fff;
                         border-radius: 2px;
                         &:hover,&:focus{
-                            color: $g_blueColor;
-                            border-color: $g_blueColor;
+                            color: #fff;
+                            background: $g_greenColor;
+                            border-color: $g_greenColor;
                             .ico-historicalRecord{
                                 background-image: url(/img/detail/ico-historicalRecord-active.png);
                             }
@@ -280,6 +281,9 @@ $colorDefault: #2b8df2;
                             }
                             .iconfont{
                                 color: $g_blueColor;
+                            }
+                            .ico-temporary{
+                                background: url(../../img/search/icon-search.png) 48px 47px;
                             }
                         }
                         .ico-addTemporary,.ico-gtype,.ico-historicalRecord{
@@ -305,6 +309,13 @@ $colorDefault: #2b8df2;
                         }
                         .iconfont{
                             color: #999;
+                        }
+                        .ico-temporary{
+                            display: inline-block;
+                            width: 14px;
+                            height: 14px;
+                            background: url(../../img/search/icon-search.png) 25px 118px;
+                            margin-right: 5px;
                         }
                         &.is-disabled,
                         &.is-disabled:focus,
@@ -352,7 +363,7 @@ $colorDefault: #2b8df2;
                         line-height: 1;
                         position: relative;
                         img{
-                            width: 110px;
+                            //width: 110px;
                         }
                         &.yf-logo-time:after{
                             content: '';
@@ -414,7 +425,7 @@ $colorDefault: #2b8df2;
             .resume-head {
                 position: relative;
 //              background: url("../../img/detail/bg-resume.png") no-repeat;
-                background: linear-gradient(#4A7CB7,#3970B2);
+                background: #fff;
                 background-size: 100% 100%;
                 min-height: 155px;
                 .avatar {
@@ -427,7 +438,7 @@ $colorDefault: #2b8df2;
                     float: left;
                 }
                 .resume-baseinfo {
-                    color: #fff;
+//                  color: #fff;
                     margin: 27.5px 0;
                     width: 600px;
                     float: left;
@@ -456,30 +467,45 @@ $colorDefault: #2b8df2;
                         vertical-align: middle;
                     }
                     i {
-                        color: #4c89fb;
-//                      margin-right: 8px;
+                        width: 14px;
+                        height: 14px;
+                        display: inline-block;
+                        background: url(../../img/detail/detail-ico.png);
+                        &.detail-dreducation{
+                            background-position: -16px -40px;
+                        }
+                        &.detail-druser{
+                            background-position: -17px -14px;
+                        }
+                        &.detail-drtel{
+                            background-position: -17px -66px;
+                        }
+                        &.detail-dremail{
+                            background-position: -17px -66px;
+                        }
                     }
                 }
                 @at-root .resume-baseinfo-right {
                     margin: 23px 30px;
-                    color: #fff;
+//                  color: #fff;
                     position: absolute;
                     right: 0;
                     .right-item {
                         margin: 10px 0;
                         float: right;
                         clear: both;
+                        &.resume-updatetime{
+                            background: #F0F9E6;
+                            padding: 5px 10px;
+                            border: 1px solid $g_greyColor;
+                        }
                         a {
                             color: #fff;
                         }
                         button {
                             padding: 10px 0px;
                             width: 88px;
-                            &.hr-btn-yellow:hover{
-                                background: linear-gradient(#fcbe64,#fea01c);
-                                color: #fff;
-                                border-color:#e0972e;
-                            }
+
 
 //                          &:hover,&:active,&:focus{
 //                              background: linear-gradient(#fbb144,#f38e00);
@@ -496,7 +522,7 @@ $colorDefault: #2b8df2;
                 }
             }
             .resume-com {
-                padding: 40px 40px 10px;
+                padding: 20px 0 10px;
                 background: #fff;
                 color: #333;
 //              border: 1px solid #d9d9d9;
@@ -509,10 +535,20 @@ $colorDefault: #2b8df2;
                     padding-bottom: 20px;
                     .item-title {
                         position: relative;
-                        color: $g_blueColor;
+                        border-bottom: 1px solid $g_greyColor;
+                        span{
+                            color: #fff;
+                            background-color: $g_greenColor;
+                            width: 75px;
+                            display: inline-block;
+                            text-align: center;
+                            line-height: 32px;
+                            margin-left: 30px;
+                        }
+//                      color: $g_blueColor;
 //                      text-align: center;
-                        background-color: #EDF6FB;
-                        padding: 8px 25px;
+//                      background-color: #EDF6FB;
+//                      padding: 8px 25px;
 //                      &:before {
 //                          content: '';
 //                          position: absolute;
@@ -532,7 +568,8 @@ $colorDefault: #2b8df2;
                     }
                     .item-con {
                         margin-top: 20px;
-                        margin-left: 20px;
+                        margin-left: 30px;
+                        margin-right: 30px;
                         .text-black {
                             color: #333;
                             span {
@@ -589,7 +626,7 @@ $colorDefault: #2b8df2;
                         }
                         .linetext {}
                         &.item-con-label{
-                            margin: 10px -10px -10px 5px;
+                            margin: 10px 20px -10px 20px;
                         }
                     }
                 }
@@ -783,15 +820,7 @@ $colorDefault: #2b8df2;
         max-width: 100%;
     }
 }
-.hr-btn-yellow{
-    box-shadow: 0 1px -1 #fcc270;
-    border: 1px solid #e0972e;
-    text-shadow: 0 -1px 0 #de8300;
-    //&:hover,&:active,&:focus{
-    //    border: 1px solid #c4c4c4;
-    //    color: #fff;
-    //}
-}
+
 .recume-null {
     text-align: center;
     margin: 300px auto 0;
@@ -815,13 +844,6 @@ $colorDefault: #2b8df2;
 //      }
         .el-dialog__body {
             padding: 20px 20px 10px;
-        }
-        .el-dialog__footer button{
-            &:hover,&:active,&:focus{
-                background: linear-gradient(#fbb144,#f38e00);
-                border: 1px solid #e1972e;
-                color: #fff;
-            }
         }
         .confirm-con{
             p{
@@ -935,18 +957,7 @@ $colorDefault: #2b8df2;
         .el-dialog__body {
             padding: 20px 20px 10px;
         }
-        .el-dialog__footer {
-            .hr-btn-yellow{
-                box-shadow: 0 1px -1 #fcc270;
-                border: 1px solid #e0972e;
-                text-shadow: 0 -1px 0 #de8300;
-                &:hover,&:active,&:focus{
-                    background: linear-gradient(#fbb144,#f38e00);
-                    border: 1px solid #e1972e;
-                    color: #fff;
-                }
-            }
-        }
+
         .confirm-con{
             p{
                 margin-left: 20px;
@@ -986,8 +997,8 @@ $colorDefault: #2b8df2;
         .el-radio{
             margin: 0 7.5px 0;
             .el-radio__input.is-checked .el-radio__inner{
-                border-color: #f7a42a;
-                background: #f7a42a;
+                background: $g_mainColor;
+                border-color: $g_mainColor;
             }
         }
     }

@@ -1,7 +1,7 @@
-require(['$', 'vue', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePage", 'headerPage',
-        'dialogJob', 'dialogCity', 'pagination', 'ajaxData', "diaDownload",],
-    function ($, Vue, vueMethods, ELEMENT, _, info, tool, basePage, headerPage,
-              dialogJob, dialogCity, pagination, ajaxData, diaDownload) {
+require(['$', 'vue', 'VueRouter', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePage", 'headerPage',
+        'dialogJob', 'dialogCity', 'pagination', 'ajaxData', "diaDownload", 'leftPage'],
+    function ($, Vue, VueRouter, vueMethods, ELEMENT, _, info, tool, basePage, headerPage,
+              dialogJob, dialogCity, pagination, ajaxData, diaDownload, leftPage) {
         "use strict";
 
         Vue.use(ELEMENT);
@@ -28,6 +28,7 @@ require(['$', 'vue', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePa
             components: {
                 'base-page': basePage,
                 'header-page': headerPage,
+                'left-page': leftPage,
                 'dialog-job': dialogJob,
                 'dialog-city': dialogCity,
                 'pagination': pagination,
@@ -43,6 +44,7 @@ require(['$', 'vue', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePa
                         id: 95,
                         isAuditThrough: 1
                     },
+                    showConditionAll: true,
                     pageDes: {
                         name: '简历管理'
                     },
@@ -341,6 +343,10 @@ require(['$', 'vue', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePa
                     } else {
                         //保存所有列表的id
                         this['checkAllUserId' + this.manageType] = _.clone(data.logList);
+                        for(var index in this.resumeAjaxData.logList){
+                        	this.resumeAjaxData.logList[index].jobTitle_name = this.mapJobOrCity('job',this.resumeAjaxData.logList[index].jobTitle);
+                        	this.resumeAjaxData.logList[index].expectCity_name = this.mapJobOrCity('city',this.resumeAjaxData.logList[index].expectCity);
+                        }
                     }
                 },
                 //处理要给用户显示的条件
@@ -408,7 +414,6 @@ require(['$', 'vue', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePa
                         config.storageTime = this.resumeManage.updateTime;		//暂存时间
                         config.education = this.resumeManage.education;		//学历
                         config.jobYear = dealCondition(this.resumeManage.startYear, this.resumeManage.endYear);		//工作经验
-
                     }
                     this.getResumeList(config);
                     //tool.console(config);
@@ -424,8 +429,10 @@ require(['$', 'vue', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePa
                 },
                 //查看简历
                 gotoResumeDetail: function (resumeDataList) {
-                    tool.cookie.set('resumeList', JSON.stringify(resumeDataList));
-                    //console.log(JSON.stringify(resumeDataList));
+                    tool.LocalStorage.set('rabsList', resumeDataList);
+                    tool.cookie.set('rabsList', JSON.stringify(resumeDataList));
+                    window.open('/cv/cv_detail?more=1&userId=' + resumeDataList[0].userId + '&searchId='
+                        + resumeDataList[0].searchId + '&token=' + resumeDataList[0].searchToken);
                 },
                 //暂存简历
                 /*tempSaveResume: function(resumeIdList){
@@ -445,9 +452,16 @@ require(['$', 'vue', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePa
                         ajaxData.cancelStorageCv(config, function () {
                             that.resumeManage.page = 1;
                             that.submitResumeManage();
+                            //that.$root.basePageChild.$getUserInfo
+                            that.getUserInfo();
                         });
                     }).catch(() => {
                     });
+                },
+                //下载单份简历
+                downResume(resumeId){
+                	this.resumeData.resumeNumber = resumeId;
+                  this.$refs.dia_download.download.dialog = true;
                 },
                 //下载、查看、暂存
                 operResume: function (type) {
@@ -461,14 +475,16 @@ require(['$', 'vue', 'vueMethods', 'ELEMENT', 'loadash', 'info', 'tool', "basePa
                     var target = this['checkUserId' + this.manageType];
                     for (var index in target) {
                         resumeDataList.push({
-                            jobTitle: target[index].jobTitle,
-                            userId: target[index].resumeId
+                            jobTitle: target[index].jobTitle_name,
+                            userId: target[index].resumeId,
+                            searchToken: target[index].searchToken,
+                            searchId: target[index].searchId,
                         })
                         resumeIdList.push(target[index].resumeId)
                         storageIdList.push(target[index].id)
                     }
                     if (type == 1) {
-                        console.log(resumeIdList);
+                        //console.log(resumeIdList);
                         this.resumeData.resumeNumber = resumeIdList.join(',');
                         this.$refs.dia_download.download.dialog = true;
                     } else if (type == 2) {

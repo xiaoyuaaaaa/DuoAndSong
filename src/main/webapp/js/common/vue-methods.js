@@ -6,26 +6,26 @@ define(['vue', 'tool'], function(Vue, tool) {
     function install(Vue) {
     	var messageTips;
     	//获取用户信息
-		Vue.prototype.getUserInfo = function (that,_callback) {
-		    tool.ajax(
-				'/common/getUserInfo', 
-				{},
-				function(res) {
-					if(res.code == 200){
-						that.userInfo = res;
-						if(typeof _callback == "function"){
-							_callback();
-						}
-					}
-				},
-				function(res) {
-					
-				}
-			);
+		Vue.prototype.getUserInfo = function (_callback) {
+			if(this.$root.$refs.basePageChild && this.$root.$refs.basePageChild.getUserInfo){
+				this.$root.$refs.basePageChild.getUserInfo(_callback);
+			}
 		}
+		
+		//全局window
 		Vue.prototype.win = function () {
 		  return window;
 		}
+		
+		//退出登录
+		Vue.prototype.userCancel = function () {
+		  tool.userCancel(
+				function(res) {
+					if(res.code == 200){
+						window.location.href = "/login/login";
+					}
+			})
+		};
 		
 		Vue.prototype.message = function(str,flag,showClose,duration){
 			if(messageTips)	messageTips.close();	//如果已经有提示了，先把之前的关掉。防止重复渲染
@@ -46,7 +46,7 @@ define(['vue', 'tool'], function(Vue, tool) {
  	        	closeOnClickModal: false,
  	        	type: 'warning'
  	        }).then(function(){
- 	        	window.location.href = '/user/user#/user/companyAuth';
+ 	        	window.location.href = '/user/auth';
  	        }).catch(function(){
  	        });
 		};

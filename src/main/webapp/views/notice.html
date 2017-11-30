@@ -2,9 +2,9 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<title>多简历-全网邀约</title>
-	<meta name="keywords" content="多简历,免费简历,人才库,简历库">
-	<meta name="description" content="多简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让多简历成为企业与人才之间沟通的桥梁。">
+	<title>送简历-全网邀约</title>
+	<meta name="keywords" content="送简历,免费简历,人才库,简历库">
+	<meta name="description" content="送简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让送简历成为企业与人才之间沟通的桥梁。">
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -22,45 +22,35 @@
 <div id="app" v-cloak>
 	<base-page ref="basePageChild"></base-page>
 	<header-page :userinfo="userinfo" :pagename="'notice'"></header-page>
-	<div class="hr-page-description">
-		<div class="hr-wrap">
-			<h1 v-text="pageDes.name"></h1>
-			<h2 v-if="pageDes.des" v-text="'-- '+pageDes.des"></h2>
-		</div>
-	</div>
 	<div class="hr-main-page">
+		<left-page></left-page>
+		<p class="notice-title">系统消息</p>
 		<div v-if="listData.length>0">
-			<p>
-				全部 <span class="hr-color-blue">{{pageModel.rowCount}}</span> 条消息通知
-			</p>
-			<div class="line"></div>
+
 			<div class="notice-list">
-				<div class="notice-item" v-for="(item,i) in listData" :key=i>
-					<div class="notice-item-head clearfix">
-						<span class="hr-fl"><i class="ico-notice"></i>系统通知</span>
-						<span class="hr-fr">{{item.creatTime}}</span>
-					</div>
-					<div class="notice-item-conent">
-						<div class="notice-title clearfix" >
-							<p class="hr-fl" :class="!item.more?'ellipsis':''">
-								<strong class="hr-mr10">{{item.title}}</strong>
-								<span>{{item.content}}</span>
-							</p>
-							<p class="hr-fl">
-								<a class="hr-color-blue" href="javascript:;" v-show="!item.more" @click="moreCon(item)">更多</a>
-								<a v-if="item.noticeUrl && item.more" :href="item.noticeUrl" target=_blank class="item-line" >查看详情</a>
-							</p>
-
-						</div>
-						<div v-if="item.noticeImg">
-							<img  @click="getNoticeInfo(item.id,item.noticeImg)" :src="'/icloudimg/getNoticeImg?noticeImg='+item.noticeImg.split(',')[0]" alt="">
+				<el-checkbox-group v-model="checkedNotices" @change="handleCheckedNoticeChange">
+					<div class="notice-item clearfix" v-for="(item,i) in listData" :key=item.id>
+						<div class=" notice-con">
+							<el-checkbox class="hr-fl" :label="item.id"></el-checkbox>
+							<span class="item-title"><i :class="item.isRead==0?'ico-notice':''" ></i>{{item.title}}</span>
+							<span class='item-text hr-text-bold'>{{item.content}}</span>
+							<a class='hr-fl hr-text-bold' @click="viewDetail(item.id)" href="javascript:;">点击查看</a>
 						</div>
 
+						<span class="hr-fr hr-color-999">{{item.creatTime}}</span>
 					</div>
+				</el-checkbox-group>
+				<div class="notice-footer">
+					<div  class="hr-fl checkall">
+						<el-checkbox v-model="checkAll" @change="handleCheckAllChange">全选</el-checkbox>
+						<a href="javascript:;" class="hr-btn hr-btn-green hr-ml5" @click="allRead">标为已读</a>
+					</div>
+
+					<pagination ref="pagination" :page-size-hide="false" :current-page="notice.page"
+								:total-page="notice.pageTotal" @changesize="changePageSize"
+								@change="changePage"></pagination>
 				</div>
-				<pagination ref="pagination" :page-size-hide="true" :current-page="pageModel.page"
-							:total-page="pageModel.pageTotal" @changesize="changePageSize"
-							@change="changePage"></pagination>
+
 			</div>
 		</div>
 
@@ -73,11 +63,14 @@
 
 		</div>
 	</div>
-	<el-dialog custom-class="notice-bigimg" :visible.sync="bigimg" size="small"  :show-close="false" top="10%">
-		<div v-if="noticeDetail.noticeImg">
-			<img v-for="(item,i) in noticeDetail.noticeImg.split(',')" :src="'/icloudimg/getNoticeImg?noticeImg='+item" class="bigimg">
+	<el-dialog custom-class="notice-bigimg" :visible.sync="bigimg" size="small" top="15%">
+		<div  v-if="noticeDetail.noticeImg">
+			<img v-for="(img,i) in noticeDetail.noticeImg.split(',')" :key=i :src="'/icloudimg/getNoticeImg?noticeImg='+img" alt="" class='notice-img'>
 		</div>
-
+		<p class='notice-text'>
+			{{noticeDetail.content}}
+			<a v-if="noticeDetail.noticeUrl" target="_blank" class="hr-color-blue" @click="bigimg=false" :href="noticeDetail.noticeUrl">点击查看</a>
+		</p>
 	</el-dialog>
 </div>
 </body>

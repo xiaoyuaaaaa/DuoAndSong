@@ -3,9 +3,9 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>多简历-登录</title>
-	<meta name="Keywords" content="多简历,免费简历,人才库,简历库">
-	<meta name="Description" content="多简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让多简历成为企业与人才之间沟通的桥梁。">
+	<title>送简历-登录</title>
+	<meta name="Keywords" content="送简历,免费简历,人才库,简历库">
+	<meta name="Description" content="送简历是全国最大的一站式招聘服务平台，10万+企业用户的共同选择。千万级优质的全网简历搜索、应用大数据智能简历推送、精准的职位发布、高效的云端管理系统，让送简历成为企业与人才之间沟通的桥梁。">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="renderer" content="webkit|ie-comp|ie-stand">
 	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
@@ -21,16 +21,16 @@
 </head>
 
 <body>
-	<div id="app">
+	<div id="app" v-cloak>
 		<div class="sign-wrap">
 			<form class="sign-form-wrap" @submit.prevent="signIn">
-				<a href="/base/index"><img src="/img/common/ico-logo-x180.png" class="sign-logo"/></a>
+
 				<div class="sign-form">
-					<p class="sign-title">用户登录</p>
+					<a href="/base/index"><img src="/img/common/ico-logo-x160.png" class="sign-logo"/></a>
+					<strong class="sign-title">用户登录</strong>
 					<div class="sign-con">
 						<div class="input-wrap">
-							<p class="input-title">帐号</p>
-							<el-input 
+							<el-input
 								v-model="userInfo.userName" 
 								@change="userNameErr=''" 
 								id="userName" 
@@ -39,8 +39,7 @@
 							<div class="err" v-text="userNameErr"></div>
 						</div>
 						<div class="input-wrap">
-							<p class="input-title">密码</p>
-							<el-input 
+							<el-input
 								type="password"
 								v-model="userInfo.passWord" 
 								@change="passWordErr=''" 
@@ -49,14 +48,14 @@
 								placeholder="请输入密码" ></el-input>
 							<div class="err" v-text="passWordErr"></div>
 						</div>
+						<a :href="'/forget/forget'" class="hr-color-blue hr-fr hr-mb15">忘记密码？</a>
 						<div class="sign-btn">
-							<button class="hr-btn hr-btn-yellow" type="submit">登&nbsp;&nbsp;录</button>
-						</div>
-						<div class="sign-footr">
-							<a :href="'/forget/forget'">忘记密码？</a>
-							<span>还没有云简历账号，<a :href="'/regist/regist'">立即注册</a></span>
+							<button class="hr-btn hr-btn-green" type="submit">登&nbsp;&nbsp;录</button>
 						</div>
 					</div>
+					<p class="sign-footer">
+						<span>还没有云简历账号? <a :href="'/regist/regist'" >立即注册</a></span>
+					</p>
 				</div>
 			</form>
 		</div>

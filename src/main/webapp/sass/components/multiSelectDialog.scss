@@ -13,10 +13,11 @@ el-dialog{
         padding-left: 20px;
     }
     .el-dialog__header{
-        height: 51px;
+        min-heightheight: 61px;
         padding: 16px;
         padding-left: 20px;
-        border-bottom: 1px solid $g_greyColor;    
+        border-bottom: 1px solid $g_greyColor;  
+        border-top: 3px solid $g_greenColor;  
         .el-dialog__title{
             font-weight: normal;
         }
@@ -32,7 +33,7 @@ el-dialog{
     max-width: 615px;
     vertical-align: middle;
     span{
-        background-color: #F7A024;
+        background-color: $g_greenColor;
         color: #fff;
         display: inline-block;
         padding: 1px 8px 3px 9px;
@@ -96,7 +97,7 @@ el-dialog{
         
         
         &.active{
-            border: 1px solid $g_blueColor;
+            border: 1px solid $g_greenColor;
             background: #F2F6F9;
             border-bottom: 0;
             position: relative;
@@ -138,7 +139,7 @@ el-dialog{
     
     .dialog-item2-wrap{
         background: #F2F6F9;
-        border: 1px solid $g_blueColor;
+        border: 1px solid $g_greenColor;
         position: relative;
         top: -1px;
         float: left;

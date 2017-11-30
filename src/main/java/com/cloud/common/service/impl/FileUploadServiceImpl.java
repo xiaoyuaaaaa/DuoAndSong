@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cloud.common.model.ResultBaseModel;
 import com.cloud.common.service.FileUploadService;
 import com.cloud.util.SysConfig;
+import com.cloud.util.resp.RespResultGenerator;
+import com.cloud.util.resp.ResponseResult;
 
 /** 
  * @author tobber
@@ -23,10 +25,10 @@ import com.cloud.util.SysConfig;
 public class FileUploadServiceImpl implements FileUploadService{
 
 	@Override
-	public ResponseEntity<ResultBaseModel> heandImgUpload(MultipartFile file,HttpServletResponse response, HttpServletRequest request) {
+	public ResponseEntity<ResponseResult<String>> heandImgUpload(MultipartFile file,HttpServletResponse response, HttpServletRequest request) {
 		try {
 			if(file.getSize()>0 && file.getSize()<2*1024*1024){ //限制文件大小2M
-				String path = SysConfig.getValue("UPLOAD_HEADIMG_PATH").toString(); 
+				String path = SysConfig.getValue("UPLOAD_TEMPORARAY_PATH").toString(); 
 		        String fileName = file.getOriginalFilename(); 
 		        String newfileName = fileName.substring(fileName.lastIndexOf("."),fileName.length());
 		        String imgName =request.getSession().getAttribute("userId")+newfileName;
@@ -37,16 +39,16 @@ public class FileUploadServiceImpl implements FileUploadService{
 			            targetFile.mkdirs();  
 			        }
 			        file.transferTo(targetFile); //保存
-			        return new ResponseEntity<ResultBaseModel>(new ResultBaseModel(200,"上传成功"), HttpStatus.OK);
+			        return RespResultGenerator.genOK(imgName, "上传成功");
 		        }else{
-			        return new ResponseEntity<ResultBaseModel>(new ResultBaseModel(301,"文件格式不正确"), HttpStatus.OK);
+			        return RespResultGenerator.genError(null, "文件格式不正确");
 		        }
 			}else{
-		        return new ResponseEntity<ResultBaseModel>(new ResultBaseModel(301,"文件过大，限制2M"), HttpStatus.OK);
+		        return RespResultGenerator.genError(null, "文件过大，限制2M");
 			}
 	    } catch (Exception e) {  
 	        e.printStackTrace();
-	        return new ResponseEntity<ResultBaseModel>(new ResultBaseModel(301,"服务器内部错误"), HttpStatus.OK);
+	        return RespResultGenerator.genError(null, "服务器内部错误");
 	    } 
 	}
 

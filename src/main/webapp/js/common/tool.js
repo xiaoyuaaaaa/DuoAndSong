@@ -599,28 +599,7 @@ define(['$', 'axios','base','vue'], function($, axios, base, Vue) {
 			}else {
 				return true;
 			}
-       },
-		
-		/*统计PVUV*/
-		addPvUv:function() {
-			var that = this;
-			var browser = tool.getBrowserVersion();
-			var config = {
-				name: browser ? browser[0] : '',
-				version: browser ? browser[1].split('.')[0] : ''
-			}
-
-//			ajaxUser.addPvUv(config, function(result) {})
-
-			/*百度统计*/
-			var _hmt = _hmt || [];
-			(function() {
-			  var hm = document.createElement("script");
-			  hm.src = "https://hm.baidu.com/hm.js?50d13d049948122f57a3031f16ed6a58";
-			  var s = document.getElementsByTagName("script")[0]; 
-			  s.parentNode.insertBefore(hm, s);
-			})();
-		}
+        }
 	};
 	
 	/*//给ie9添加promise

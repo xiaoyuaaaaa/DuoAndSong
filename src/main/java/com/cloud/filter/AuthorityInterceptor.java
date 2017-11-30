@@ -1,12 +1,9 @@
 package com.cloud.filter;
 
 import java.net.URLEncoder;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import net.sf.json.JSONObject;
-
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,31 +25,26 @@ public class AuthorityInterceptor extends HandlerInterceptorAdapter{
 	    @Override    
 	    public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {    
 	    	if (handler instanceof HandlerMethod) {
-				boolean falg = request.getSession().getAttribute("email")!=null && request.getSession().getAttribute("userId")!=null;
 				final HandlerMethod handler2 = (HandlerMethod) handler;
 				final ResponseBody responseBodyFormat = handler2.getMethodAnnotation(ResponseBody.class);
 				final ResultTypeEnum format = responseBodyFormat==null ? ResultTypeEnum.HTML : ResultTypeEnum.JSON;
+				boolean falg = request.getSession().getAttribute("email")!=null && request.getSession().getAttribute("userId")!=null;
+				//boolean falg = request.getSession().getAttribute("email")!=null && request.getSession().getAttribute("userId")!=null && request.getSession().getAttribute("companyId")!=null && request.getSession().getAttribute("isSaveUserInfo")!=null && request.getSession().getAttribute("isSaveUserInfo").toString().equals("1");
 				if(falg){
 					return true;
 				}else{
 					if(format == ResultTypeEnum.JSON) {
-						if(request.getParameter("timeStamp") !=null && !"".equals(request.getParameter("timeStamp")) 
-		    					&& request.getParameter("sign") !=null && !"".equals(request.getParameter("sign"))){
-							return true;
-						}else{
-							JSONObject json = new JSONObject();
-							json.put("code", 444);
-							json.put("message", "请先登录！");
-							new Util().responesWriter(response,json.toString());	
-						}
-						
+						JSONObject json = new JSONObject();
+						json.put("code", 444);
+						json.put("message", "请先登录！");
+						Util.responesWriter(response,json.toString());
 					}else {						
 						String url = request.getScheme()+"://"; //请求协议 http 或 https    
 						url+=request.getHeader("host");  // 请求服务器    
 						url+=request.getRequestURI();     // 工程名      
 						if(request.getQueryString()!=null) //判断请求参数是否为空  
 						url+="?"+request.getQueryString();   // 参数   
-						response.sendRedirect(request.getContextPath() + "/base/signin?backUrl="+URLEncoder.encode(url, "UTF-8"));
+						response.sendRedirect(request.getContextPath() + "/login/login?backUrl="+URLEncoder.encode(url, "UTF-8"));
 						/*if(request.getHeader("referer")!=null){
 							response.setContentType("text/html;charset=UTF-8");
 							if(url.contains("superPoolZL"))

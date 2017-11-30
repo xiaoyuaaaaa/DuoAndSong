@@ -49,8 +49,8 @@ public class LoginController {
 	@ApiResponses({
 		@ApiResponse(code=200,message="返回信息",response=ResultBaseModel.class)
 	})
-	@ResponseBody
 	@RequestMapping(value="userLogin",method=RequestMethod.POST)
+	@ResponseBody
 	public ResponseEntity<ResultBaseModel> userLogin(
 		String userName, 
 		String passWord, 

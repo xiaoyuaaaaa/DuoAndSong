@@ -7,71 +7,58 @@
     min-width: 1200px;
 }
 .sign-wrap {
-    background-color: #fff;
     min-height: 100%;
-    background: url(/img/sigin/bg-sign.png) 50% 50% no-repeat;
+    background:#f2f3f5 url(/img/sigin/bg-sign.jpg) 48% 50% no-repeat;
 //  background-size: cover;
 }
 .sign-form-wrap{
-    width: 530px;
+    width: 440px;
     color: #888;
-//  border-radius: 3px;  
-    border: 5px solid rgba(255, 255, 255, 0.1);
     position: absolute;
     left: 50%;
     top: 50%; 
     -webkit-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
-    .sign-logo { 
-        position: absolute;
-        top: -80px;
-        left: 50%;
-        margin-left: -90px;
-    }
+    box-shadow: 0 0 10px #e4e6f2;
     .sign-form{
         background-color: #fff;
+        position: relative;
+        padding-top:96px;
+        .sign-logo {
+            position: absolute;
+            top: -80px;
+            left: 50%;
+            margin-left: -80px;
+        }
         .sign-title{
-            background-color: #f4f4f4;
-            font-size: 16px;
-            padding: 13px 40px;
             color: #333;
-            font-weight: 700;
+            text-align: center;
+            font-size: 20px;
+            display: block;
+            font-weight: bold;
         }
         .sign-con{
-            padding: 20px 42px 30px;
+            padding: 30px 25px;
             .input-wrap{
-                .input-title{
-                    color: #555;
-                    font-size: 14px;
-                    font-weight: 700;
-                    display: block;
-                    margin: 0px 0 5px;
-                    &.active:after{
-                        content: '*';
-                        color: red;
-                    }
-                }
-                input[type='text'],input[type='password']{ 
+                input[type='text'],input[type='password']{
                     width: 100%;
                     padding: 8px 0;
                     color: #333; 
                     text-indent: 12px;
                     border-radius: 3px;
-                    border: 2px solid #eee;
-                    box-shadow: 0 0 0 1000px #fff inset;
+                    border:1px solid #dbdbdb;
                 }
                 .err{
                     color: red;
-                    line-height: 25px;
-                    height: 25px; 
+                    line-height: 20px;
+                    height: 20px;
                 }
                 .input-wrap-email,.input-wrap-phone{
-                    width: 205px;
+                    width: 180px;
                 }
                 &.input-wrap-code{ 
-                    
                     .el-input{
-                        width: 305px;
+                        width: 255px;
                         margin-right: 25px;
                     }
                     .codeBtn{ 
@@ -80,9 +67,6 @@
                         font-size: 14px;
                         padding: 6px 5px;
                         cursor: pointer;
-                        box-shadow: 0 1px -1 #fcc270;
-                        border: 1px solid #e0972e;
-                        text-shadow: 0 -1px 0 #de8300;
                         &.codeBtning{
                             background: #ccc;
                             border: 1px solid #ccc;
@@ -94,11 +78,11 @@
                 }
                 &.input-verCode{
                     .el-input{
-                        width: 205px;
-                        margin-right: 16px;
+                        width: 180px;
+                        margin-right: 28px;
                     }
                     img{
-                        margin: 0 10px;
+
                         vertical-align: middle;
                     }
                     a{
@@ -106,9 +90,12 @@
                         margin-left: 10px;
                     }
                 }
+                .el-input__inner{
+                    height: 37px;
+                    background: #f9f9f9;
+                }
             }
             .sign-btn{
-                margin-top: 7px;
                 button{
                     width: 100%;
                     height: 43px;
@@ -116,23 +103,21 @@
                     cursor: pointer;
                     font-family: "Microsoft YaHei","微软雅黑","Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB",SimHei,Arial,sans-serif;
                     outline: none;
-                    border: 1px solid #e59732;
+                    border:1px solid $g_greenBorderColor;
+                    background: linear-gradient(#15c4a5,#12bb9e);
                     &:hover{
-                        background: linear-gradient(#fcbe64,#fea01c);
+                        background: #26d1b3;
                     }
                 }
             } 
-            .sign-footr{
-                margin: 20px 0 0;
-                text-align: center;
-                color: #333;
-                span{
-                    margin: 0 15px;
-                }
-                a{
-                    color: $g_blueColor;
-                    margin: 0 3px;
-                }
+        }
+        .sign-footer{
+            background-color: #f9faff;
+            padding: 13px 40px;
+            color: #555;
+            text-align: center;
+            a{
+                color: #0088ed;
             }
         }
     }
